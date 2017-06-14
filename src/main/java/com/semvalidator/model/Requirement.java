@@ -14,7 +14,10 @@ public class Requirement extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    private String description;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_checklist")
     private CheckList checkList;
 
     @Override
@@ -25,5 +28,21 @@ public class Requirement extends GenericEntity{
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public CheckList getCheckList() {
+        return checkList;
+    }
+
+    public void setCheckList(CheckList checkList) {
+        this.checkList = checkList;
     }
 }

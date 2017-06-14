@@ -16,6 +16,12 @@ public class Question extends GenericEntity{
     @ManyToOne
     private Criterion criterion;
 
+    private Integer number;
+
+    private String description;
+
+    private String tip;
+
     @Override
     public Integer getId() {
         return this.id;
@@ -24,5 +30,37 @@ public class Question extends GenericEntity{
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Criterion getCriterion() {
+        return criterion;
+    }
+
+    public void setCriterion(Criterion criterion) {
+        this.criterion = criterion;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
     }
 }

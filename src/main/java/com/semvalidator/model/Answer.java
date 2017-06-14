@@ -15,9 +15,11 @@ public class Answer extends GenericEntity{
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "id_model")
     private Model model;
 
     @ManyToOne
+    @JoinColumn(name = "id_question")
     private Question question;
 
     @Enumerated(EnumType.ORDINAL)
@@ -31,5 +33,29 @@ public class Answer extends GenericEntity{
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public AnswerValue getValue() {
+        return value;
+    }
+
+    public void setValue(AnswerValue value) {
+        this.value = value;
     }
 }

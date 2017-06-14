@@ -1,5 +1,7 @@
 package com.semvalidator.model;
 
+import com.semvalidator.enums.CheckListType;
+
 import javax.persistence.*;
 
 /**
@@ -13,6 +15,15 @@ public class CheckList extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String title;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_validator")
+    private User userValidator;
+
+    @Enumerated(EnumType.ORDINAL)
+    private CheckListType checkListType;
+
     @Override
     public Integer getId() {
         return this.id;
@@ -21,5 +32,29 @@ public class CheckList extends GenericEntity{
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public User getUserValidator() {
+        return userValidator;
+    }
+
+    public void setUserValidator(User userValidator) {
+        this.userValidator = userValidator;
+    }
+
+    public CheckListType getCheckListType() {
+        return checkListType;
+    }
+
+    public void setCheckListType(CheckListType checkListType) {
+        this.checkListType = checkListType;
     }
 }

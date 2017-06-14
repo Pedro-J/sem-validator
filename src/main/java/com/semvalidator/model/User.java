@@ -94,4 +94,5 @@ public class User extends GenericEntity {
 	public void setProfile(UserProfile profile) {
 		this.profile = profile;
 	}
+
 }

@@ -13,7 +13,10 @@ public class Criterion extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    private String description;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_requirement")
     private Requirement requirement;
 
     @Override
@@ -26,4 +29,19 @@ public class Criterion extends GenericEntity{
         this.id = id;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
+    }
 }
