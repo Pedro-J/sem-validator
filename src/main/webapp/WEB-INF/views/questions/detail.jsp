@@ -12,7 +12,9 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <strong><s:message code="${msgTitle}"/><s:message code="${msgContent}"/></strong>
+                <strong><s:message code="${msgTitle}"/>
+                    <s:message code="app.entity.question"/>&nbsp;<s:message code="${msgContent}" />
+                </strong>
             </div>
         </c:if>
         <br/>
@@ -23,17 +25,17 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <label class="col-sm-2">Number</label>
+                    <label class="col-sm-2"><s:message code="number.label"/>:</label>
                     <div class="col-sm-10">${question.number}</div>
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-2">Description</label>
+                    <label class="col-sm-2"><s:message code="description.label"/>:</label>
                     <div class="col-sm-10">${question.description}</div>
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-2">Criterion</label>
+                    <label class="col-sm-2"><s:message code="criterion.label"/>:</label>
                     <div class="col-sm-10">
                         <c:if test="${not empty question.criterion}">
                             ${question.criterion.description}
@@ -42,9 +44,12 @@
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-2">Tip</label>
+                    <label class="col-sm-2"><s:message code="tip.label"/>:</label>
                     <div class="col-sm-10">${question.tip}</div>
                 </div>
+            </div>
+            <div class="panel-footer text-center" >
+                <a href="/questions/list" class="btn btn-primary"><s:message code="general.back" /> </a>
             </div>
         </div>
     </div>

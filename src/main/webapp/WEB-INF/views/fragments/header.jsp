@@ -66,17 +66,23 @@
                         </ul>
                     </li>
                 </sec:authorize>
-                <li class="pull-right">
-                    <c:url value="/logout" var="logoutUrl" />
-                    <form id="logout" action="${logoutUrl}" method="post" >
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                    </form>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged as User</a></li>
+                <li>
                     <c:if test="${pageContext.request.userPrincipal.name != null}">
                         <a href="javascript:document.getElementById('logout').submit()">
                             <s:message code="general.logout" />
                         </a>
                     </c:if>
+                    <c:url value="/logout" var="logoutUrl" />
+                    <form id="logout" action="${logoutUrl}" method="post" >
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
+
                 </li>
+
             </ul>
         </div>
     </div>

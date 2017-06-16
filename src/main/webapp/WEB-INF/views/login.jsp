@@ -49,7 +49,7 @@
                                                name="password" id="password" placeholder="password">
                                     </div>
                                     <button type="submit" class="btn btn-primary"><s:message code="login.form.confirm"/></button>
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
                                 </form>
                             </div>
                             <div class="panel-footer text-center">

@@ -53,8 +53,7 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions/add", method = RequestMethod.GET)
     public String showAddForm(Model model){
-        Question question = new Question();
-        model.addAttribute("question", question);
+        model.addAttribute("question", new Question());
         model.addAttribute("criterions",criterionService.findAll());
         return "questions/form";
     }
@@ -105,7 +104,7 @@ public class QuestionController {
         redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
         redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
 
-        return "redirect:questions/list";
+        return "redirect:/questions/list";
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)

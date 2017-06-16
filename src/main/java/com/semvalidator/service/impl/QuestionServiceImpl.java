@@ -22,6 +22,9 @@ public class QuestionServiceImpl implements QuestionService{
     private QuestionRepository questionRepository;
 
     public Question save(Question entity) {
+        if(entity.getCriterion() != null && entity.getCriterion().getId() == 0){
+            entity.setCriterion(null);
+        }
         return questionRepository.saveAndFlush(entity);
     }
 

@@ -6,19 +6,19 @@
 
 <tags:pageTemplate title="question.list.title" >
     <div class="container">
+        <c:if test="${not empty msgContent}">
+            <div class="alert alert-${msgCSS} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong><s:message code="${msgTitle}" /><s:message code="app.entity.question"/>&nbsp;<s:message code="${msgContent}" /></strong>
+            </div>
+        </c:if>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h4><s:message code="question.list.title" /></h4>
             </div>
             <div class="panel-body">
-                <c:if test="${not empty msgContent}">
-                    <div class="alert alert-${msgCSS} alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong><s:message code="${msgTitle}" /><s:message code="${msgContent}" /></strong>
-                    </div>
-                </c:if>
 
                 <table class="table table-striped">
                     <thead>
@@ -43,7 +43,7 @@
 
                                 <button class="btn btn-info" onclick="location.href='${detailUrl}'">Query</button>
                                 <button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
-                                <button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}')">Delete</button></td>
+                                <button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}');">Delete</button></td>
                         </tr>
                     </c:forEach>
                 </table>
