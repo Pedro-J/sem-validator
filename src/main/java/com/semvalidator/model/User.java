@@ -24,6 +24,9 @@ public class User extends GenericEntity {
 
 	private String password;
 
+	@Transient
+	private String confirmPassword;
+
 	private String firstName;
 
 	private String lastName;
@@ -95,4 +98,11 @@ public class User extends GenericEntity {
 		this.profile = profile;
 	}
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 }

@@ -13,7 +13,7 @@ public class Question extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Criterion criterion;
 
     private Integer number;
@@ -30,6 +30,10 @@ public class Question extends GenericEntity{
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public boolean isNew() {
+        return (this.id == null);
     }
 
     public Criterion getCriterion() {

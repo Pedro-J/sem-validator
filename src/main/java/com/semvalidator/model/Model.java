@@ -15,7 +15,10 @@ public class Model extends GenericEntity{
     private Integer id;
 
     private String title;
+
+    @Lob
     private String description;
+
     private String modelFileUrl;
 
     @ManyToOne

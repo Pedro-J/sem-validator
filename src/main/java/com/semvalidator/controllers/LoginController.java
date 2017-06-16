@@ -22,7 +22,7 @@ public class LoginController {
 		if (isCurrentAuthenticationAnonymous()) {
 			return "login";
 		} else {
-			return "auth/home";
+			return "home";
 		}
 	}
 
@@ -42,7 +42,7 @@ public class LoginController {
 		if (isCurrentAuthenticationAnonymous()) {
 			model.setViewName("login");
 		}else{
-			model.setViewName("redirect:auth/home");
+			model.setViewName("redirect:home");
 		}
 
 		return model;

@@ -1,39 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page session="false" language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="tags" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<tags:pageTemplate titulo="Produto não encontrado">
+<tags:pageTemplate title="Error" >
+	<div class="container">
 
-  <section id="index-section" class="container middle">
-	
-	<h2>Erro genérico acontecendo!!!</h2>
-	
-	<!-- 
-		Mensagem: ${exception.message }
-		<c:forEach items="${exception.stackTrace}" var="stk">
-			${stk}
-		</c:forEach>
-	 -->
-    
-  </section>
+		<h1>Error Page</h1>
 
+		<p>${exception.message}</p>
+		<!-- Exception: ${exception.message}.
+		  	<c:forEach items="${exception.stackTrace}" var="stackTrace"> 
+				${stackTrace} 
+			</c:forEach>
+	  	-->
+
+	</div>
 </tags:pageTemplate>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
