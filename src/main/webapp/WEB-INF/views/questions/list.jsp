@@ -20,13 +20,14 @@
             </div>
             <div class="panel-body">
 
-                <table class="table table-striped">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Number</th>
-                        <th>Description</th>
-                        <th>Criterion</th>
-                        <th>Tip</th>
+                        <th><s:message code="number.label" /></th>
+                        <th><s:message code="description.label" /></th>
+                        <th><s:message code="criterion.label" /></th>
+                        <th><s:message code="tip.label" /></th>
+                        <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
 
@@ -41,9 +42,13 @@
                                 <s:url value="/questions/${question.id}/delete" var="deleteUrl" />
                                 <s:url value="/questions/${question.id}/update" var="updateUrl" />
 
-                                <button class="btn btn-info" onclick="location.href='${detailUrl}'">Query</button>
-                                <button class="btn btn-primary" onclick="location.href='${updateUrl}'">Update</button>
-                                <button class="btn btn-danger" onclick="this.disabled=true;post('${deleteUrl}');">Delete</button></td>
+                                <button class="btn btn-info glyphicon glyphicon-zoom-in"
+                                        onclick="location.href='${detailUrl}'"></button>
+                                <button class="btn btn-primary glyphicon glyphicon-edit"
+                                        onclick="location.href='${updateUrl}'"></button>
+                                <button class="btn btn-danger glyphicon glyphicon-remove"
+                                        onclick="this.disabled=true;post('${deleteUrl}');"></button>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>

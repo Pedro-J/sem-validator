@@ -74,7 +74,6 @@ public class QuestionController {
         if(result.hasErrors()){
             return "questions/form";
         }else{
-            questionService.save(question);
 
             redirectAttributes.addFlashAttribute("msgCSS","success");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
@@ -83,8 +82,8 @@ public class QuestionController {
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
-
-            return "redirect:questions/"+ question.getId();
+            questionService.save(question);
+            return "redirect:/questions/list";
         }
     }
 

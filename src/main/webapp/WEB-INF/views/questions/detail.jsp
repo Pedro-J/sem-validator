@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="panel-footer text-center" >
-                <a href="/questions/list" class="btn btn-primary"><s:message code="general.back" /> </a>
+                <a href="/questions/list" class="btn btn-default"><s:message code="general.back" /> </a>
             </div>
         </div>
     </div>

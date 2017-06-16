@@ -76,12 +76,15 @@
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
                                 <c:when test="${question['new']}">
-                                    <button type="submit" class="btn-lg btn-primary pull-right"><s:message
+                                    <button type="submit" class="btn btn-primary pull-right"><s:message
                                             code="general.save"/></button>
                                 </c:when>
                                 <c:otherwise>
-                                    <button type="submit" class="btn-lg btn-primary pull-right"><s:message
+                                    <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message
                                             code="general.update"/></button>
+
+                                    <a href="/questions/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
+
                                 </c:otherwise>
                             </c:choose>
                         </div>
