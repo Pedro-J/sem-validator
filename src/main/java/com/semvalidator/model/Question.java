@@ -32,8 +32,9 @@ public class Question extends GenericEntity{
         this.id = id;
     }
 
+    @Override
     public boolean isNew() {
-        return (this.id == null);
+        return (id == null ? true : false);
     }
 
     public Criterion getCriterion() {

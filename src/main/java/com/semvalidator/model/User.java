@@ -58,6 +58,11 @@ public class User extends GenericEntity {
 		this.id = id;
 	}
 
+	@Override
+	public boolean isNew() {
+		return (id == null ? true : false);
+	}
+
 	public String getLogin() {
 		return login;
 	}

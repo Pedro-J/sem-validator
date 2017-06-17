@@ -34,6 +34,11 @@ public class CheckList extends GenericEntity{
         this.id = id;
     }
 
+    @Override
+    public boolean isNew() {
+        return (id == null ? true : false);
+    }
+
     public String getTitle() {
         return title;
     }

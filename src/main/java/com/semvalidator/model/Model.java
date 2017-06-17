@@ -47,6 +47,11 @@ public class Model extends GenericEntity{
         return title;
     }
 
+    @Override
+    public boolean isNew() {
+        return (id == null ? true : false);
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }

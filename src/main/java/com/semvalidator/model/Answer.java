@@ -35,6 +35,11 @@ public class Answer extends GenericEntity{
         this.id = id;
     }
 
+    @Override
+    public boolean isNew() {
+        return (id == null ? true : false);
+    }
+
     public Model getModel() {
         return model;
     }

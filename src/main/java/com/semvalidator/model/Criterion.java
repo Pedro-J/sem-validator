@@ -29,6 +29,11 @@ public class Criterion extends GenericEntity{
         this.id = id;
     }
 
+    @Override
+    public boolean isNew() {
+        return (id == null ? true : false);
+    }
+
     public String getDescription() {
         return description;
     }

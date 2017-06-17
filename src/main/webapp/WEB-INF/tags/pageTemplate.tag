@@ -8,12 +8,11 @@
 <!doctype html>
     <head>
         <meta charset="UTF-8">
-<%--        <meta name="_csrf" content="${_csrf.token}"/>
+<%--    <meta name="_csrf" content="${_csrf.token}"/>
         <meta name="_csrf_header" content="${_csrf.headerName}"/>--%>
         <c:url value="/resources/css" var="cssPath" />
         <c:url value="/resources/js" var="jsPath" />
         <link rel="stylesheet" href="${cssPath}/bootstrap.css">
-<%--        <link rel="stylesheet" href="${cssPath}/bootstrap-theme.min.css">--%>
         <link rel="stylesheet" href="${cssPath}/style.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -37,7 +36,7 @@
         <jsp:invoke fragment="extraScripts" />
 
         <script type="text/javascript">
-            //scripts for all pages
+            //define a script for all pages
         </script>
 
     </body>
