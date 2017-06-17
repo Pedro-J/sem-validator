@@ -1,6 +1,8 @@
 package com.semvalidator.service.impl;
 
+import com.semvalidator.model.CheckList;
 import com.semvalidator.model.Requirement;
+import com.semvalidator.repository.CheckListRepository;
 import com.semvalidator.repository.RequirementRepository;
 import com.semvalidator.service.RequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,18 @@ public class RequirementServiceImpl implements RequirementService{
     @Autowired
     private RequirementRepository requirementRepository;
 
+    @Autowired
+    private CheckListRepository checkListRepository;
+
     public Requirement save(Requirement entity) {
+        CheckList checkList = entity.getCheckList();
+        if( checkList != null ){
+            if( checkList.getId() == 0 ){
+                entity.setCheckList(null);
+            }else{
+                entity.setCheckList(checkListRepository.findOne(checkList.getId()));
+            }
+        }
         return requirementRepository.saveAndFlush(entity);
     }
 

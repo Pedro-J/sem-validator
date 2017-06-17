@@ -38,10 +38,10 @@
                     <div class="col-sm-10">${criterion.description}</div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2"><s:message code="criterion.questions.label"/>:</label>
+                    <label class="col-sm-2"><s:message code="questions.label"/>:</label>
                     <div class="col-sm-10">
                         <c:forEach var="question" items="${questions}" >
-                            *${question.number} - ${question.description}<br/>
+                            ${question.number} - ${question.description}<br/>
                         </c:forEach>
                     </div>
                 </div>

@@ -1,12 +1,128 @@
 package com.semvalidator.controllers;
 
+import com.semvalidator.model.CheckList;
+import com.semvalidator.model.Criterion;
+import com.semvalidator.model.Requirement;
+import com.semvalidator.service.CheckListService;
+import com.semvalidator.service.CriterionService;
+import com.semvalidator.service.RequirementService;
+import com.semvalidator.validation.RequirementFormValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author Created by Pedro-J on 6/14/17.
  */
 @Controller
-@RequestMapping("/requirement")
 public class RequirementController {
+
+    private final Logger logger = LoggerFactory.getLogger(RequirementController.class);
+
+    @Autowired
+    private RequirementService requirementService;
+
+    @Autowired
+    private CheckListService checkListService;
+
+    @Autowired
+    private CriterionService criterionService;
+
+    @Autowired
+    private RequirementFormValidator requirementFormValidator;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(requirementFormValidator);
+    }
+
+    @RequestMapping(value = "/requirements/list")
+    public ModelAndView showAllRequirements(){
+        ModelAndView modelAndView = new ModelAndView("requirements/list");
+        modelAndView.addObject("requirements",requirementService.findAll());
+        return modelAndView;
+    }
+
+    @RequestMapping("/requirements/add")
+    public String showAddForm(Model model){
+        Requirement requirement = new Requirement();
+        model.addAttribute("requirement", requirement);
+        model.addAttribute("checklists", checkListService.findAll());
+
+        return "requirements/form";
+    }
+
+    @RequestMapping("/requirements/{id}/update")
+    public String showUpdateForm(@PathVariable("id") Integer id, Model model){
+        Requirement requirement = requirementService.findById(id);
+        List<CheckList> checkLists = checkListService.findAll();
+        model.addAttribute("requirement", requirement);
+        model.addAttribute("checklists", checkLists);
+        return "requirements/form";
+    }
+
+    @RequestMapping(value = "/requirements", method = RequestMethod.POST)
+    public String saveOrUpdate(@ModelAttribute("requirement") @Validated Requirement requirement,
+                               BindingResult result, Model model, RedirectAttributes redirectAttributes){
+        if(result.hasErrors()){
+            return "requirements/form";
+        }else{
+            redirectAttributes.addFlashAttribute("msgCSS","success");
+            redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
+
+            if( requirement.getId() == null){
+                redirectAttributes.addFlashAttribute("msgContent","general.msg.save");
+            }else{
+                redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
+            }
+            requirementService.save(requirement);
+            return "redirect:/requirements/list";
+        }
+    }
+
+    @RequestMapping(value = "/requirements/{id}", method = RequestMethod.GET)
+    public String showUserDetails(@PathVariable("id") Integer id, Model model){
+        Requirement requirement = requirementService.findById(id);
+        List<Criterion> criterions = criterionService.findByRequirement(requirement);
+        model.addAttribute("requirement", requirement);
+        model.addAttribute("criterions", criterions);
+
+        return "requirements/detail";
+    }
+
+    @RequestMapping(value = "/requirements/{id}/delete", method = RequestMethod.POST)
+    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+        requirementService.delete(id);
+
+        redirectAttributes.addFlashAttribute("msgCSS","success");
+        redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
+        redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
+
+        return "redirect:/requirements/list";
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ModelAndView handleEmptyData(HttpServletRequest req, Exception ex) {
+
+        logger.debug("handleEmptyData()");
+        logger.error("Request: {}, error ", req.getRequestURL(), ex);
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("requirements/detail");
+        model.addObject("msg", "question not found");
+
+        return model;
+    }
 }

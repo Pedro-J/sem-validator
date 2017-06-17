@@ -43,8 +43,9 @@
                             <div class="col-sm-5">
                                 <form:select path="checkList.id" class="form-control">
                                     <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${criterions}" itemValue="checkList.id"
-                                                  itemLabel="checkList.title"/>
+                                    <c:forEach items="${checklists}" var="item" >
+                                        <form:option value="${item.id}" label="${item.description}" />
+                                    </c:forEach>
                                 </form:select>
                                 <form:errors path="checkList" class="control-label"/>
                             </div>

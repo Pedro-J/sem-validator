@@ -30,18 +30,19 @@ public class QuestionController {
     private final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     @Autowired
-    private QuestionFormValidator questionFormValidator;
+    private QuestionService questionService;
 
     @Autowired
     private CriterionService criterionService;
+
+    @Autowired
+    private QuestionFormValidator questionFormValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(questionFormValidator);
     }
 
-    @Autowired
-    private QuestionService questionService;
 
     @RequestMapping(value = "/questions/list", method = RequestMethod.GET)
     public ModelAndView showAllUsers(){
@@ -53,8 +54,9 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions/add", method = RequestMethod.GET)
     public String showAddForm(Model model){
-        model.addAttribute("question", new Question());
-        model.addAttribute("criterions",criterionService.findAll());
+        Question question = new Question();
+        model.addAttribute("question", question);
+        model.addAttribute("criterions", criterionService.findAll());
         return "questions/form";
     }
 
@@ -117,7 +119,6 @@ public class QuestionController {
         model.addObject("msg", "question not found");
 
         return model;
-
     }
 
 }

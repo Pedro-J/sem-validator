@@ -16,7 +16,7 @@ public class Answer extends GenericEntity{
 
     @ManyToOne
     @JoinColumn(name = "id_model")
-    private Model model;
+    private ModelSE model;
 
     @ManyToOne
     @JoinColumn(name = "id_question")
@@ -40,11 +40,11 @@ public class Answer extends GenericEntity{
         return (id == null ? true : false);
     }
 
-    public Model getModel() {
+    public ModelSE getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(ModelSE model) {
         this.model = model;
     }
 

@@ -1,9 +1,9 @@
 package com.semvalidator.service;
 
-import com.semvalidator.model.Model;
+import com.semvalidator.model.ModelSE;
 
 /**
  * @Author Created by Pedro-J on 6/14/17.
  */
-public interface ModelService extends GenericService<Model>{
+public interface ModelService extends GenericService<ModelSE>{
 }

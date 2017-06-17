@@ -69,7 +69,13 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logged as User</a></li>
+                <li>
+                    <sec:authentication property="principal" var="usuario" />
+                    <a href="#">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <s:message code="general.logged.as" /> <b>${usuario.username}</b>
+                    </a>
+                </li>
                 <li>
                     <c:if test="${pageContext.request.userPrincipal.name != null}">
                         <a href="javascript:document.getElementById('logout').submit()">

@@ -1,6 +1,8 @@
 package com.semvalidator.service.impl;
 
+import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
+import com.semvalidator.repository.CriterionRepository;
 import com.semvalidator.repository.QuestionRepository;
 import com.semvalidator.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,18 @@ public class QuestionServiceImpl implements QuestionService{
     @Autowired
     private QuestionRepository questionRepository;
 
+    @Autowired
+    private CriterionRepository criterionRepository;
+
     public Question save(Question entity) {
-        if(entity.getCriterion() != null && entity.getCriterion().getId() == 0){
-            entity.setCriterion(null);
+        Criterion criterion = entity.getCriterion();
+        if( criterion != null ){
+            if( criterion.getId() == 0 ){
+                entity.setCriterion(null);
+            }else{
+                entity.setCriterion(criterionRepository.findOne(criterion.getId()));
+            }
+
         }
         return questionRepository.saveAndFlush(entity);
     }
@@ -49,5 +60,10 @@ public class QuestionServiceImpl implements QuestionService{
     @Transactional(readOnly = true)
     public Page<Question> findAllPageable(Pageable pageable) {
         return questionRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Question> findByCriterion(Criterion criterion) {
+        return questionRepository.findByCriterion(criterion);
     }
 }

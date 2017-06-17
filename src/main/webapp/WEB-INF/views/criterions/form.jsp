@@ -43,8 +43,9 @@
                             <div class="col-sm-5">
                                 <form:select path="requirement.id" class="form-control">
                                     <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${requirements}" itemValue="requirement.id"
-                                                  itemLabel="requirement.description"/>
+                                    <c:forEach items="${requirements}" var="item" >
+                                        <form:option value="${item.id}" label="${item.description}" />
+                                    </c:forEach>
                                 </form:select>
                                 <form:errors path="requirement" class="control-label"/>
                             </div>

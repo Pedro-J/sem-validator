@@ -38,16 +38,20 @@
                             <td>${question.criterion.description}</td>
                             <td>${question.tip}</td>
                             <td>
+                                <s:message code="general.delete" var="delete"/>
+                                <s:message code="general.edit" var="edit"/>
+                                <s:message code="general.seeDetail" var="detail"/>
+
                                 <s:url value="/questions/${question.id}" var="detailUrl" />
                                 <s:url value="/questions/${question.id}/delete" var="deleteUrl" />
                                 <s:url value="/questions/${question.id}/update" var="updateUrl" />
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
-                                        onclick="location.href='${detailUrl}'"></button>
+                                        onclick="location.href='${detailUrl}'" title="${detail}"></button>
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
-                                        onclick="location.href='${updateUrl}'"></button>
+                                        onclick="location.href='${updateUrl}'" title="${edit}"></button>
                                 <button class="btn btn-danger glyphicon glyphicon-remove"
-                                        onclick="this.disabled=true;post('${deleteUrl}');"></button>
+                                        onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
                             </td>
                         </tr>
                     </c:forEach>

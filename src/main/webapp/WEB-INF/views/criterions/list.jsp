@@ -29,21 +29,25 @@
                     </tr>
                     </thead>
 
-                    <c:forEach var="criterion" items="${critetions}">
+                    <c:forEach var="criterion" items="${criterions}">
                         <tr>
-                            <td>${critetion.requirement.description}</td>
-                            <td>${critetion.description}</td>
+                            <td>${criterion.requirement.description}</td>
+                            <td>${criterion.description}</td>
                             <td>
-                                <s:url value="/critetions/${criterion.id}" var="detailUrl" />
-                                <s:url value="/critetions/${criterion.id}/delete" var="deleteUrl" />
-                                <s:url value="/critetions/${criterion.id}/update" var="updateUrl" />
+                                <s:message code="general.delete" var="delete"/>
+                                <s:message code="general.edit" var="edit"/>
+                                <s:message code="general.seeDetail" var="detail"/>
+
+                                <s:url value="/criterions/${criterion.id}" var="detailUrl" />
+                                <s:url value="/criterions/${criterion.id}/delete" var="deleteUrl" />
+                                <s:url value="/criterions/${criterion.id}/update" var="updateUrl" />
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
-                                        onclick="location.href='${detailUrl}'"></button>
+                                        onclick="location.href='${detailUrl}'" title="${detail}"></button>
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
-                                        onclick="location.href='${updateUrl}'"></button>
+                                        onclick="location.href='${updateUrl}'" title="${edit}"></button>
                                 <button class="btn btn-danger glyphicon glyphicon-remove"
-                                        onclick="this.disabled=true;post('${deleteUrl}');"></button>
+                                        onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
                             </td>
                         </tr>
                     </c:forEach>

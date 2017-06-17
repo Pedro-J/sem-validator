@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_model")
-public class Model extends GenericEntity{
+public class ModelSE extends GenericEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
