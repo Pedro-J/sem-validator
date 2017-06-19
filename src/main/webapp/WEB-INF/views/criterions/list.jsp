@@ -23,7 +23,6 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th><s:message code="requirement.label" /></th>
                         <th><s:message code="description.label" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
@@ -31,7 +30,6 @@
 
                     <c:forEach var="criterion" items="${criterions}">
                         <tr>
-                            <td>${criterion.requirement.description}</td>
                             <td>${criterion.description}</td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>

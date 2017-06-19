@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -45,13 +48,6 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/home").setViewName("home");
-		registry.addViewController("/").setViewName("home");
-		registry.addViewController("/hello").setViewName("hello");
-		registry.addViewController("/login").setViewName("login");
-	}
 	
 	@Bean
 	public MessageSource messageSource() {
@@ -123,6 +119,32 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	public LocaleResolver localeResolver() {
 		return new CookieLocaleResolver();
 	}
+
+/*	@Autowired
+	private CriterionConverter criterionConverter;
+
+	@Bean(name="conversionService")
+	public ConversionService getConversionService() {
+		ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
+		bean.setConverters( getConverters() );
+		bean.afterPropertiesSet();
+		ConversionService object = bean.getObject();
+		return object;
+	}
+
+	private Set<Converter<?, ?>> getConverters() {
+		Set<Converter<?, ?>> converters = new HashSet<Converter<?, ?>>();
+
+		converters.add( criterionConverter );
+		// add here more custom converters, either as spring bean references or directly instantiated
+
+		return converters;
+	}
+
+	@Override
+	public void addFormatters(FormatterRegistry formatterRegistry) {
+		formatterRegistry.addConverter(criterionConverter);
+	}*/
 
 /*	@Bean
 	public MailSender mailSender() {

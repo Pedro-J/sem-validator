@@ -1,6 +1,7 @@
 package com.semvalidator.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Author Created by comp-dev on 6/12/17.
@@ -15,9 +16,8 @@ public class Criterion extends GenericEntity{
 
     private String description;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_requirement")
-    private Requirement requirement;
+    @OneToMany(mappedBy = "criterion" )
+    private List<Question> questions;
 
     @Override
     public Integer getId() {
@@ -42,11 +42,11 @@ public class Criterion extends GenericEntity{
         this.description = description;
     }
 
-    public Requirement getRequirement() {
-        return requirement;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setRequirement(Requirement requirement) {
-        this.requirement = requirement;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }

@@ -9,5 +9,6 @@ import java.util.List;
  * @Author Created by Pedro-J on 6/14/17.
  */
 public interface QuestionService extends GenericService<Question>{
+    List<Question> findAllAvailable();
     List<Question> findByCriterion(Criterion criterion);
 }

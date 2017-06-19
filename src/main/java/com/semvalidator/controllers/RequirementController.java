@@ -1,6 +1,6 @@
 package com.semvalidator.controllers;
 
-import com.semvalidator.model.CheckList;
+import com.semvalidator.editor.CriterionPropertyEditor;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Requirement;
 import com.semvalidator.service.CheckListService;
@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @Author Created by Pedro-J on 6/14/17.
@@ -45,6 +44,7 @@ public class RequirementController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Criterion.class, new CriterionPropertyEditor(criterionService));
         binder.setValidator(requirementFormValidator);
     }
 
@@ -57,27 +57,25 @@ public class RequirementController {
 
     @RequestMapping("/requirements/add")
     public String showAddForm(Model model){
-        Requirement requirement = new Requirement();
-        model.addAttribute("requirement", requirement);
-        model.addAttribute("checklists", checkListService.findAll());
-
+        model.addAttribute("requirement", new Requirement());
+        model.addAttribute("availableCriterions", criterionService.findAll());
         return "requirements/form";
     }
 
     @RequestMapping("/requirements/{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
-        Requirement requirement = requirementService.findById(id);
-        List<CheckList> checkLists = checkListService.findAll();
-        model.addAttribute("requirement", requirement);
-        model.addAttribute("checklists", checkLists);
+        model.addAttribute("requirement", requirementService.findById(id));
+        model.addAttribute("availableCriterions", criterionService.findAll());
         return "requirements/form";
     }
 
     @RequestMapping(value = "/requirements", method = RequestMethod.POST)
-    public String saveOrUpdate(@ModelAttribute("requirement") @Validated Requirement requirement,
-                               BindingResult result, Model model, RedirectAttributes redirectAttributes){
+    public String saveOrUpdateRequirement(
+                @ModelAttribute("requirement") @Validated Requirement requirement,
+                BindingResult result, Model model, RedirectAttributes redirectAttributes){
+
         if(result.hasErrors()){
-            return "requirements/form";
+            return showAddForm(model);
         }else{
             redirectAttributes.addFlashAttribute("msgCSS","success");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
@@ -93,17 +91,16 @@ public class RequirementController {
     }
 
     @RequestMapping(value = "/requirements/{id}", method = RequestMethod.GET)
-    public String showUserDetails(@PathVariable("id") Integer id, Model model){
-        Requirement requirement = requirementService.findById(id);
-        List<Criterion> criterions = criterionService.findByRequirement(requirement);
+    public String showRequirementDetails(@PathVariable("id") Integer id, Model model){
+        Requirement requirement = requirementService.findByIdWithCriterions(id);
         model.addAttribute("requirement", requirement);
-        model.addAttribute("criterions", criterions);
+        model.addAttribute("criterions", requirement.getCriterions());
 
         return "requirements/detail";
     }
 
     @RequestMapping(value = "/requirements/{id}/delete", method = RequestMethod.POST)
-    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+    public String deleteRequerement(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         requirementService.delete(id);
 
         redirectAttributes.addFlashAttribute("msgCSS","success");

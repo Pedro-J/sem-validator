@@ -1,5 +1,7 @@
 package com.semvalidator.controllers;
 
+import com.semvalidator.editor.CriterionPropertyEditor;
+import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
@@ -40,6 +42,7 @@ public class QuestionController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Criterion.class, new CriterionPropertyEditor(criterionService));
         binder.setValidator(questionFormValidator);
     }
 
@@ -70,7 +73,7 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.POST)
-    public String saveOrUpdate(@ModelAttribute("question") @Validated Question question,
+    public String saveOrUpdateQuestion(@ModelAttribute("question") @Validated Question question,
                      BindingResult result, Model model, RedirectAttributes redirectAttributes){
 
         if(result.hasErrors()){
@@ -90,7 +93,7 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
-    public String showUserDetails(@PathVariable("id") Integer id, Model model){
+    public String showQuestionDetails(@PathVariable("id") Integer id, Model model){
         Question question = questionService.findById(id);
         model.addAttribute("question", question);
 
@@ -98,7 +101,7 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions/{id}/delete", method = RequestMethod.POST)
-    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+    public String deleteQuestion(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         questionService.delete(id);
 
         redirectAttributes.addFlashAttribute("msgCSS","success");

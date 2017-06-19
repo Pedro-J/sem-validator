@@ -1,10 +1,10 @@
 package com.semvalidator.controllers;
 
+import com.semvalidator.editor.QuestionPropertyEditor;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
-import com.semvalidator.service.RequirementService;
 import com.semvalidator.validation.CriterionFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +36,6 @@ public class CriterionController {
     private CriterionService criterionService;
 
     @Autowired
-    private RequirementService requirementService;
-
-    @Autowired
     private QuestionService questionService;
 
     @Autowired
@@ -46,6 +43,7 @@ public class CriterionController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Question.class, new QuestionPropertyEditor(questionService));
         binder.setValidator(criterionFormValidator);
     }
 
@@ -59,19 +57,19 @@ public class CriterionController {
     public String showAddForm(Model model){
         Criterion criterion = new Criterion();
         model.addAttribute("criterion", criterion);
-        model.addAttribute("requirements", requirementService.findAll());
+        model.addAttribute("availableQuestions", questionService.findAllAvailable());
         return "criterions/form";
     }
 
     @RequestMapping("/{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
         model.addAttribute("criterion", criterionService.findById(id));
-        model.addAttribute("requirements", requirementService.findAll());
+        model.addAttribute("availableQuestions", questionService.findAllAvailable());
         return "criterions/form";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String saveOrUpdate(@ModelAttribute("criterion") @Validated Criterion criterion,
+    public String saveOrUpdateCriterion(@ModelAttribute("criterion") @Validated Criterion criterion,
                                BindingResult result, Model model, RedirectAttributes redirectAttributes){
 
         if(result.hasErrors()){
@@ -80,7 +78,7 @@ public class CriterionController {
             redirectAttributes.addFlashAttribute("msgCSS","success");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
 
-            if( criterion.getId() == null){
+            if( criterion.isNew() ){
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.save");
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
@@ -90,7 +88,7 @@ public class CriterionController {
         }
     }
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String showUserDetails(@PathVariable("id") Integer id, Model model){
+    public String showCriterion(@PathVariable("id") Integer id, Model model){
         Criterion criterion = criterionService.findById(id);
         List<Question> questions = questionService.findByCriterion(criterion);
         model.addAttribute("criterion", criterion);
@@ -99,7 +97,7 @@ public class CriterionController {
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+    public String deleteCriterion(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         criterionService.delete(id);
 
         redirectAttributes.addFlashAttribute("msgCSS","success");

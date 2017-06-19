@@ -37,21 +37,17 @@
                         </div>
                     </s:bind>
 
-                    <s:bind path="checkList">
+                    <spring:bind path="criterions">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="checklist.label"/>:</label>
+                            <label class="col-sm-2 control-label"><s:message code="criterions.label"/>:</label>
                             <div class="col-sm-5">
-                                <form:select path="checkList.id" class="form-control">
-                                    <form:option value="0" label="--- Select ---"/>
-                                    <c:forEach items="${checklists}" var="item" >
-                                        <form:option value="${item.id}" label="${item.description}" />
-                                    </c:forEach>
-                                </form:select>
-                                <form:errors path="checkList" class="control-label"/>
+                                <form:select path="criterions" items="${availableCriterions}" itemValue="id" itemLabel="description" multiple="true"
+                                             class="form-control" />
+                                <form:errors path="criterions" class="control-label" />
                             </div>
                             <div class="col-sm-5"></div>
                         </div>
-                    </s:bind>
+                    </spring:bind>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">

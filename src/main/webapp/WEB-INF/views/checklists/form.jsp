@@ -5,54 +5,59 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="${criterion['new'] ? 'criterion.add.title': 'criterion.update.title'}">
+<tags:pageTemplate title="${checklist['new'] ? 'checklist.add.title': 'checklist.update.title'}">
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <c:choose>
-                    <c:when test="${criterion['new']}">
-                        <h4><s:message code="criterion.add.title"/></h4>
+                    <c:when test="${checklist['new']}">
+                        <h4><s:message code="checklist.add.title"/></h4>
                     </c:when>
                     <c:otherwise>
-                        <h4><s:message code="criterion.update.title"/></h4>
+                        <h4><s:message code="checklist.update.title"/></h4>
                     </c:otherwise>
                 </c:choose>
             </div>
             <div class="panel-body">
-                <s:url value="/criterions" var="formActionUrl"/>
+                <s:url value="/checklists" var="formActionUrl"/>
 
-                <form:form class="form-horizontal" method="POST" modelAttribute="criterion"
+                <form:form class="form-horizontal" method="POST" modelAttribute="checklist"
                            action="${formActionUrl}" acceptCharset="UTF-8">
 
                     <form:hidden path="id"/>
 
-                    <s:bind path="description">
+                    <s:bind path="title">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
                             <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
                             <div class="col-sm-10">
-                                <form:input path="description" type="text" class="form-control " id="description"
-                                            placeholder="Description"/>
-                                <form:errors path="description" class="control-label"/>
+                                <form:input path="title" type="text" class="form-control " id="title"
+                                            placeholder="Title"/>
+                                <form:errors path="title" class="control-label"/>
                             </div>
                         </div>
                     </s:bind>
 
-                    <spring:bind path="questions">
+                    <s:bind path="checklistType">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="questions.label"/>:</label>
+                            <label class="col-sm-2 control-label"><s:message code="checklist.label"/>:</label>
                             <div class="col-sm-5">
-                                <form:select path="questions" items="${availableQuestions}" itemValue="id" itemLabel="description" multiple="true"
-                                             class="form-control" />
-                                <form:errors path="questions" class="control-label" />
+                                <form:select path="checklistType" class="form-control">
+                                    <form:option value="0" label="--- Select ---"/>
+                                    <c:forEach items="${checklistTypes}" var="item" >
+                                        <s:message code="${item.messageCode}" var="typeDescription"/>
+                                        <form:option value="${item}" label="${typeDescription}" />
+                                    </c:forEach>
+                                </form:select>
+                                <form:errors path="checklist" class="control-label"/>
                             </div>
                             <div class="col-sm-5"></div>
                         </div>
-                    </spring:bind>
+                    </s:bind>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
-                                <c:when test="${criterion['new']}">
+                                <c:when test="${checklist['new']}">
                                     <button type="submit" class="btn btn-primary pull-right"><s:message
                                             code="general.save"/></button>
                                 </c:when>
@@ -60,7 +65,7 @@
                                     <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message
                                             code="general.update"/></button>
 
-                                    <a href="/criterions/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
+                                    <a href="/checklists/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
 
                                 </c:otherwise>
                             </c:choose>

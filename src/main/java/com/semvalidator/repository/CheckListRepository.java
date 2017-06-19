@@ -1,6 +1,6 @@
 package com.semvalidator.repository;
 
-import com.semvalidator.model.CheckList;
+import com.semvalidator.model.Checklist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface CheckListRepository extends JpaRepository<CheckList, Integer> {
+public interface CheckListRepository extends JpaRepository<Checklist, Integer> {
 }

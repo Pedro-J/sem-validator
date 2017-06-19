@@ -27,15 +27,6 @@ public class QuestionServiceImpl implements QuestionService{
     private CriterionRepository criterionRepository;
 
     public Question save(Question entity) {
-        Criterion criterion = entity.getCriterion();
-        if( criterion != null ){
-            if( criterion.getId() == 0 ){
-                entity.setCriterion(null);
-            }else{
-                entity.setCriterion(criterionRepository.findOne(criterion.getId()));
-            }
-
-        }
         return questionRepository.saveAndFlush(entity);
     }
 
@@ -60,6 +51,11 @@ public class QuestionServiceImpl implements QuestionService{
     @Transactional(readOnly = true)
     public Page<Question> findAllPageable(Pageable pageable) {
         return questionRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Question> findAllAvailable() {
+        return questionRepository.findAllAvailable();
     }
 
     @Override

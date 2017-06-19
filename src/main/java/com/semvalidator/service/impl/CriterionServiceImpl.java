@@ -1,8 +1,9 @@
 package com.semvalidator.service.impl;
 
 import com.semvalidator.model.Criterion;
-import com.semvalidator.model.Requirement;
+import com.semvalidator.model.Question;
 import com.semvalidator.repository.CriterionRepository;
+import com.semvalidator.repository.QuestionRepository;
 import com.semvalidator.repository.RequirementRepository;
 import com.semvalidator.service.CriterionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -24,17 +26,19 @@ public class CriterionServiceImpl implements CriterionService{
     private CriterionRepository criterionRepository;
 
     @Autowired
+    private QuestionRepository questionRepository;
+
+    @Autowired
     private RequirementRepository requirementRepository;
 
     public Criterion save(Criterion entity) {
-        Requirement requirement = entity.getRequirement();
-        if( requirement != null ){
-            if( requirement.getId() == 0 ){
-                entity.setRequirement(null);
-            }else{
-                entity.setRequirement(requirementRepository.findOne(requirement.getId()));
-            }
+        List<Question> questions = entity.getQuestions();
 
+        if( !CollectionUtils.isEmpty(questions) ){
+            for(Question question : questions){
+                question.setCriterion(entity);
+                questionRepository.saveAndFlush(question);
+            }
         }
 
         return criterionRepository.saveAndFlush(entity);
@@ -63,8 +67,4 @@ public class CriterionServiceImpl implements CriterionService{
         return criterionRepository.findAll(pageable);
     }
 
-    @Override
-    public List<Criterion> findByRequirement(Requirement requirement) {
-        return criterionRepository.findByRequirement(requirement);
-    }
 }

@@ -1,6 +1,5 @@
 package com.semvalidator.service.impl;
 
-import com.semvalidator.model.CheckList;
 import com.semvalidator.model.Requirement;
 import com.semvalidator.repository.CheckListRepository;
 import com.semvalidator.repository.RequirementRepository;
@@ -26,14 +25,14 @@ public class RequirementServiceImpl implements RequirementService{
     private CheckListRepository checkListRepository;
 
     public Requirement save(Requirement entity) {
-        CheckList checkList = entity.getCheckList();
+/*        Checklist checkList = entity.getChecklist();
         if( checkList != null ){
             if( checkList.getId() == 0 ){
-                entity.setCheckList(null);
+                entity.setChecklist(null);
             }else{
-                entity.setCheckList(checkListRepository.findOne(checkList.getId()));
+                entity.setChecklist(checkListRepository.findOne(checkList.getId()));
             }
-        }
+        }*/
         return requirementRepository.saveAndFlush(entity);
     }
 
@@ -58,5 +57,10 @@ public class RequirementServiceImpl implements RequirementService{
     @Transactional(readOnly = true)
     public Page<Requirement> findAllPageable(Pageable pageable) {
         return requirementRepository.findAll(pageable);
+    }
+
+    @Override
+    public Requirement findByIdWithCriterions(Integer id) {
+        return requirementRepository.findByIdWithCriterions(id);
     }
 }

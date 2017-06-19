@@ -1,6 +1,6 @@
 package com.semvalidator.service.impl;
 
-import com.semvalidator.model.CheckList;
+import com.semvalidator.model.Checklist;
 import com.semvalidator.repository.CheckListRepository;
 import com.semvalidator.service.CheckListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ public class CheckListServiceImpl implements CheckListService{
     @Autowired
     private CheckListRepository checkListRepository;
 
-    public CheckList save(CheckList entity) {
+    public Checklist save(Checklist entity) {
         return checkListRepository.saveAndFlush(entity);
     }
 
-    public CheckList update(CheckList entity) {
+    public Checklist update(Checklist entity) {
         return checkListRepository.saveAndFlush(entity);
     }
 
@@ -33,17 +33,17 @@ public class CheckListServiceImpl implements CheckListService{
     }
 
     @Transactional(readOnly = true)
-    public CheckList findById(Integer id) {
+    public Checklist findById(Integer id) {
         return checkListRepository.findOne(id);
     }
 
     @Transactional(readOnly = true)
-    public List<CheckList> findAll() {
+    public List<Checklist> findAll() {
         return checkListRepository.findAll();
     }
 
     @Transactional(readOnly = true)
-    public Page<CheckList> findAllPageable(Pageable pageable) {
+    public Page<Checklist> findAllPageable(Pageable pageable) {
         return checkListRepository.findAll(pageable);
     }
 }

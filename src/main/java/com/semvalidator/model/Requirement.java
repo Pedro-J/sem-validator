@@ -1,6 +1,7 @@
 package com.semvalidator.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Author Created by comp-dev on 6/12/17.
@@ -16,9 +17,12 @@ public class Requirement extends GenericEntity{
 
     private String description;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_checklist")
-    private CheckList checkList;
+    @ManyToMany//(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "tb_requirement_criterion", joinColumns = {
+            @JoinColumn(name = "id_requirement", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_criterion",
+                    nullable = false) })
+    private List<Criterion> criterions;
 
     @Override
     public Integer getId() {
@@ -43,11 +47,11 @@ public class Requirement extends GenericEntity{
         this.description = description;
     }
 
-    public CheckList getCheckList() {
-        return checkList;
+    public List<Criterion> getCriterions() {
+        return criterions;
     }
 
-    public void setCheckList(CheckList checkList) {
-        this.checkList = checkList;
+    public void setCriterions(List<Criterion> criterions) {
+        this.criterions = criterions;
     }
 }

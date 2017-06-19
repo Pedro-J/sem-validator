@@ -17,17 +17,27 @@ public class ModelSE extends GenericEntity{
     private String title;
 
     @Lob
+    @Column(name = "dsc_model")
     private String description;
 
+    @Lob
+    @Column(name = "dsc_aplicabilities")
+    private String objetivesDesc;
+
+    @Lob
+    @Column(name = "dsc_applicabilities")
+    private String applicabilitiesDesc;
+
+    @Column(name = "file_url")
     private String modelFileUrl;
 
     @ManyToOne
     @JoinColumn(name = "id_cl_verification")
-    private CheckList checkListVerification;
+    private Checklist checklistVerification;
 
     @ManyToOne
     @JoinColumn(name = "id_cl_validation")
-    private CheckList checkListValidation;
+    private Checklist checklistValidation;
 
     @ManyToOne
     @JoinColumn(name = "id_user")
@@ -72,20 +82,20 @@ public class ModelSE extends GenericEntity{
         this.modelFileUrl = modelFileUrl;
     }
 
-    public CheckList getCheckListVerification() {
-        return checkListVerification;
+    public Checklist getChecklistVerification() {
+        return checklistVerification;
     }
 
-    public void setCheckListVerification(CheckList checkListVerification) {
-        this.checkListVerification = checkListVerification;
+    public void setChecklistVerification(Checklist checklistVerification) {
+        this.checklistVerification = checklistVerification;
     }
 
-    public CheckList getCheckListValidation() {
-        return checkListValidation;
+    public Checklist getChecklistValidation() {
+        return checklistValidation;
     }
 
-    public void setCheckListValidation(CheckList checkListValidation) {
-        this.checkListValidation = checkListValidation;
+    public void setChecklistValidation(Checklist checklistValidation) {
+        this.checklistValidation = checklistValidation;
     }
 
     public User getUser() {
@@ -96,5 +106,19 @@ public class ModelSE extends GenericEntity{
         this.user = user;
     }
 
+    public String getObjetivesDesc() {
+        return objetivesDesc;
+    }
 
+    public void setObjetivesDesc(String objetivesDesc) {
+        this.objetivesDesc = objetivesDesc;
+    }
+
+    public String getApplicabilitiesDesc() {
+        return applicabilitiesDesc;
+    }
+
+    public void setApplicabilitiesDesc(String applicabilitiesDesc) {
+        this.applicabilitiesDesc = applicabilitiesDesc;
+    }
 }

@@ -1,8 +1,9 @@
 package com.semvalidator.model;
 
-import com.semvalidator.enums.CheckListType;
+import com.semvalidator.enums.ChecklistType;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Author Created by comp-dev on 6/12/17.
@@ -10,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_checklist")
-public class CheckList extends GenericEntity{
+public class Checklist extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,7 +23,14 @@ public class CheckList extends GenericEntity{
     private User userValidator;
 
     @Enumerated(EnumType.ORDINAL)
-    private CheckListType checkListType;
+    private ChecklistType checklistType;
+
+    @ManyToMany//(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "tb_checklist_requirement", joinColumns = {
+            @JoinColumn(name = "id_checklist", nullable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_requirement",
+                    nullable = false) })
+    private List<Requirement> requirements;
 
     @Override
     public Integer getId() {
@@ -55,11 +63,19 @@ public class CheckList extends GenericEntity{
         this.userValidator = userValidator;
     }
 
-    public CheckListType getCheckListType() {
-        return checkListType;
+    public ChecklistType getChecklistType() {
+        return checklistType;
     }
 
-    public void setCheckListType(CheckListType checkListType) {
-        this.checkListType = checkListType;
+    public void setChecklistType(ChecklistType checklistType) {
+        this.checklistType = checklistType;
+    }
+
+    public List<Requirement> getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(List<Requirement> requirements) {
+        this.requirements = requirements;
     }
 }

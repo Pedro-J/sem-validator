@@ -48,7 +48,7 @@ public class JPAConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres");
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/db_se_model_gen");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/db_se_model_validator");
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		
 		return dataSource;

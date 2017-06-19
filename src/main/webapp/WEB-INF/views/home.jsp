@@ -8,57 +8,31 @@
 
   <section id="index-section" class="container middle">
 
-    <h2 class="cdc-call">Cddasd dsadas de dasdsad dasd</h2>
+    <h2 class="cdc-call"><s:message code="app.title" /> </h2>
    
     <ul id="cdc-diferenciais" class="clearfix">
       <li class="col-left">
-        <h3>E dsa ewdaf ff. Assdwe das fdfdss</h3>
+        <h3>Criação de Modelos de Experiência do Usuário</h3>
         <p>
           <span class="sprite" id="sprite-drm"></span>
-          Ndas das das dasdd, das a, dasd dasd asd sdasdsfdfds fdsfsdf, dada e dasdasd.
+          Modelos de Experiência do Usuário podem auxiliar na diminuição de falhas relacionadas a Experiência do Usuário na fase inicial de um projeto.
         </p>
       </li>
       <li class="col-right">
-        <h3>Adasd dsa fd dssdas fdfds</h3>
+        <h3>Criação de Checklists de Validação e Verificação</h3>
         <p>
           <span class="sprite" id="sprite-renome"></span>
-          Rda dsad aasdsdsda jhk b jnjk kknlnl, das dd dsdassdasf, dasdas r fdsfsd.
+          Checklists podem ser criadas utilizando questões já presentes no programa ou novas questões adicionadas pelo autor do modelo para avaliar os requisitos de Modelos de Experiência do Usuário.
         </p>
       </li>
       <li class="col-left">
-        <h3>Tdasd dasdasd weefef da dasd ffdf</h3>
+        <h3>Avaliação de Modelos de Experiência do Usuário a Partir de Checklists</h3>
         <p>
           <span class="sprite" id="sprite-atualizacoes"></span>
-          Qdasd dasd asd de dasdasdda d asd adasdsda sdasda fdfdsf.
-        </p>
-      </li>
-      <li class="col-right">
-        <h3>Ldasd dasd f bgfghghfgh fhfgh dadasdfd fdf ddas</h3>
-        <p>
-          <span class="sprite" id="sprite-caelum"></span>
-          Dedasd fdfdgdf dgdffghfg jhjg jjghjghjghjghjkj jnjdn da dadasf.
+          Novos modelos ou modelos pré-existentes podem ser avaliados pelo criador do modelo e especialistas da área a partir de checklists de validação e verificação.
         </p>
       </li>
     </ul>
   </section>
 
 </tags:pageTemplate>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

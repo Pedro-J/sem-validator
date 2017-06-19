@@ -29,14 +29,14 @@
                     <div class="col-sm-10">${requirement.description}</div>
                 </div>
 
-<%--                <div class="row">
+                <div class="row">
                     <label class="col-sm-2"><s:message code="checklist.label"/>:</label>
                     <div class="col-sm-10">
                         <c:if test="${not empty requirement.checklist}">
                             ${requirement.checklist.title}
                         </c:if>
                     </div>
-                </div>--%>
+                </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="criterions.label"/>:</label>

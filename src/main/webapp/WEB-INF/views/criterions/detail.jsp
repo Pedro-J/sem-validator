@@ -25,15 +25,6 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <label class="col-sm-2"><s:message code="requirement.label"/>:</label>
-                    <div class="col-sm-10">
-                        <c:if test="${not empty criterion.requirement}">
-                            ${criterion.requirement.description}
-                        </c:if>
-                    </div>
-                </div>
-
-                <div class="row">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
                     <div class="col-sm-10">${criterion.description}</div>
                 </div>
