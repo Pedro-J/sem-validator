@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class CheckListServiceImpl implements ChecklistService {
     @Autowired
     private ChecklistRepository checklistRepository;
 
-    public Checklist save(Checklist entity, MultipartFile modelFile) {
+    public Checklist save(Checklist entity) {
         return checklistRepository.saveAndFlush(entity);
     }
 

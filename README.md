@@ -1,13 +1,16 @@
 Software Engineering Model Validator
 -------------------
 Create User Experience Models
-· User Experience models can assist in reducing user experience related failures in the initial phase of a project.
+
+* User Experience models can assist in reducing user experience related failures in the initial phase of a project.
 
 Create Validation and Verification Checklists
-· Checklists can be created using questions already in the program or new questions added by the model author to evaluate user experience models requirements.
+
+* Checklists can be created using questions already in the program or new questions added by the model author to evaluate user experience models requirements.
  
 Evaluate User Experience Models throught Checklists
-· Models can be evaluated by the model's creator or area experts throught validation and verification checklists.
+
+* Models can be evaluated by the model's creator or area experts throught validation and verification checklists.
 
 In this showcase you'll see the following in action:
 

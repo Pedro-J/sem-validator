@@ -45,6 +45,11 @@ public class CriterionServiceImpl implements CriterionService{
         return criterionRepository.saveAndFlush(entity);
     }
 
+    @Override
+    public Criterion save(Criterion entity) {
+        return criterionRepository.saveAndFlush(entity);
+    }
+
     public Criterion update(Criterion entity) {
         return criterionRepository.saveAndFlush(entity);
     }
