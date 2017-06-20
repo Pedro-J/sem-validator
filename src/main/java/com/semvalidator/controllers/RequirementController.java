@@ -85,7 +85,7 @@ public class RequirementController {
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
-            requirementService.save(requirement, modelFile);
+            requirementService.save(requirement);
             return "redirect:/requirements/list";
         }
     }

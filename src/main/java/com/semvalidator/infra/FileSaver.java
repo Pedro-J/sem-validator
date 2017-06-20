@@ -14,13 +14,28 @@ public class FileSaver {
 	@Autowired
 	private HttpServletRequest request;
 
-	public String write(String baseFolder, MultipartFile file) {
+	public String write(String baseFolder, String baseName, MultipartFile file) {
 		try {
 			String realPath = request.getServletContext().getRealPath("/"+baseFolder);
-			String path = realPath + "/" + file.getOriginalFilename();
-			file.transferTo(new File(path));
+
+			String filePath = realPath +"/";
+			String fileName = null;
+
+			if( baseName == null || baseName.equals("")) {
+				fileName = "/" + file.getOriginalFilename();
+			}else{
+				fileName = "/" + baseName + file.getOriginalFilename();
+			}
+
+			File dirUploadedFile = new File(realPath);
+			if( !dirUploadedFile.exists() ){
+				dirUploadedFile.mkdirs();
+			}
+
+			File uploadedFile = new File((filePath + fileName));
+			file.transferTo(uploadedFile);
 			
-			return baseFolder + "/" + file.getOriginalFilename();
+			return baseFolder + "/" + fileName;
 		} catch (IllegalStateException | IOException e) {
 			throw new RuntimeException(e);
 		}

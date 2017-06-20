@@ -1,6 +1,7 @@
 package com.semvalidator.controllers;
 
 import com.semvalidator.editor.ChecklistPropertyEditor;
+import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.ModelSE;
 import com.semvalidator.service.ChecklistService;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author Created by Pedro-J on 6/18/17.
@@ -54,15 +56,15 @@ public class ModelController {
 
     @RequestMapping(value = "/models/add", method = RequestMethod.GET)
     public String showAddForm(Model model){
+        loadForm(model);
         model.addAttribute("model", new ModelSE());
-        //TODO load combo boxies
         return "models/form";
     }
 
     @RequestMapping(value = "/models/{id}/update", method = RequestMethod.GET)
     public String showAddForm(@PathVariable("id") Integer id, Model model){
+        loadForm(model);
         model.addAttribute("model", modelService.findById(id));
-        //TODO load combo boxies
         return "models/form";
     }
 
@@ -116,5 +118,12 @@ public class ModelController {
         model.addObject("msg", "model not found");
 
         return model;
+    }
+
+    private void loadForm(Model model){
+        List<Checklist> clValidation = checkListService.findByChecklistType(ChecklistType.VALIDATION);
+        List<Checklist> clVerification = checkListService.findByChecklistType(ChecklistType.VERIFICATION);
+        model.addAttribute("checklistsVerification", clVerification);
+        model.addAttribute("checklistsValidation", clValidation);
     }
 }

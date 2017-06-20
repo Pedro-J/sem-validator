@@ -82,7 +82,7 @@ public class ChecklistController {
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
 
-            checkListService.save(checklist, modelFile);
+            checkListService.save(checklist);
 
             return "redirect:/checklists/list";
         }

@@ -24,15 +24,15 @@
                     <thead>
                     <tr>
                         <th><s:message code="title.label" /></th>
-                        <th><s:message code="checklist.label" /></th>
+                        <th><s:message code="checklistType.label" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
 
                     <c:forEach var="checklist" items="${checklists}">
                         <tr>
-                            <td>${checklist.description}</td>
                             <td>${checklist.title}</td>
+                            <td><s:message code="${checklist.checklistType.messageCode}" /></td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>

@@ -23,13 +23,20 @@ public class ModelServiceImpl implements ModelService{
     @Autowired
     private FileSaver fileSaver;
 
-    @Override
     public ModelSE save(ModelSE entity, MultipartFile modelFile) {
         if (modelFile != null && !modelFile.getOriginalFilename().isEmpty()) {
-            String path = fileSaver.write("uploaded_files", modelFile);
+            String baseName = "model_" + entity.getId() + "_";
+            String path = fileSaver.write("uploaded_files/models", baseName, modelFile);
             entity.setModelFileUrl(path);
+        }else{
+            entity.setModelFileUrl(null);
         }
 
+        return modelRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    public ModelSE save(ModelSE entity) {
         return modelRepository.saveAndFlush(entity);
     }
 

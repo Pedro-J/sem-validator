@@ -83,7 +83,7 @@ public class CriterionController {
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
-            criterionService.save(criterion, modelFile);
+            criterionService.save(criterion);
             return "redirect:/criterions/list";
         }
     }

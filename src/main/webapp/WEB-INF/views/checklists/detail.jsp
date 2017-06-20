@@ -25,8 +25,8 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                    <div class="col-sm-10">${checklist.description}</div>
+                    <label class="col-sm-2"><s:message code="title.label"/>:</label>
+                    <div class="col-sm-10">${checklist.title}</div>
                 </div>
 
                 <div class="row">
@@ -37,19 +37,6 @@
                         </c:if>
                     </div>
                 </div>
-
-
-
-                <div class="row">
-                    <label class="col-sm-2"><s:message code="answers.label"/>:</label>
-                    <div class="col-sm-10">
-                        <c:forEach var="answer" items="${answers}" >
-                            * ${answer.question.number} - ${answer.question.description}
-                             => <s:message code="${answer.value.messageCode}" /><br/>
-                        </c:forEach>
-                    </div>
-                </div>
-
                 
             </div>
             <div class="panel-footer text-center" >

@@ -1,5 +1,6 @@
 package com.semvalidator.service.impl;
 
+import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.repository.ChecklistRepository;
 import com.semvalidator.service.ChecklistService;
@@ -50,5 +51,10 @@ public class CheckListServiceImpl implements ChecklistService {
     @Override
     public Checklist findByIdWithCriterions(Integer id) {
         return checklistRepository.findByIdWithCriterions(id);
+    }
+
+    @Override
+    public List<Checklist> findByChecklistType(ChecklistType type) {
+        return checklistRepository.findByChecklistType(type);
     }
 }

@@ -5,7 +5,7 @@ package com.semvalidator.enums;
  */
 public enum ChecklistType {
     VERIFICATION("enum.checklist.tipo.verification"),
-    VALIDACAO("enum.checklist.tipo.validation");
+    VALIDATION("enum.checklist.tipo.validation");
 
     private String messageCode;
 

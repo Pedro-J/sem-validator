@@ -55,7 +55,22 @@
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="answers.label"/>:</label>
-                    <div class="col-sm-10">${model.checklistVerification.title}</div>
+                    <div class="col-sm-10">
+                        <c:forEach var="answer" items="${answers}" >
+                            * ${answer.question.number} - ${answer.question.description}
+                            => <s:message code="${answer.value.messageCode}" /><br/>
+                        </c:forEach>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><s:message code="modelFile.label"/>:</label>
+                    <div class="col-sm-10">
+                        <c:if test="${not empty model.modelFileUrl}" >
+                            <c:url value="/" var="contextPath" />
+                            <img src="${contextPath}${model.modelFileUrl}" class="img-responsive" />
+                        </c:if>
+                    </div>
                 </div>
                 
             </div>

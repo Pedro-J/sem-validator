@@ -20,13 +20,13 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <sec:authorize access="hasRole('USER')" >
+                <sec:authorize access="hasRole('ADMIN')" >
 
                 </sec:authorize>
                 <sec:authorize access="hasRole('MANAGER')" >
 
                 </sec:authorize>
-                <sec:authorize access="hasRole('ADMIN')" >
+                <sec:authorize access="hasRole('USER')" >
                     <li class="dropdown">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
@@ -63,6 +63,32 @@
                             <li><a href="/requirements/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/requirements/list"><s:message code="general.list" /></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            <s:message code="app.entity.checklist" />
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/checklists/add"><s:message code="general.register" /></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/checklists/list"><s:message code="general.list" /></a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            <s:message code="app.entity.model" />
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/models/add"><s:message code="general.register" /></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/models/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
                 </sec:authorize>

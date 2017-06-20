@@ -28,97 +28,91 @@
 
                     <s:bind path="title">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="description.label" var="titleLabel"/>:</label>
-                            <div class="col-sm-10">
-                                <form:textarea path="description" type="text" class="form-control " id="${titleLabel}"
+                            <s:message code="title.label" var="titleLabel"/>
+                            <label class="col-sm-2 control-label">${titleLabel}:</label>
+                            <div class="col-sm-7">
+                                <form:input path="title" type="text" class="form-control " id="${titleLabel}"
                                                placeholder="${titleLabel}"/>
-                                <form:errors path="description" class="control-label"/>
+                                <form:errors path="title" class="control-label"/>
                             </div>
+                            <div class="col-sm-3"></div>
                         </div>
                     </s:bind>
 
                     <s:bind path="description">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="description.label" var="descLabel"/>:</label>
-                            <div class="col-sm-10">
-                                <form:input path="description" type="text" class="form-control " id="${descLabel}"
-                                            placeholder="${descLabel}"/>
+                            <s:message code="description.label" var="descLabel"/>
+                            <label class="col-sm-2 control-label">${descLabel}:</label>
+                            <div class="col-sm-7">
+                                <form:textarea path="description" class="form-control " id="${descLabel}"
+                                            placeholder="${descLabel}" rows="4"/>
                                 <form:errors path="description" class="control-label"/>
                             </div>
+                            <div class="col-sm-3"></div>
                         </div>
                     </s:bind>
 
                     <s:bind path="objectivesDesc">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="objectives.label" var="objectivesLabel"/>:</label>
-                            <div class="col-sm-10">
+                            <s:message code="objectives.label" var="objectivesLabel"/>
+                            <label class="col-sm-2 control-label">${objectivesLabel}:</label>
+                            <div class="col-sm-7">
                                 <form:textarea path="objectivesDesc" class="form-control " id="${objectivesLabel}"
-                                               placeholder="${objectivesLabel}"/>
+                                               placeholder="${objectivesLabel}" rows="4"/>
                                 <form:errors path="objectivesDesc" class="control-label"/>
                             </div>
+                            <div class="col-sm-3"></div>
                         </div>
                     </s:bind>
 
                     <s:bind path="applicabilitiesDesc">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="applicabilities.label" var="appsLabel"/>:</label>
-                            <div class="col-sm-10">
+                            <s:message code="applicabilities.label" var="appsLabel"/>
+                            <label class="col-sm-2 control-label">${appsLabel}:</label>
+                            <div class="col-sm-7">
                                 <form:textarea path="applicabilitiesDesc" class="form-control " id="${appsLabel}"
-                                               placeholder="${appsLabel}"/>
+                                               placeholder="${appsLabel}" rows="4"/>
                                 <form:errors path="applicabilitiesDesc" class="control-label"/>
                             </div>
+                            <div class="col-sm-3"></div>
                         </div>
                     </s:bind>
 
-                    <s:bind path="checklist">
+                    <s:bind path="checklistVerification">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="checklist.label"/>:</label>
-                            <div class="col-sm-5">
-                                <form:select path="checklist.id" class="form-control">
+                            <label class="col-sm-2 control-label"><s:message code="checklist.verification.label"/>:</label>
+                            <div class="col-sm-7">
+                                <form:select path="checklistVerification" class="form-control">
                                     <form:option value="0" label="--- Select ---"/>
-                                    <c:forEach items="${checklists}" var="item" >
-                                        <form:option value="${item.id}" label="${item.description}" />
-                                    </c:forEach>
+                                    <form:options items="${checklistsVerification}" itemLabel="title" itemValue="id"/>
                                 </form:select>
-                                <form:errors path="checklist" class="control-label"/>
+                                <form:errors path="checklistVerification" class="control-label"/>
                             </div>
-                            <div class="col-sm-5"></div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </s:bind>
+
+                    <s:bind path="checklistValidation">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <label class="col-sm-2 control-label"><s:message code="checklist.validation.label"/>:</label>
+                            <div class="col-sm-7">
+                                <form:select path="checklistValidation" class="form-control">
+                                    <form:option value="0" label="--- Select ---"/>
+                                    <form:options items="${checklistsValidation}" itemLabel="title" itemValue="id"/>
+                                </form:select>
+                                <form:errors path="checklistValidation" class="control-label"/>
+                            </div>
+                            <div class="col-sm-3"></div>
                         </div>
                     </s:bind>
 
                     <div class="form-group">
-                        <label>Sumário</label>
-                        <input name="sumario" type="file" class="form-control">
+                        <label class="col-sm-2 control-label"><s:message code="modelFile.label"/>: </label>
+                        <div class="col-sm-7">
+                            <input name="modelFile" type="file" class="form-control">
+                        </div>
+                        <div class="col-sm-3"></div>
                     </div>
-
-                    <s:bind path="checklistVerification">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="criterion.label"/>:</label>
-                            <div class="col-sm-5">
-                                <form:select path="checklistVerification" class="form-control">
-                                    <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${criterions}" itemLabel="description" itemValue="id"/>
-                                </form:select>
-                                <form:errors path="checklistVerification" class="control-label"/>
-                            </div>
-                            <div class="col-sm-5"></div>
-                        </div>
-                    </s:bind>
-
-                    <s:bind path="criterion">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="criterion.label"/>:</label>
-                            <div class="col-sm-5">
-                                <form:select path="criterion" class="form-control">
-                                    <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${criterions}" itemLabel="description" itemValue="id"/>
-                                </form:select>
-                                <form:errors path="criterion" class="control-label"/>
-                            </div>
-                            <div class="col-sm-5"></div>
-                        </div>
-                    </s:bind>
-
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">

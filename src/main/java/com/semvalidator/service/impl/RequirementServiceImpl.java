@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,15 +24,7 @@ public class RequirementServiceImpl implements RequirementService{
     @Autowired
     private ChecklistRepository checkListRepository;
 
-    public Requirement save(Requirement entity, MultipartFile modelFile) {
-/*        Checklist checkList = entity.getChecklist();
-        if( checkList != null ){
-            if( checkList.getId() == 0 ){
-                entity.setChecklist(null);
-            }else{
-                entity.setChecklist(checkListRepository.findOne(checkList.getId()));
-            }
-        }*/
+    public Requirement save(Requirement entity) {
         return requirementRepository.saveAndFlush(entity);
     }
 

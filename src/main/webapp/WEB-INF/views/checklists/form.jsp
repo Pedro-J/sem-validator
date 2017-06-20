@@ -48,7 +48,7 @@
                                         <form:option value="${item}" label="${typeDescription}" />
                                     </c:forEach>
                                 </form:select>
-                                <form:errors path="checklist" class="control-label"/>
+                                <form:errors path="checklistType" class="control-label"/>
                             </div>
                             <div class="col-sm-5"></div>
                         </div>
