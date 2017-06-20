@@ -16,7 +16,7 @@ public class Criterion extends GenericEntity{
 
     private String description;
 
-    @OneToMany(mappedBy = "criterion" )
+    @OneToMany(mappedBy = "criterion", cascade = CascadeType.REMOVE)
     private List<Question> questions;
 
     @Override

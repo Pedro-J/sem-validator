@@ -1,7 +1,7 @@
 package com.semvalidator.service.impl;
 
 import com.semvalidator.model.Requirement;
-import com.semvalidator.repository.CheckListRepository;
+import com.semvalidator.repository.ChecklistRepository;
 import com.semvalidator.repository.RequirementRepository;
 import com.semvalidator.service.RequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,9 +23,9 @@ public class RequirementServiceImpl implements RequirementService{
     private RequirementRepository requirementRepository;
 
     @Autowired
-    private CheckListRepository checkListRepository;
+    private ChecklistRepository checkListRepository;
 
-    public Requirement save(Requirement entity) {
+    public Requirement save(Requirement entity, MultipartFile modelFile) {
 /*        Checklist checkList = entity.getChecklist();
         if( checkList != null ){
             if( checkList.getId() == 0 ){

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class CriterionServiceImpl implements CriterionService{
     @Autowired
     private RequirementRepository requirementRepository;
 
-    public Criterion save(Criterion entity) {
+    public Criterion save(Criterion entity, MultipartFile modelFile) {
         List<Question> questions = entity.getQuestions();
 
         if( !CollectionUtils.isEmpty(questions) ){

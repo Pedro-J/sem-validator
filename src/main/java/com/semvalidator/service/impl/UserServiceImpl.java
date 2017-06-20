@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService{
         return new SecurityUser(user.getId(), user.getLogin(), user.getPassword(), user.getProfile(), authorities);
     }
 
-    public User save(User user){
+    public User save(User user, MultipartFile modelFile){
         return userRepository.saveAndFlush(user);
     }
 

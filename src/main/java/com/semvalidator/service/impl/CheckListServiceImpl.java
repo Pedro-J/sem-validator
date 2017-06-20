@@ -1,13 +1,14 @@
 package com.semvalidator.service.impl;
 
 import com.semvalidator.model.Checklist;
-import com.semvalidator.repository.CheckListRepository;
-import com.semvalidator.service.CheckListService;
+import com.semvalidator.repository.ChecklistRepository;
+import com.semvalidator.service.ChecklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,34 +17,39 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class CheckListServiceImpl implements CheckListService{
+public class CheckListServiceImpl implements ChecklistService {
     @Autowired
-    private CheckListRepository checkListRepository;
+    private ChecklistRepository checklistRepository;
 
-    public Checklist save(Checklist entity) {
-        return checkListRepository.saveAndFlush(entity);
+    public Checklist save(Checklist entity, MultipartFile modelFile) {
+        return checklistRepository.saveAndFlush(entity);
     }
 
     public Checklist update(Checklist entity) {
-        return checkListRepository.saveAndFlush(entity);
+        return checklistRepository.saveAndFlush(entity);
     }
 
     public void delete(Integer id) {
-        checkListRepository.delete(id);
+        checklistRepository.delete(id);
     }
 
     @Transactional(readOnly = true)
     public Checklist findById(Integer id) {
-        return checkListRepository.findOne(id);
+        return checklistRepository.findOne(id);
     }
 
     @Transactional(readOnly = true)
     public List<Checklist> findAll() {
-        return checkListRepository.findAll();
+        return checklistRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     public Page<Checklist> findAllPageable(Pageable pageable) {
-        return checkListRepository.findAll(pageable);
+        return checklistRepository.findAll(pageable);
+    }
+
+    @Override
+    public Checklist findByIdWithCriterions(Integer id) {
+        return checklistRepository.findByIdWithCriterions(id);
     }
 }

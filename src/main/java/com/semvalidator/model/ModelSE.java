@@ -22,7 +22,7 @@ public class ModelSE extends GenericEntity{
 
     @Lob
     @Column(name = "dsc_aplicabilities")
-    private String objetivesDesc;
+    private String objectivesDesc;
 
     @Lob
     @Column(name = "dsc_applicabilities")
@@ -106,12 +106,12 @@ public class ModelSE extends GenericEntity{
         this.user = user;
     }
 
-    public String getObjetivesDesc() {
-        return objetivesDesc;
+    public String getObjectivesDesc() {
+        return objectivesDesc;
     }
 
-    public void setObjetivesDesc(String objetivesDesc) {
-        this.objetivesDesc = objetivesDesc;
+    public void setObjectivesDesc(String objectivesDesc) {
+        this.objectivesDesc = objectivesDesc;
     }
 
     public String getApplicabilitiesDesc() {

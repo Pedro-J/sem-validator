@@ -87,7 +87,7 @@ public class QuestionController {
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
-            questionService.save(question);
+            questionService.save(question, modelFile);
             return "redirect:/questions/list";
         }
     }

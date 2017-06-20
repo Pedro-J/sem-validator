@@ -1,5 +1,6 @@
 package com.semvalidator.service.impl;
 
+import com.semvalidator.infra.FileSaver;
 import com.semvalidator.model.ModelSE;
 import com.semvalidator.repository.ModelRepository;
 import com.semvalidator.service.ModelService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +20,16 @@ public class ModelServiceImpl implements ModelService{
     @Autowired
     private ModelRepository modelRepository;
 
+    @Autowired
+    private FileSaver fileSaver;
+
     @Override
-    public ModelSE save(ModelSE entity) {
+    public ModelSE save(ModelSE entity, MultipartFile modelFile) {
+        if (modelFile != null && !modelFile.getOriginalFilename().isEmpty()) {
+            String path = fileSaver.write("uploaded_files", modelFile);
+            entity.setModelFileUrl(path);
+        }
+
         return modelRepository.saveAndFlush(entity);
     }
 

@@ -23,20 +23,29 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
+                        <th><s:message code="title.label" /></th>
                         <th><s:message code="description.label" /></th>
-                        <th><s:message code="checklist.label" /></th>
+                        <th><s:message code="objectives.label" /></th>
+                        <th><s:message code="applicabilities.label" /></th>
+                        <th><s:message code="checklist.verification.label" /></th>
+                        <th><s:message code="checklist.validation.label" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
 
                     <c:forEach var="model" items="${models}">
                         <tr>
+                            <td>${model.title}</td>
                             <td>${model.description}</td>
-                            <td>${model.checklist.title}</td>
+                            <td>${model.objectivesDesc}</td>
+                            <td>${model.applicabilitiesDesc}</td>
+                            <td>${model.checklistVerification.title}</td>
+                            <td>${model.checklistValidation.title}</td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>
+
                                 <s:url value="/models/${model.id}" var="detailUrl" />
                                 <s:url value="/models/${model.id}/delete" var="deleteUrl" />
                                 <s:url value="/models/${model.id}/update" var="updateUrl" />

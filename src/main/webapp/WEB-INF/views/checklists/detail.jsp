@@ -38,14 +38,18 @@
                     </div>
                 </div>
 
+
+
                 <div class="row">
-                    <label class="col-sm-2"><s:message code="requirements.label"/>:</label>
+                    <label class="col-sm-2"><s:message code="answers.label"/>:</label>
                     <div class="col-sm-10">
-                        <c:forEach var="requirement" items="${requirements}" >
-                            * ${requirement.description}<br/>
+                        <c:forEach var="answer" items="${answers}" >
+                            * ${answer.question.number} - ${answer.question.description}
+                             => <s:message code="${answer.value.messageCode}" /><br/>
                         </c:forEach>
                     </div>
                 </div>
+
                 
             </div>
             <div class="panel-footer text-center" >

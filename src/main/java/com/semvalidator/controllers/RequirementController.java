@@ -3,7 +3,7 @@ package com.semvalidator.controllers;
 import com.semvalidator.editor.CriterionPropertyEditor;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Requirement;
-import com.semvalidator.service.CheckListService;
+import com.semvalidator.service.ChecklistService;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.RequirementService;
 import com.semvalidator.validation.RequirementFormValidator;
@@ -34,7 +34,7 @@ public class RequirementController {
     private RequirementService requirementService;
 
     @Autowired
-    private CheckListService checkListService;
+    private ChecklistService checkListService;
 
     @Autowired
     private CriterionService criterionService;
@@ -85,7 +85,7 @@ public class RequirementController {
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
-            requirementService.save(requirement);
+            requirementService.save(requirement, modelFile);
             return "redirect:/requirements/list";
         }
     }

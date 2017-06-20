@@ -1,12 +1,16 @@
 package com.semvalidator.controllers;
 
+import com.semvalidator.editor.RequirementPropertyEditor;
 import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
-import com.semvalidator.service.CheckListService;
+import com.semvalidator.model.Requirement;
+import com.semvalidator.service.ChecklistService;
+import com.semvalidator.service.RequirementService;
 import com.semvalidator.validation.ChecklistFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author Created by Pedro-J on 6/18/17.
@@ -26,13 +32,17 @@ public class ChecklistController {
     private final Logger logger = LoggerFactory.getLogger(Checklist.class);
 
     @Autowired
-    private CheckListService checkListService;
+    private ChecklistService checkListService;
+
+    @Autowired
+    private RequirementService requirementService;
 
     @Autowired
     private ChecklistFormValidator checklistFormValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Requirement.class, new RequirementPropertyEditor(requirementService));
         binder.setValidator(checklistFormValidator);
     }
 
@@ -72,7 +82,7 @@ public class ChecklistController {
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
 
-            checkListService.save(checklist);
+            checkListService.save(checklist, modelFile);
 
             return "redirect:/checklists/list";
         }
@@ -80,11 +90,32 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/{id}", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("checklist", checkListService.findById(id));
+        Checklist checklist = checkListService.findByIdWithCriterions(id);
+
+        model.addAttribute("checklist", checklist);
+        model.addAttribute("requirements", checklist.getRequirements());
         return "checklists/detail";
     }
 
-    public String deleteChecklist(){
-        return null;
+    @RequestMapping(value = "/checklists/{id}/delete", method = RequestMethod.POST)
+    public String deleteChecklist(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+        checkListService.delete(id);
+        redirectAttributes.addFlashAttribute("msgCSS","success");
+        redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
+        redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
+        return "redirect:/checklists/list";
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ModelAndView handleEmptyData(HttpServletRequest req, Exception ex) {
+
+        logger.debug("handleEmptyData()");
+        logger.error("Request: {}, error ", req.getRequestURL(), ex);
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("checklists/detail");
+        model.addObject("msg", "checklist not found");
+
+        return model;
     }
 }
