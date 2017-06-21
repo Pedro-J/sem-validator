@@ -57,13 +57,15 @@ public class ChecklistController {
     public String showAddForm(Model model){
         model.addAttribute("checklist", new Checklist());
         model.addAttribute("checklistTypes", ChecklistType.values());
+        model.addAttribute("availableRequirements", requirementService.findAll());
         return "checklists/form";
     }
 
     @RequestMapping(value = "/checklists/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("checklist", checkListService.findById(id));
+        model.addAttribute("checklist", checkListService.findByIdWithRequirements(id));
         model.addAttribute("checklistTypes", ChecklistType.values());
+        model.addAttribute("availableRequirements", requirementService.findAll());
         return "checklists/form";
     }
 
@@ -90,10 +92,9 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/{id}", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
-        Checklist checklist = checkListService.findByIdWithCriterions(id);
+        Checklist checklist = checkListService.findByIdWithRequirements(id);
 
         model.addAttribute("checklist", checklist);
-        model.addAttribute("requirements", checklist.getRequirements());
         return "checklists/detail";
     }
 

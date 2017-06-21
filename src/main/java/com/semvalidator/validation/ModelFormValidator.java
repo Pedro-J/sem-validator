@@ -20,7 +20,7 @@ public class ModelFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "form.notEmpty.description");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "form.notEmpty.title");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "form.notEmpty.description");
     }
 }

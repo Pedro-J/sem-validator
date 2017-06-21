@@ -45,17 +45,29 @@
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>
+                                <s:message code="answer.validation.question" var="validation"/>
+                                <s:message code="answer.verification.question" var="verification"/>
 
                                 <s:url value="/models/${model.id}" var="detailUrl" />
                                 <s:url value="/models/${model.id}/delete" var="deleteUrl" />
                                 <s:url value="/models/${model.id}/update" var="updateUrl" />
+                                <s:url value="/models/${model.id}/validation" var="validationAnswers" />
+                                <s:url value="/models/${model.id}/verification" var="verificatonAnswers" />
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
                                         onclick="location.href='${updateUrl}'" title="${edit}"></button>
-                                <button class="btn btn-danger glyphicon glyphicon-remove"
-                                        onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
+                                <c:if test="${not empty model.checklistVerification}" >
+                                    <button class="btn btn-primary glyphicon glyphicon-question-sign" title="${verification}"
+                                            onclick="location.href='${verificatonAnswers}'" ></button>
+                                </c:if>
+                                <c:if test="${not empty model.checklistVerification}" >
+                                    <button class="btn btn-danger glyphicon glyphicon-question-sign" title="${validation}"
+                                            onclick="location.href='${validationAnswers}'" ></button>
+                                </c:if>
+<%--                                <button class="btn btn-danger glyphicon glyphicon-remove"
+                                        onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>--%>
                             </td>
                         </tr>
                     </c:forEach>

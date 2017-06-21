@@ -49,8 +49,8 @@ public class CheckListServiceImpl implements ChecklistService {
     }
 
     @Override
-    public Checklist findByIdWithCriterions(Integer id) {
-        return checklistRepository.findByIdWithCriterions(id);
+    public Checklist findByIdWithRequirements(Integer id) {
+        return checklistRepository.findByIdWithRequirements(id);
     }
 
     @Override

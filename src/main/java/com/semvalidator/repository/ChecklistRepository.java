@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface ChecklistRepository extends JpaRepository<Checklist, Integer> {
     @Query("select c from Checklist c left join c.requirements where c.id = :id")
-    Checklist findByIdWithCriterions(@Param("id") Integer id);
+    Checklist findByIdWithRequirements(@Param("id") Integer id);
 
     List<Checklist> findByChecklistType(ChecklistType type);
 }

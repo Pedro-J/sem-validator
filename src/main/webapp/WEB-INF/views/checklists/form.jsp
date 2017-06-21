@@ -54,6 +54,18 @@
                         </div>
                     </s:bind>
 
+                    <spring:bind path="requirements">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <label class="col-sm-2 control-label"><s:message code="questions.label"/>:</label>
+                            <div class="col-sm-5">
+                                <form:select path="requirements" items="${availableRequirements}" itemValue="id" itemLabel="description" multiple="true"
+                                             class="form-control" />
+                                <form:errors path="requirements" class="control-label" />
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+                    </spring:bind>
+
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>

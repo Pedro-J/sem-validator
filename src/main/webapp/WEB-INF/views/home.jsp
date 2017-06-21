@@ -5,7 +5,6 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="general.page.home.title" >
-
   <section id="index-section" class="container middle">
 
     <h2 class="cdc-call"><s:message code="app.title" /> </h2>

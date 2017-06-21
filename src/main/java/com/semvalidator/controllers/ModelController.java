@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -105,6 +106,40 @@ public class ModelController {
         redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
 
         return "redirect:/models/list";
+    }
+
+    @RequestMapping(value = "/models/{id}/validation", method = RequestMethod.GET)
+    public String showAnswerValidationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+        ModelSE modelSE = modelService.findById(id);
+        Checklist clValidation = checkListService.findByIdWithRequirements(
+                modelSE.getChecklistValidation().getId());
+
+        return redirectAnswerQuestions(clValidation, modelSE, model, redirectAttributes);
+
+    }
+
+    @RequestMapping(value = "/models/{id}/verification", method = RequestMethod.GET)
+    public String showAnswerVerificationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+        ModelSE modelSE = modelService.findById(id);
+        Checklist clVerification = checkListService.findByIdWithRequirements(
+                modelSE.getChecklistVerification().getId());
+
+
+        return redirectAnswerQuestions(clVerification, modelSE, model, redirectAttributes);
+    }
+
+    private String redirectAnswerQuestions(Checklist checklist, ModelSE modelSE,
+                                        Model model, RedirectAttributes redirectAttributes){
+        if( !CollectionUtils.isEmpty(checklist.getRequirements()) ) {
+            model.addAttribute("model", modelSE);
+            model.addAttribute("checklist", checklist);
+            return "answers/form";
+        }else{
+            redirectAttributes.addFlashAttribute("msgCSS","warning");
+            redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.warn");
+            redirectAttributes.addFlashAttribute("msgContent","checklist.requirements.empty");
+            return "redirect:/models/list";
+        }
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)

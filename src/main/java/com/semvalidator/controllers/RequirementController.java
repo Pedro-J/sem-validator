@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author Created by Pedro-J on 6/14/17.
@@ -108,6 +110,16 @@ public class RequirementController {
         redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
 
         return "redirect:/requirements/list";
+    }
+
+    @RequestMapping(value = "/requirements/{id}/criterions", method = RequestMethod.GET, produces="application/json")
+    public List<Criterion> getCriterionsByRequirementId(@PathVariable("id") Integer id){
+        Requirement requirement = requirementService.findByIdWithCriterions(id);
+        if( CollectionUtils.isEmpty(requirement.getCriterions()) ){
+            return null;
+        }
+
+        return requirement.getCriterions();
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
