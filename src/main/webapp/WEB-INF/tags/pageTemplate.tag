@@ -16,6 +16,10 @@
         <link rel="stylesheet" href="${cssPath}/style.css">
 
 
+        <script type="text/javascript" src="${jsPath}/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="${jsPath}/bootstrap.js"></script>
+        <script type="text/javascript" src="${jsPath}/mvcUtils.js"></script>
+        <script type="text/javascript" src="${jsPath}/scriptUtils.js"></script>
 
         <title>
             <c:if test="${not empty title and not title.contains('')}" >
@@ -30,13 +34,6 @@
         <jsp:doBody />
 
         <%@include file="/WEB-INF/views/fragments/footer.jsp" %>
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="${jsPath}/bootstrap.js"></script>
-        <script src="${jsPath}/scriptUtils.js"></script>
-        <script src="${jsPath}/mvcUtils.js"></script>
-
 
         <jsp:invoke fragment="extraScripts" />
 

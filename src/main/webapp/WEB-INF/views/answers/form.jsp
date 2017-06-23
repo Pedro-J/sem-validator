@@ -5,44 +5,72 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="'criterion.add.title'">
-    <jsp:body>
+<tags:pageTemplate title="answer.add.title">
+
+    <c:url value="/" var="urlContext" scope="request"></c:url>
+    url valor: ${urlContext}
     <div class="container">
         <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h4><s:message code="answer.add.title"/></h4>
+            </div>
             <div class="panel-body">
                 <s:url value="/answer" var="formActionUrl"/>
-
+                <s:message code="select.label" var="select" />
                 <form class="form-horizontal" method="POST" action="${formActionUrl}" acceptCharset="UTF-8">
-
+                    <input id="initValue" type="hidden" value="${select}"/>
                     <div class="form-group">
-                        ${model.title}
+                        <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
+                        <div class="col-sm-8">${model.title}</div>
                     </div>
 
                     <div class="form-group">
-                        ${checklist.title}
+                        <label class="col-sm-2"><s:message code="app.entity.checklist" />:</label>
+                        <div class="col-sm-8">${checklistTitle}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"><s:message code="requirements.label"/>:</label>
-                        <div class="col-sm-7">
-                            <select id="requirementSelect">
-                                <c:forEach items="${checklist.requirements}" var="item">
-                                    <option value="item.id">item.description</option>
+                        <label class="col-sm-2"><s:message code="requirements.label"/>:</label>
+                        <div class="col-sm-8">
+                            <select id="requirementSelect" class="form-control">
+                                <option value="0">--- ${select} ---</option>
+                                <c:forEach items="${requirements}" var="item">
+                                    <option value="${item.id}">${item.description}</option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-sm-3"></div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label"><s:message code="criterions.label"/>:</label>
-                        <div class="col-sm-7">
-                            <select id="criterionSelect">
+                        <label class="col-sm-2"><s:message code="criterions.label"/>:</label>
+                        <div id="divCriterion" class="col-sm-8">
+                            <select id="selectCriterions" class="form-control" >
+                                <option value="0">--- ${select} ---</option>
                             </select>
                         </div>
-                        <div class="col-sm-3"></div>
                     </div>
 
+                    <div class="form-group">
+                        <div class="panel panel-primary" style="width: 80%;margin: 10px auto;">
+                            <div class="panel-heading text-center">
+                                <h5><s:message code="answers.label"/></h5>
+                            </div>
+                            <div class="panel-body ">
+                                <div id="questionsContainer" class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="3"><s:message code="app.entity.question" /> </th>
+                                            <th colspan="1"><s:message code="app.entity.answer" /> </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="answers_questions">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div class="form-group">
@@ -56,26 +84,24 @@
             </div>
         </div>
     </div>
-    </jsp:body>
-
-    <jsp:attribute name="extraScripts">
     <script type="text/javascript">
         $(document).ready(function() {
 
-            var currentSelect = $("#requirementSelect");
-            var selectToBeLoad = $("#criterionSelect");
-            loadSelectBySelect("requirements/"+ currentSelect.value +"/criterions",currentSelect, selectToBeLoad);
 
+            var currentSelectId = "#requirementSelect";
+            var responseContainer = $("#divCriterion");
+            var urlLoadCriterions = "/requirements/{id}/criterions";
+            loadSelectBySelect(urlLoadCriterions, currentSelectId, responseContainer);
 
             // Include CSRF token as header in JQuery AJAX requests
             // See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf-include-csrf-token-ajax
-/*            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-            $(document).ajaxSend(function(e, xhr, options) {
-                xhr.setRequestHeader(header, token);
-            });*/
+            /*            var token = $("meta[name='_csrf']").attr("content");
+             var header = $("meta[name='_csrf_header']").attr("content");
+             $(document).ajaxSend(function(e, xhr, options) {
+             xhr.setRequestHeader(header, token);
+             });*/
 
         });
     </script>
-    </jsp:attribute>
+
 </tags:pageTemplate>

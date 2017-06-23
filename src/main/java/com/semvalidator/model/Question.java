@@ -1,5 +1,8 @@
 package com.semvalidator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
 /**
@@ -8,11 +11,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_question")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Question extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne(optional = true)
     private Criterion criterion;
 

@@ -4,18 +4,33 @@ package com.semvalidator.enums;
  * @Author Created by comp-dev on 6/12/17.
  */
 public enum AnswerValue {
-    APPLY("enum.answer.apply"),
-    NOT_APPLY("enum.answer.not_apply"),
-    NOT_KNOW("enum.answer.not_know"),
-    NOT_UNDERSTAND("enum.answer.not_understand");
+    APPLY(0, "enum.answer.apply"),
+    NOT_APPLY(1, "enum.answer.not_apply"),
+    NOT_KNOW(2, "enum.answer.not_know"),
+    NOT_UNDERSTAND(3, "enum.answer.not_understand");
 
+    private Integer code;
     private String messageCode;
 
-    private AnswerValue(String messageCode){
+    private AnswerValue(Integer code, String messageCode){
+        this.code = code;
         this.messageCode = messageCode;
     }
 
     public String getMessageCode() {
         return messageCode;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public AnswerValue findByCode(Integer code){
+        for(AnswerValue value : values()){
+            if( value.code.equals(code)){
+                return value;
+            }
+        }
+        return null;
     }
 }

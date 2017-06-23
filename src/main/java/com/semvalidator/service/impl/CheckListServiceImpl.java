@@ -53,7 +53,6 @@ public class CheckListServiceImpl implements ChecklistService {
         return checklistRepository.findByIdWithRequirements(id);
     }
 
-    @Override
     public List<Checklist> findByChecklistType(ChecklistType type) {
         return checklistRepository.findByChecklistType(type);
     }

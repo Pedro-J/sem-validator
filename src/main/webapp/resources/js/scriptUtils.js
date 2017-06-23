@@ -1,10 +1,4 @@
-$(function () {
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });
-});
+
 
 function reqAjax(url,method) {
     $.ajax({
@@ -60,22 +54,93 @@ function ajaxGetJson(linkElementId) {
     });
 }
 
-function loadSelectBySelect(url, currentSelect, selectToBeLoaded){
-    currentSelect.change(function(){
+function loadSelectBySelect(url, currentSelectId, responseContainer){
+    $(currentSelectId).change(function(){
+        var urlRequest = url.replace("{id}", $(currentSelectId).val());
+        console.log('url req:  '+urlRequest);
         $.ajax({
-            url: url,
-            beforeSend: function (req) {
-                if (!this.url.match(/\.json$/)) {
-                    req.setRequestHeader("Accept", "application/json");
+            type:'GET',
+            url: urlRequest,
+            success: function (data) {
+                var select = $('#selectCriterions');
+                if( data.length > 0 ) {
+
+                    $.each(data, function (i, optionObj) {
+                        var option = $('<option />');
+                        option.val(optionObj.value);
+                        option.text(optionObj.label);
+                        select.append(option);
+                    });
+
+                    select.change(showTableAnswers);
+                }else{
+                    var optionInit = $('<option />');
+                    optionInit.text('--- '+$('#initValue').val()+' ---')
+                    select.html(optionInit);
+                    $('#answers_questions').html("")
                 }
             },
-            success: function (json) {
-                console.log(json);
-            },
-            error: function (xhr) {
-                MvcUtil.showErrorResponse(xhr.responseText, "msg_error_");
+            error: function(xhr) {
+                MvcUtil.showErrorResponse(xhr.responseText, link);
             }
         });
-        return false;
     });
+}
+
+function showTableAnswers(){
+    $.when(getAnswers()).done(function(answers) {
+        console.log(answers);
+        $.ajax({
+            type: 'GET',
+            url: '/criterions/' + $('#selectCriterions').val() + '/questions',
+            success: function (data) {
+                var tBody = $('#answers_questions');
+                if( data.length > 0 ) {
+                    $.each(data, function (i, question) {
+                        var idSelect = 'select_q_' + question.id;
+                        var selectAnswers = createSelectAnswer(idSelect, answers);
+
+                        var tdQuestionLabel = createTD(question.number + ' - ' + question.description, '3');
+                        var tdQuestionAnswer = createTD(selectAnswers, '1');
+
+                        var trQuestion = $('<tr />');
+
+                        trQuestion.append(tdQuestionLabel).append(tdQuestionAnswer);
+                        tBody.append(trQuestion);
+
+                    });
+                }else{
+                    tBody.html("");
+                }
+            }
+        });
+    });
+}
+
+function getAnswers(answers){
+    return $.ajax({
+        type: 'GET',
+        url: '/answers/types'
+    });
+}
+
+function createSelectAnswer(idSelect, answers){
+    var select = $('<select class="form-control select-answers" />');
+    select.attr("id", idSelect);
+
+    $.each(answers, function (i, obj) {
+        var option = $('<option />');
+        option.val(obj.value);
+        option.text(obj.label);
+        select.append(option);
+    });
+
+    return select;
+}
+
+function createTD(value, colspan){
+    var tdLabel = $('<td/>');
+    tdLabel.attr('colspan', colspan);
+    tdLabel.html(value);
+    return tdLabel;
 }

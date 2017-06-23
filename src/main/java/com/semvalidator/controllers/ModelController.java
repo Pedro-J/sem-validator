@@ -114,7 +114,7 @@ public class ModelController {
         Checklist clValidation = checkListService.findByIdWithRequirements(
                 modelSE.getChecklistValidation().getId());
 
-        return redirectAnswerQuestions(clValidation, modelSE, model, redirectAttributes);
+        return validateAndRedirectAnswersForm(clValidation, modelSE, model, redirectAttributes);
 
     }
 
@@ -125,14 +125,16 @@ public class ModelController {
                 modelSE.getChecklistVerification().getId());
 
 
-        return redirectAnswerQuestions(clVerification, modelSE, model, redirectAttributes);
+        return validateAndRedirectAnswersForm(clVerification, modelSE, model, redirectAttributes);
     }
 
-    private String redirectAnswerQuestions(Checklist checklist, ModelSE modelSE,
-                                        Model model, RedirectAttributes redirectAttributes){
+    private String validateAndRedirectAnswersForm(Checklist checklist, ModelSE modelSE,
+                                                  Model model, RedirectAttributes redirectAttributes){
         if( !CollectionUtils.isEmpty(checklist.getRequirements()) ) {
             model.addAttribute("model", modelSE);
-            model.addAttribute("checklist", checklist);
+            model.addAttribute("checklistTitle", checklist.getTitle());
+            model.addAttribute("checklistId", checklist.getId());
+            model.addAttribute("requirements", checklist.getRequirements());
             return "answers/form";
         }else{
             redirectAttributes.addFlashAttribute("msgCSS","warning");
@@ -140,6 +142,13 @@ public class ModelController {
             redirectAttributes.addFlashAttribute("msgContent","checklist.requirements.empty");
             return "redirect:/models/list";
         }
+    }
+
+    private void loadForm(Model model){
+        List<Checklist> clValidation = checkListService.findByChecklistType(ChecklistType.VALIDATION);
+        List<Checklist> clVerification = checkListService.findByChecklistType(ChecklistType.VERIFICATION);
+        model.addAttribute("checklistsVerification", clVerification);
+        model.addAttribute("checklistsValidation", clValidation);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
@@ -155,10 +164,4 @@ public class ModelController {
         return model;
     }
 
-    private void loadForm(Model model){
-        List<Checklist> clValidation = checkListService.findByChecklistType(ChecklistType.VALIDATION);
-        List<Checklist> clVerification = checkListService.findByChecklistType(ChecklistType.VERIFICATION);
-        model.addAttribute("checklistsVerification", clVerification);
-        model.addAttribute("checklistsValidation", clValidation);
-    }
 }
