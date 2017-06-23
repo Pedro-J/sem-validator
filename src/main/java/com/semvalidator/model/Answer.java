@@ -1,6 +1,7 @@
 package com.semvalidator.model;
 
 import com.semvalidator.enums.AnswerValue;
+import com.semvalidator.util.AnswerJsonDTO;
 
 import javax.persistence.*;
 
@@ -22,8 +23,20 @@ public class Answer extends GenericEntity{
     @JoinColumn(name = "id_question")
     private Question question;
 
+    @ManyToOne
+    @JoinColumn(name = "id_requirement")
+    private Requirement requirement;
+
     @Enumerated(EnumType.ORDINAL)
     private AnswerValue value;
+
+    public Answer(AnswerJsonDTO answerJsonDTO){
+        convertFromDTO(answerJsonDTO);
+    }
+
+    public Answer(){
+
+    }
 
     @Override
     public Integer getId() {
@@ -62,5 +75,20 @@ public class Answer extends GenericEntity{
 
     public void setValue(AnswerValue value) {
         this.value = value;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
+    }
+
+    public void convertFromDTO(AnswerJsonDTO answer){
+        this.model = new ModelSE(answer.getModel());
+        this.requirement = new Requirement(answer.getRequirement());
+        this.question = new Question(answer.getQuestion());
+        this.value = AnswerValue.findByCode(answer.getValue());
     }
 }

@@ -25,7 +25,7 @@ public enum AnswerValue {
         return code;
     }
 
-    public AnswerValue findByCode(Integer code){
+    public static AnswerValue findByCode(Integer code){
         for(AnswerValue value : values()){
             if( value.code.equals(code)){
                 return value;

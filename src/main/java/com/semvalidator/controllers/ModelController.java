@@ -2,8 +2,10 @@ package com.semvalidator.controllers;
 
 import com.semvalidator.editor.ChecklistPropertyEditor;
 import com.semvalidator.enums.ChecklistType;
+import com.semvalidator.model.Answer;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.ModelSE;
+import com.semvalidator.service.AnswerService;
 import com.semvalidator.service.ChecklistService;
 import com.semvalidator.service.ModelService;
 import com.semvalidator.validation.ModelFormValidator;
@@ -39,6 +41,9 @@ public class ModelController {
 
     @Autowired
     private ChecklistService checkListService;
+
+    @Autowired
+    private AnswerService answerService;
 
     @Autowired
     private ModelFormValidator modelFormValidator;
@@ -92,8 +97,9 @@ public class ModelController {
     @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
     public String showQuestionDetails(@PathVariable("id") Integer id, Model model){
         ModelSE modelSE = modelService.findById(id);
+        List<Answer> answers = answerService.findByModelOrderByRequirementAndCriterion(modelSE);
         model.addAttribute("model", modelSE);
-
+        model.addAttribute("answers", answers);
         return "models/detail";
     }
 

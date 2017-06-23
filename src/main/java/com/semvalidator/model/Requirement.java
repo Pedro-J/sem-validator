@@ -24,6 +24,13 @@ public class Requirement extends GenericEntity{
                     nullable = false) })
     private List<Criterion> criterions;
 
+    public Requirement(Integer id) {
+        this.id = id;
+    }
+
+    public Requirement() {
+    }
+
     @Override
     public Integer getId() {
         return this.id;

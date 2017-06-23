@@ -43,6 +43,13 @@ public class ModelSE extends GenericEntity{
     @JoinColumn(name = "id_user")
     private User user;
 
+    public ModelSE(Integer id) {
+        this.id = id;
+    }
+    public ModelSE() {
+
+    }
+
     @Override
     public Integer getId() {
         return this.id;

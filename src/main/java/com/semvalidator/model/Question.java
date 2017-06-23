@@ -27,6 +27,13 @@ public class Question extends GenericEntity{
 
     private String tip;
 
+    public Question(Integer id) {
+        this.id = id;
+    }
+
+    public Question() {
+    }
+
     @Override
     public Integer getId() {
         return this.id;

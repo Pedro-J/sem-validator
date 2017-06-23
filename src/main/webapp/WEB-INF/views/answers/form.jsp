@@ -8,8 +8,13 @@
 <tags:pageTemplate title="answer.add.title">
 
     <c:url value="/" var="urlContext" scope="request"></c:url>
-    url valor: ${urlContext}
     <div class="container">
+        <div class="alert alert-${msgCSS} alert-dismissible" role="alert" sty>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><s:message code="${msgTitle}" /><s:message code="app.entity.model"/>&nbsp;<s:message code="${msgContent}" /></strong>
+        </div>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h4><s:message code="answer.add.title"/></h4>
@@ -18,7 +23,8 @@
                 <s:url value="/answer" var="formActionUrl"/>
                 <s:message code="select.label" var="select" />
                 <form class="form-horizontal" method="POST" action="${formActionUrl}" acceptCharset="UTF-8">
-                    <input id="initValue" type="hidden" value="${select}"/>
+                    <input id="init_value" type="hidden" value="${select}"/>
+                    <input id="id_model" type="hidden" value="${model.id}"/>
                     <div class="form-group">
                         <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
                         <div class="col-sm-8">${model.title}</div>
@@ -75,7 +81,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button id="btnSubmit" type="submit" class="btn btn-primary pull-right">
+                            <button id="btnSubmit" class="btn btn-primary pull-right">
                                 <s:message code="general.save"/>
                             </button>
                         </div>
@@ -92,6 +98,14 @@
             var responseContainer = $("#divCriterion");
             var urlLoadCriterions = "/requirements/{id}/criterions";
             loadSelectBySelect(urlLoadCriterions, currentSelectId, responseContainer);
+
+            $("#btnSubmit").click(function(event) {
+
+                // Prevent the form from submitting via the browser.
+                event.preventDefault();
+                saveAnswers();
+
+            });
 
             // Include CSRF token as header in JQuery AJAX requests
             // See http://docs.spring.io/spring-security/site/docs/3.2.x/reference/htmlsingle/#csrf-include-csrf-token-ajax
