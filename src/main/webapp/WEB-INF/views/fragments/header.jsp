@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <div class="navbar navbar-default" role="navigation" >
+    <c:url value="/resources/images" var="imagesPath" />
     <div class="container">
         <div class="navbar-header">
 
@@ -95,6 +96,19 @@
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
+
+                <li>
+                    <s:message code="menu.pt" var="lang_pt"/>
+                    <a href="?locale=pt" rel="nofollow">
+                        <img src="${imagesPath}/lang_pt.png" title="${lang_pt}" class="lang"/>
+                    </a>
+                </li>
+                <li>
+                    <s:message code="menu.en" var="lang_en"/>
+                    <a href="?locale=en_US" rel="nofollow">
+                        <img src="${imagesPath}/lang_en.png" title="${lang_en}" class="lang" />
+                    </a>
+                </li>
                 <li>
                     <sec:authentication property="principal" var="usuario" />
                     <a href="#">

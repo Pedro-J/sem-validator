@@ -145,7 +145,7 @@ public class ModelController {
         }else{
             redirectAttributes.addFlashAttribute("msgCSS","warning");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.warn");
-            redirectAttributes.addFlashAttribute("msgContent","checklist.requirements.empty");
+            redirectAttributes.addFlashAttribute("msgContent","model.checklist.empty");
             return "redirect:/models/list";
         }
     }

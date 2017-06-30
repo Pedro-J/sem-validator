@@ -9,12 +9,20 @@
 
     <c:url value="/" var="urlContext" scope="request"></c:url>
     <div class="container">
-        <div class="alert alert-${msgCSS} alert-dismissible" role="alert" sty>
+        <div class="alert alert-success alert-dismissible" role="alert" style="display: none;">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <strong><s:message code="${msgTitle}" /><s:message code="app.entity.model"/>&nbsp;<s:message code="${msgContent}" /></strong>
+            <strong><s:message code="general.msg.title.info" />&nbsp;<s:message code="general.msg.positive.operation"/></strong>
         </div>
+
+        <div class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong><s:message code="general.msg.title.error" />&nbsp;<s:message code="general.msg.negative.operation"/></strong>
+        </div>
+
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h4><s:message code="answer.add.title"/></h4>
