@@ -49,7 +49,8 @@
                 
             </div>
             <div class="panel-footer text-center" >
-                <a href="/checklists/list" class="btn btn-default"><s:message code="general.back" /> </a>
+                <c:url value="/" var="app_context" />
+                <a href="${app_context}checklists/list" class="btn btn-default"><s:message code="general.back" /> </a>
             </div>
         </div>
     </div>

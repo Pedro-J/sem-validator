@@ -38,7 +38,8 @@
                 </div>
             </div>
             <div class="panel-footer text-center" >
-                <a href="/criterions/list" class="btn btn-default"><s:message code="general.back" /> </a>
+                <c:url value="/" var="app_context" />
+                <a href="${app_context}criterions/list" class="btn btn-default"><s:message code="general.back" /> </a>
             </div>
         </div>
     </div>
