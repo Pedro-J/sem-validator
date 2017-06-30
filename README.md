@@ -46,4 +46,4 @@ In your preferred IDE such as Eclipse or IDEA:
 * Import sem-validator as a Maven Project;
 * Download Tomcat 8 and add the project to it;
 
-Access the deployed web application at: http://localhost:8080/
+Access the deployed web application at: http://localhost:8080/sem-validator
