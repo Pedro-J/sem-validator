@@ -60,7 +60,8 @@
                                     <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message
                                             code="general.update"/></button>
 
-                                    <a href="/criterions/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
+                                    <c:url value="/" var="app_context" />
+                                    <a href="${app_context}criterions/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
 
                                 </c:otherwise>
                             </c:choose>

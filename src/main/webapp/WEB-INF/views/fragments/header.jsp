@@ -4,6 +4,7 @@
 
 <div class="navbar navbar-default" role="navigation" >
     <c:url value="/resources/images" var="imagesPath" />
+    <c:url value="/" var="app_context"/>
     <div class="container">
         <div class="navbar-header">
 
@@ -35,9 +36,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/questions/add"><s:message code="general.register" /></a></li>
+                            <li><a href="${app_context}questions/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/questions/list"><s:message code="general.list" /></a></li>
+                            <li><a href="${app_context}questions/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
 
@@ -48,9 +49,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/criterions/add"><s:message code="general.register" /></a></li>
+                            <li><a href="${app_context}criterions/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/criterions/list"><s:message code="general.list" /></a></li>
+                            <li><a href="${app_context}criterions/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
 
@@ -61,9 +62,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/requirements/add"><s:message code="general.register" /></a></li>
+                            <li><a href="${app_context}requirements/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/requirements/list"><s:message code="general.list" /></a></li>
+                            <li><a href="${app_context}requirements/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
 
@@ -74,9 +75,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/checklists/add"><s:message code="general.register" /></a></li>
+                            <li><a href="${app_context}checklists/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/checklists/list"><s:message code="general.list" /></a></li>
+                            <li><a href="${app_context}checklists/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
 
@@ -87,9 +88,9 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/models/add"><s:message code="general.register" /></a></li>
+                            <li><a href="${app_context}models/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/models/list"><s:message code="general.list" /></a></li>
+                            <li><a href="${app_context}models/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
                 </sec:authorize>
