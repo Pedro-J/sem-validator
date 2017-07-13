@@ -1,7 +1,7 @@
 package com.semvalidator.service.impl;
 
 import com.semvalidator.model.Answer;
-import com.semvalidator.model.ModelSE;
+import com.semvalidator.model.Checklist;
 import com.semvalidator.repository.AnswerRepository;
 import com.semvalidator.repository.ModelRepository;
 import com.semvalidator.repository.QuestionRepository;
@@ -71,8 +71,8 @@ public class AnswerServiceImpl implements AnswerService{
             Answer answer = new Answer(dto);
 
             if( alreadyExist(answer) ){
-                answer = answerRepository.findByModelAndRequirementAndQuestion(
-                        answer.getModel(), answer.getRequirement(), answer.getQuestion() );
+                answer = answerRepository.findByChecklistAndRequirementAndQuestion(
+                        answer.getChecklist(), answer.getRequirement(), answer.getQuestion() );
                 answer.convertFromDTO(dto);
                 answerRepository.saveAndFlush(answer);
             }else {
@@ -84,14 +84,14 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Transactional(readOnly = true )
-    public List<Answer> findByModelOrderByRequirementAndCriterion(ModelSE model) {
-        return answerRepository.findByModelOrderByRequirementAndCriterion(model);
+    public List<Answer> findByChecklistOrderByRequirementAndCriterion(Checklist checklist) {
+        return answerRepository.findByChecklistOrderByRequirementAndCriterion(checklist);
     }
 
     @Transactional(readOnly = true )
     public boolean alreadyExist(Answer answer){
-        Answer savedAnswer = answerRepository.findByModelAndRequirementAndQuestion(
-                answer.getModel(), answer.getRequirement(), answer.getQuestion());
+        Answer savedAnswer = answerRepository.findByChecklistAndRequirementAndQuestion(
+                answer.getChecklist(), answer.getRequirement(), answer.getQuestion());
         if( savedAnswer != null ){
             return true;
         }

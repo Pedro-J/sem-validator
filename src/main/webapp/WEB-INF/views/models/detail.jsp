@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="model.detail.title">
+<tags:pageTemplate title="checklist.detail.title">
     <div class="container">
 
         <c:if test="${not empty msgContent}">
@@ -13,44 +13,44 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <strong><s:message code="${msgTitle}"/>
-                    <s:message code="app.entity.model"/>&nbsp;<s:message code="${msgContent}" />
+                    <s:message code="app.entity.checklist"/>&nbsp;<s:message code="${msgContent}" />
                 </strong>
             </div>
         </c:if>
         <br/>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
-                <h4><s:message code="model.detail.title"/></h4>
+                <h4><s:message code="checklist.detail.title"/></h4>
             </div>
             <div class="panel-body">
                 <div class="row">
                     <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                    <div class="col-sm-10">${model.title}</div>
+                    <div class="col-sm-10">${checklist.title}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                    <div class="col-sm-10">${model.description}</div>
+                    <div class="col-sm-10">${checklist.description}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                    <div class="col-sm-10">${model.objectivesDesc}</div>
+                    <div class="col-sm-10">${checklist.objectivesDesc}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                    <div class="col-sm-10">${model.applicabilitiesDesc}</div>
+                    <div class="col-sm-10">${checklist.applicabilitiesDesc}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="checklist.validation.label"/>:</label>
-                    <div class="col-sm-10">${model.checklistValidation.title}</div>
+                    <div class="col-sm-10">${checklist.checklistValidation.title}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="checklist.verification.label"/>:</label>
-                    <div class="col-sm-10">${model.checklistVerification.title}</div>
+                    <div class="col-sm-10">${checklist.checklistVerification.title}</div>
                 </div>
 
 
@@ -58,9 +58,9 @@
                 <div class="row">
                     <label class="col-sm-2"><s:message code="modelFile.label"/>:</label>
                     <div class="col-sm-10">
-                        <c:if test="${not empty model.modelFileUrl}" >
+                        <c:if test="${not empty checklist.modelFileUrl}" >
                             <c:url value="/" var="contextPath" />
-                            <img src="${contextPath}${model.modelFileUrl}" class="img-responsive" />
+                            <img src="${contextPath}${checklist.modelFileUrl}" class="img-responsive" />
                         </c:if>
                     </div>
                 </div>

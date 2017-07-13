@@ -34,6 +34,8 @@ public class CriterionServiceImpl implements CriterionService{
     public Criterion save(Criterion entity) {
         List<Question> questions = entity.getQuestions();
 
+        Criterion savedEntity = criterionRepository.saveAndFlush(entity);
+
         if( !CollectionUtils.isEmpty(questions) ){
             for(Question question : questions){
                 question.setCriterion(entity);
@@ -41,7 +43,7 @@ public class CriterionServiceImpl implements CriterionService{
             }
         }
 
-        return criterionRepository.saveAndFlush(entity);
+        return savedEntity;
     }
 
     public Criterion update(Criterion entity) {

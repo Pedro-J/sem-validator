@@ -1,11 +1,10 @@
 package com.semvalidator.controllers;
 
-import com.semvalidator.editor.RequirementPropertyEditor;
 import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
-import com.semvalidator.model.Requirement;
 import com.semvalidator.service.ChecklistService;
-import com.semvalidator.service.RequirementService;
+import com.semvalidator.service.ModelService;
+import com.semvalidator.service.QuestionService;
 import com.semvalidator.validation.ChecklistFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,16 +33,13 @@ public class ChecklistController {
     private ChecklistService checkListService;
 
     @Autowired
-    private RequirementService requirementService;
+    private QuestionService questionService;
+
+    @Autowired
+    private ModelService modelService;
 
     @Autowired
     private ChecklistFormValidator checklistFormValidator;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Requirement.class, new RequirementPropertyEditor(requirementService));
-        binder.setValidator(checklistFormValidator);
-    }
 
     @RequestMapping(value = "/checklists/list", method = RequestMethod.GET)
     public ModelAndView showAllChecklists(){
@@ -57,15 +52,13 @@ public class ChecklistController {
     public String showAddForm(Model model){
         model.addAttribute("checklist", new Checklist());
         model.addAttribute("checklistTypes", ChecklistType.values());
-        model.addAttribute("availableRequirements", requirementService.findAll());
         return "checklists/form";
     }
 
     @RequestMapping(value = "/checklists/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("checklist", checkListService.findByIdWithRequirements(id));
+        model.addAttribute("checklist", checkListService.findById(id));
         model.addAttribute("checklistTypes", ChecklistType.values());
-        model.addAttribute("availableRequirements", requirementService.findAll());
         return "checklists/form";
     }
 
@@ -92,7 +85,7 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/{id}", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
-        Checklist checklist = checkListService.findByIdWithRequirements(id);
+        Checklist checklist = checkListService.findById(id);
 
         model.addAttribute("checklist", checklist);
         return "checklists/detail";
@@ -105,6 +98,14 @@ public class ChecklistController {
         redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
         redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
         return "redirect:/checklists/list";
+    }
+
+    @RequestMapping(value = "/checklists/{id}/answers")
+    public String formAnswerChecklist(@PathVariable("id") Integer id, Model model){
+        model.addAttribute("models", modelService.findAll());
+        model.addAttribute("types", ChecklistType.values());
+
+        return "answers/form";
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)

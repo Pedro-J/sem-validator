@@ -61,6 +61,20 @@
                         </div>
                     </s:bind>
 
+                    <s:bind path="requirement">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <label class="col-sm-2 control-label"><s:message code="requirement.label"/>:</label>
+                            <div class="col-sm-5">
+                                <form:select path="requirement" class="form-control">
+                                    <form:option value="0" label="--- Select ---"/>
+                                    <form:options items="${requirements}" itemLabel="description" itemValue="id"/>
+                                </form:select>
+                                <form:errors path="requirement" class="control-label"/>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+                    </s:bind>
+
                     <s:bind path="tip">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
                             <label class="col-sm-2 control-label"><s:message code="tip.label"/>:</label>

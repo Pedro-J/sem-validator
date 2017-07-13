@@ -5,7 +5,6 @@ import javax.persistence.*;
 /**
  * @Author Created by comp-dev on 6/12/17.
  */
-
 @Entity
 @Table(name = "tb_model")
 public class ModelSE extends GenericEntity{
@@ -21,7 +20,7 @@ public class ModelSE extends GenericEntity{
     private String description;
 
     @Lob
-    @Column(name = "dsc_aplicabilities")
+    @Column(name = "dsc_objectives")
     private String objectivesDesc;
 
     @Lob
@@ -32,23 +31,14 @@ public class ModelSE extends GenericEntity{
     private String modelFileUrl;
 
     @ManyToOne
-    @JoinColumn(name = "id_cl_verification")
-    private Checklist checklistVerification;
-
-    @ManyToOne
-    @JoinColumn(name = "id_cl_validation")
-    private Checklist checklistValidation;
-
-    @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
 
     public ModelSE(Integer id) {
         this.id = id;
     }
-    public ModelSE() {
 
-    }
+    public ModelSE() {}
 
     @Override
     public Integer getId() {
@@ -89,22 +79,6 @@ public class ModelSE extends GenericEntity{
         this.modelFileUrl = modelFileUrl;
     }
 
-    public Checklist getChecklistVerification() {
-        return checklistVerification;
-    }
-
-    public void setChecklistVerification(Checklist checklistVerification) {
-        this.checklistVerification = checklistVerification;
-    }
-
-    public Checklist getChecklistValidation() {
-        return checklistValidation;
-    }
-
-    public void setChecklistValidation(Checklist checklistValidation) {
-        this.checklistValidation = checklistValidation;
-    }
-
     public User getUser() {
         return user;
     }
@@ -128,4 +102,5 @@ public class ModelSE extends GenericEntity{
     public void setApplicabilitiesDesc(String applicabilitiesDesc) {
         this.applicabilitiesDesc = applicabilitiesDesc;
     }
+
 }

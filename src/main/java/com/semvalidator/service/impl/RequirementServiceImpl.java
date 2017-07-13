@@ -51,8 +51,4 @@ public class RequirementServiceImpl implements RequirementService{
         return requirementRepository.findAll(pageable);
     }
 
-    @Override
-    public Requirement findByIdWithCriterions(Integer id) {
-        return requirementRepository.findByIdWithCriterions(id);
-    }
 }

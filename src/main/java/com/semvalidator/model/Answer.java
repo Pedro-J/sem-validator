@@ -16,8 +16,8 @@ public class Answer extends GenericEntity{
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_model")
-    private ModelSE model;
+    @JoinColumn(name = "id_checklist")
+    private Checklist checklist;
 
     @ManyToOne
     @JoinColumn(name = "id_question")
@@ -34,9 +34,7 @@ public class Answer extends GenericEntity{
         convertFromDTO(answerJsonDTO);
     }
 
-    public Answer(){
-
-    }
+    public Answer(){}
 
     @Override
     public Integer getId() {
@@ -53,12 +51,12 @@ public class Answer extends GenericEntity{
         return (id == null ? true : false);
     }
 
-    public ModelSE getModel() {
-        return model;
+    public Checklist getChecklist() {
+        return checklist;
     }
 
-    public void setModel(ModelSE model) {
-        this.model = model;
+    public void setChecklist(Checklist checklist) {
+        this.checklist = checklist;
     }
 
     public Question getQuestion() {
@@ -86,7 +84,7 @@ public class Answer extends GenericEntity{
     }
 
     public void convertFromDTO(AnswerJsonDTO answer){
-        this.model = new ModelSE(answer.getModel());
+        this.checklist = new Checklist(answer.getChecklist());
         this.requirement = new Requirement(answer.getRequirement());
         this.question = new Question(answer.getQuestion());
         this.value = AnswerValue.findByCode(answer.getValue());

@@ -2,6 +2,7 @@ package com.semvalidator.service.impl;
 
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
+import com.semvalidator.model.Requirement;
 import com.semvalidator.repository.CriterionRepository;
 import com.semvalidator.repository.QuestionRepository;
 import com.semvalidator.service.QuestionService;
@@ -62,4 +63,15 @@ public class QuestionServiceImpl implements QuestionService{
     public List<Question> findByCriterion(Criterion criterion) {
         return questionRepository.findByCriterion(criterion);
     }
+
+    @Override
+    public List<Question> findByRequirement(Requirement requirement) {
+        return questionRepository.findByRequirement(requirement);
+    }
+
+    @Override
+    public List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion) {
+        return questionRepository.findByRequirementAndCriterion(requirement, criterion);
+    }
+
 }

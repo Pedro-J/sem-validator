@@ -2,7 +2,6 @@ package com.semvalidator.controllers;
 
 import com.semvalidator.editor.ChecklistPropertyEditor;
 import com.semvalidator.enums.ChecklistType;
-import com.semvalidator.model.Answer;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.ModelSE;
 import com.semvalidator.service.AnswerService;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -94,14 +92,14 @@ public class ModelController {
         }
     }
 
-    @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
     public String showQuestionDetails(@PathVariable("id") Integer id, Model model){
         ModelSE modelSE = modelService.findById(id);
-        List<Answer> answers = answerService.findByModelOrderByRequirementAndCriterion(modelSE);
+        List<Answer> answers = answerService.findByChecklistOrderByRequirementAndCriterion(modelSE);
         model.addAttribute("model", modelSE);
         model.addAttribute("answers", answers);
         return "models/detail";
-    }
+    }*/
 
     @RequestMapping(value = "/models/{id}/delete", method = RequestMethod.POST)
     public String deleteQuestion(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
@@ -114,7 +112,7 @@ public class ModelController {
         return "redirect:/models/list";
     }
 
-    @RequestMapping(value = "/models/{id}/validation", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/models/{id}/validation", method = RequestMethod.GET)
     public String showAnswerValidationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         ModelSE modelSE = modelService.findById(id);
         Checklist clValidation = checkListService.findByIdWithRequirements(
@@ -148,7 +146,7 @@ public class ModelController {
             redirectAttributes.addFlashAttribute("msgContent","model.checklist.empty");
             return "redirect:/models/list";
         }
-    }
+    }*/
 
     private void loadForm(Model model){
         List<Checklist> clValidation = checkListService.findByChecklistType(ChecklistType.VALIDATION);

@@ -159,6 +159,7 @@ function saveAnswers() {
 
     var modelId = $('#id_model').val();
     var requirementId = $('#requirementSelect').val();
+
     $.each(selects, function (i, obj) {
         var questionId = obj.id.replace("select_q_","");
         var answerValue = obj.value;

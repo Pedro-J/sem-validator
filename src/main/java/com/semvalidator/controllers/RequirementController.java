@@ -2,20 +2,18 @@ package com.semvalidator.controllers;
 
 import com.semvalidator.editor.CriterionPropertyEditor;
 import com.semvalidator.model.Criterion;
+import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
-import com.semvalidator.service.ChecklistService;
 import com.semvalidator.service.CriterionService;
+import com.semvalidator.service.QuestionService;
 import com.semvalidator.service.RequirementService;
-import com.semvalidator.util.OptionHTML;
 import com.semvalidator.validation.RequirementFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +36,7 @@ public class RequirementController {
     private RequirementService requirementService;
 
     @Autowired
-    private ChecklistService checkListService;
+    private QuestionService questionService;
 
     @Autowired
     private CriterionService criterionService;
@@ -63,14 +60,12 @@ public class RequirementController {
     @RequestMapping("/requirements/add")
     public String showAddForm(Model model){
         model.addAttribute("requirement", new Requirement());
-        model.addAttribute("availableCriterions", criterionService.findAll());
         return "requirements/form";
     }
 
     @RequestMapping("/requirements/{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
         model.addAttribute("requirement", requirementService.findById(id));
-        model.addAttribute("availableCriterions", criterionService.findAll());
         return "requirements/form";
     }
 
@@ -97,9 +92,10 @@ public class RequirementController {
 
     @RequestMapping(value = "/requirements/{id}", method = RequestMethod.GET)
     public String showRequirementDetails(@PathVariable("id") Integer id, Model model){
-        Requirement requirement = requirementService.findByIdWithCriterions(id);
+        Requirement requirement = requirementService.findById(id);
+        List<Question> questions = questionService.findByRequirement(requirement);
         model.addAttribute("requirement", requirement);
-        model.addAttribute("criterions", requirement.getCriterions());
+        model.addAttribute("questions", questions);
 
         return "requirements/detail";
     }
@@ -115,7 +111,7 @@ public class RequirementController {
         return "redirect:/requirements/list";
     }
 
-    @RequestMapping(value = "/requirements/{id}/criterions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @RequestMapping(value = "/requirements/{id}/criterions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<OptionHTML> getCriterionsByRequirementId(@PathVariable("id") Integer id){
         Requirement requirement = requirementService.findByIdWithCriterions(id);
         if( CollectionUtils.isEmpty(requirement.getCriterions()) ){
@@ -130,7 +126,7 @@ public class RequirementController {
             }
             return options;
         }
-    }
+    }*/
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ModelAndView handleEmptyData(HttpServletRequest req, Exception ex) {

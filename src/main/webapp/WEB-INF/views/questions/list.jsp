@@ -22,20 +22,21 @@
 
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th><s:message code="number.label" /></th>
-                        <th><s:message code="description.label" /></th>
-                        <th><s:message code="criterion.label" /></th>
-                        <th><s:message code="tip.label" /></th>
-                        <th><s:message code="actions.label" /></th>
-                    </tr>
-                    </thead>
+                        <tr>
 
+                            <th><s:message code="description.label" /></th>
+                            <th><s:message code="criterion.label" /></th>
+                            <th><s:message code="requirement.label" /></th>
+                            <th><s:message code="tip.label" /></th>
+                            <th><s:message code="actions.label" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <c:forEach var="question" items="${questions}">
                         <tr>
-                            <td>${question.number}</td>
-                            <td>${question.description}</td>
+                            <td><div style="width:400px">${question.description}</div></td>
                             <td>${question.criterion.description}</td>
+                            <td>${question.requirement.description}</td>
                             <td>${question.tip}</td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
@@ -55,6 +56,7 @@
                             </td>
                         </tr>
                     </c:forEach>
+                    </tbody>
                 </table>
 
             </div>

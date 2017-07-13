@@ -2,6 +2,7 @@ package com.semvalidator.repository;
 
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
+import com.semvalidator.model.Requirement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,8 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     List<Question> findAllAvailable();
 
     List<Question> findByCriterion(Criterion criterion);
+
+    List<Question> findByRequirement(Requirement requirement);
+
+    List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
 }

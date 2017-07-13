@@ -2,6 +2,7 @@ package com.semvalidator.service;
 
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
+import com.semvalidator.model.Requirement;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ import java.util.List;
 public interface QuestionService extends GenericService<Question>{
     List<Question> findAllAvailable();
     List<Question> findByCriterion(Criterion criterion);
+    List<Question> findByRequirement(Requirement requirement);
+    List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
 }

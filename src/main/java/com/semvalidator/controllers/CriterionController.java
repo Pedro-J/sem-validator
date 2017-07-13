@@ -58,14 +58,12 @@ public class CriterionController {
     public String showAddForm(Model model){
         Criterion criterion = new Criterion();
         model.addAttribute("criterion", criterion);
-        model.addAttribute("availableQuestions", questionService.findAllAvailable());
         return "criterions/form";
     }
 
     @RequestMapping("/{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
         model.addAttribute("criterion", criterionService.findById(id));
-        model.addAttribute("availableQuestions", questionService.findAllAvailable());
         return "criterions/form";
     }
 

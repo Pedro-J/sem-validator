@@ -4,19 +4,19 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="model.list.title" >
+<tags:pageTemplate title="checklist.list.title" >
     <div class="container">
         <c:if test="${not empty msgContent}">
             <div class="alert alert-${msgCSS} alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <strong><s:message code="${msgTitle}" />&nbsp;<s:message code="app.entity.model"/>&nbsp;<s:message code="${msgContent}" /></strong>
+                <strong><s:message code="${msgTitle}" />&nbsp;<s:message code="app.entity.checklist"/>&nbsp;<s:message code="${msgContent}" /></strong>
             </div>
         </c:if>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
-                <h4><s:message code="model.list.title" /></h4>
+                <h4><s:message code="checklist.list.title" /></h4>
             </div>
             <div class="panel-body">
 
@@ -33,36 +33,33 @@
                     </tr>
                     </thead>
 
-                    <c:forEach var="model" items="${models}">
+                    <c:forEach var="checklist" items="${models}">
                         <tr>
-                            <td>${model.title}</td>
-                            <td>${model.description}</td>
-                            <td>${model.objectivesDesc}</td>
-                            <td>${model.applicabilitiesDesc}</td>
-                            <td>${model.checklistVerification.title}</td>
-                            <td>${model.checklistValidation.title}</td>
+                            <td>${checklist.title}</td>
+                            <td>${checklist.description}</td>
+                            <td>${checklist.objectivesDesc}</td>
+                            <td>${checklist.applicabilitiesDesc}</td>
+                            <td>${checklist.checklistVerification.title}</td>
+                            <td>${checklist.checklistValidation.title}</td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>
-                                <s:message code="answer.validation.question" var="validation"/>
-                                <s:message code="answer.verification.question" var="verification"/>
 
-                                <s:url value="/models/${model.id}" var="detailUrl" />
-                                <s:url value="/models/${model.id}/delete" var="deleteUrl" />
-                                <s:url value="/models/${model.id}/update" var="updateUrl" />
-                                <s:url value="/models/${model.id}/validation" var="validationAnswers" />
-                                <s:url value="/models/${model.id}/verification" var="verificatonAnswers" />
+
+                                <s:url value="/models/${checklist.id}" var="detailUrl" />
+                                <s:url value="/models/${checklist.id}/delete" var="deleteUrl" />
+                                <s:url value="/models/${checklist.id}/update" var="updateUrl" />
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
                                         onclick="location.href='${updateUrl}'" title="${edit}"></button>
-                                <c:if test="${not empty model.checklistVerification}" >
+                                <c:if test="${not empty checklist.checklistVerification}" >
                                     <button class="btn btn-primary glyphicon glyphicon-question-sign" title="${verification}"
                                             onclick="location.href='${verificatonAnswers}'" ></button>
                                 </c:if>
-                                <c:if test="${not empty model.checklistVerification}" >
+                                <c:if test="${not empty checklist.checklistVerification}" >
                                     <button class="btn btn-danger glyphicon glyphicon-question-sign" title="${validation}"
                                             onclick="location.href='${validationAnswers}'" ></button>
                                 </c:if>

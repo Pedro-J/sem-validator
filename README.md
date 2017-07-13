@@ -8,12 +8,12 @@ in the initial phase of a project.
 Create Validation and Verification Checklists
 
 * Checklists can be created using questions already in the program 
-or new questions added by the model author to evaluate user experience 
+or new questions added by the checklist author to evaluate user experience 
 models requirements.
 
 Evaluate User Experience Models throught Checklists
 
-* Models can be evaluated by the model's creator or area experts 
+* Models can be evaluated by the checklist's creator or area experts 
 throught validation and verification checklists.
 
 In this showcase you'll see the following in action:

@@ -25,11 +25,6 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <label class="col-sm-2"><s:message code="number.label"/>:</label>
-                    <div class="col-sm-10">${question.number}</div>
-                </div>
-
-                <div class="row">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
                     <div class="col-sm-10">${question.description}</div>
                 </div>
@@ -39,6 +34,15 @@
                     <div class="col-sm-10">
                         <c:if test="${not empty question.criterion}">
                             ${question.criterion.description}
+                        </c:if>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><s:message code="requirement.label"/>:</label>
+                    <div class="col-sm-10">
+                        <c:if test="${not empty question.requirement}">
+                            ${question.requirement.description}
                         </c:if>
                     </div>
                 </div>

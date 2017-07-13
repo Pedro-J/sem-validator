@@ -5,11 +5,14 @@ import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
+import com.semvalidator.service.RequirementService;
 import com.semvalidator.validation.QuestionFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +41,9 @@ public class QuestionController {
     private CriterionService criterionService;
 
     @Autowired
+    private RequirementService requirementService;
+
+    @Autowired
     private QuestionFormValidator questionFormValidator;
 
     @InitBinder
@@ -55,11 +61,18 @@ public class QuestionController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/questions", method = RequestMethod.GET)
+    public @ResponseBody Page<Question> getAllUsers(
+            @RequestParam("page") Integer page, @RequestParam("size") Integer size){
+        return questionService.findAllPageable(new PageRequest(page, size));
+    }
+
     @RequestMapping(value = "/questions/add", method = RequestMethod.GET)
     public String showAddForm(Model model){
         Question question = new Question();
         model.addAttribute("question", question);
         model.addAttribute("criterions", criterionService.findAll());
+        model.addAttribute("requirements", requirementService.findAll());
         return "questions/form";
     }
 
@@ -68,7 +81,8 @@ public class QuestionController {
         ModelAndView modelAndView = new ModelAndView("questions/form");
 
         modelAndView.addObject("question", questionService.findById(id));
-        modelAndView.addObject("criterions",criterionService.findAll());
+        modelAndView.addObject("criterions", criterionService.findAll());
+        modelAndView.addObject("requirements", requirementService.findAll());
         return modelAndView;
     }
 

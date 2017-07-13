@@ -32,10 +32,10 @@
                 <s:message code="select.label" var="select" />
                 <form class="form-horizontal" method="POST" action="${formActionUrl}" acceptCharset="UTF-8">
                     <input id="init_value" type="hidden" value="${select}"/>
-                    <input id="id_model" type="hidden" value="${model.id}"/>
+                    <input id="id_model" type="hidden" value="${checklist.id}"/>
                     <div class="form-group">
-                        <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
-                        <div class="col-sm-8">${model.title}</div>
+                        <label class="col-sm-2"><s:message code="app.entity.checklist" />:</label>
+                        <div class="col-sm-8">${checklist.title}</div>
                     </div>
 
                     <div class="form-group">

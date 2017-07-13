@@ -19,7 +19,8 @@ public class QuestionFormValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "requirement", "form.requirement.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "criterion", "form.criterion.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "form.notEmpty.description");
     }
 }

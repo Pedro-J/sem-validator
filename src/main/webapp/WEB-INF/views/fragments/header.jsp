@@ -84,7 +84,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
-                            <s:message code="app.entity.model" />
+                            <s:message code="app.entity.checklist" />
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">

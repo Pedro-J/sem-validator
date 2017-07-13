@@ -48,11 +48,6 @@ public class CheckListServiceImpl implements ChecklistService {
         return checklistRepository.findAll(pageable);
     }
 
-    @Override
-    public Checklist findByIdWithRequirements(Integer id) {
-        return checklistRepository.findByIdWithRequirements(id);
-    }
-
     public List<Checklist> findByChecklistType(ChecklistType type) {
         return checklistRepository.findByChecklistType(type);
     }

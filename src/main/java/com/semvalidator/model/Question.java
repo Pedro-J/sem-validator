@@ -18,10 +18,12 @@ public class Question extends GenericEntity{
     private Integer id;
 
     @JsonIgnore
-    @ManyToOne(optional = true)
+    @ManyToOne//(optional = true)
     private Criterion criterion;
 
-    private Integer number;
+    @JsonIgnore
+    @ManyToOne//(optional = true)
+    private Requirement requirement;
 
     private String description;
 
@@ -57,14 +59,6 @@ public class Question extends GenericEntity{
         this.criterion = criterion;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -79,5 +73,13 @@ public class Question extends GenericEntity{
 
     public void setTip(String tip) {
         this.tip = tip;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
     }
 }

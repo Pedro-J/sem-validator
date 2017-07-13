@@ -6,7 +6,7 @@ package com.semvalidator.util;
 public class AnswerJsonDTO {
     private Integer value;
     private Integer question;
-    private Integer model;
+    private Integer checklist;
     private Integer requirement;
 
     public Integer getQuestion() {
@@ -17,12 +17,12 @@ public class AnswerJsonDTO {
         this.question = question;
     }
 
-    public Integer getModel() {
-        return model;
+    public Integer getChecklist() {
+        return checklist;
     }
 
-    public void setModel(Integer model) {
-        this.model = model;
+    public void setChecklist(Integer checklist) {
+        this.checklist = checklist;
     }
 
     public Integer getValue() {

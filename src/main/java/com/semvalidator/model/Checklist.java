@@ -25,12 +25,23 @@ public class Checklist extends GenericEntity{
     @Enumerated(EnumType.ORDINAL)
     private ChecklistType checklistType;
 
-    @ManyToMany//(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "tb_checklist_requirement", joinColumns = {
+    @ManyToOne
+    @JoinColumn(name = "id_model")
+    private ModelSE model;
+
+    @ManyToMany
+    @JoinTable(name = "tb_checklist_question", joinColumns = {
             @JoinColumn(name = "id_checklist", nullable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "id_requirement",
+            inverseJoinColumns = { @JoinColumn(name = "id_question",
                     nullable = false) })
-    private List<Requirement> requirements;
+    private List<Question> questions;
+
+    public Checklist(Integer id) {
+        this.id = id;
+    }
+
+    public Checklist() {
+    }
 
     @Override
     public Integer getId() {
@@ -71,11 +82,19 @@ public class Checklist extends GenericEntity{
         this.checklistType = checklistType;
     }
 
-    public List<Requirement> getRequirements() {
-        return requirements;
+    public ModelSE getModel() {
+        return model;
     }
 
-    public void setRequirements(List<Requirement> requirements) {
-        this.requirements = requirements;
+    public void setModel(ModelSE model) {
+        this.model = model;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }

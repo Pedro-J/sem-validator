@@ -9,6 +9,5 @@ import java.util.List;
  * @Author Created by Pedro-J on 6/14/17.
  */
 public interface ChecklistService extends GenericService<Checklist>{
-    Checklist findByIdWithRequirements(Integer id);
     List<Checklist> findByChecklistType(ChecklistType type);
 }
