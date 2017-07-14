@@ -53,28 +53,43 @@
                             <div class="col-sm-5"></div>
                         </div>
                     </s:bind>
+                    <s:message code="criterion.label" var="criterionLabel" />
+                    <s:message code="requirement.label" var="requirementLabel" />
+                    <s:message code="questions.label" var="questionLabel" />
 
-                    <spring:bind path="requirements">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="questions.label"/>:</label>
-                            <div class="col-sm-5">
-                                <form:select path="requirements" items="${availableRequirements}" itemValue="id" itemLabel="description" multiple="true"
-                                             class="form-control" />
-                                <form:errors path="requirements" class="control-label" />
-                            </div>
-                            <div class="col-sm-5"></div>
-                        </div>
-                    </spring:bind>
+
+                    <div>
+                        <input type="text" class="form-control input-cri" placeholder="${criterionLabel}" />
+                        <input type="text" class="form-control input-req" placeholder="${requirementLabel}" />
+                        <input type="text" class="form-control input-des" placeholder="${questionLabel}" />
+                        <button class="btn btn-default btn-search">
+                            <s:message code="search.label" />
+                        </button>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><s:message code="criterion.label" /></th>
+                            <th><s:message code="requirement.label" /></th>
+                            <th><s:message code="questions.label" /></th>
+                        </tr>
+                        </thead>
+
+                        <tbody class="ss-table-content" >
+
+                        </tbody>
+                    </table>
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
                                 <c:when test="${checklist['new']}">
-                                    <button type="submit" class="btn btn-primary pull-right"><s:message
+                                    <button type="submit" class="btn btn-primary pull-right btn-save"><s:message
                                             code="general.save"/></button>
                                 </c:when>
                                 <c:otherwise>
-                                    <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message
+                                    <button type="submit" class="btn btn-primary pull-right btn-update" style="margin-left: 5px"><s:message
                                             code="general.update"/></button>
                                     <c:url value="/" var="app_context" />
                                     <a href="${app_context}checklists/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
