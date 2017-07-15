@@ -1,12 +1,14 @@
 
+var checklist = function(desc, model, type, questions){
+    this.description = desc;
+    this.model = model;
+    this.type = type;
+    this.questions = questions;
+};
+
 // Model CONTROLLER
 var tableModel = (function() {
 
-    var question = function(description, requirement, criterion){
-        this.description = description;
-        this.requriement = requirement;
-        this.criterion = criterion;
-    };
 
     var data = {
         content: [],	  //json objects of current page
@@ -54,8 +56,24 @@ var tableModel = (function() {
         setCurrentPage: function(value){
             data.currentPage = value;
         },
+        getCurrentPage: function(){
+            return data.currentPage;
+        },
         getTotalElements: function(){
             return data.totalElements;
+        },
+        getTotalPages: function(){
+            var totalPages = 0;
+            if( data.totalElements > 0) {
+                if( data.totalElements < data.pageSize ){
+                    return 1;
+                } else if (data.totalElements % data.pageSize === 0) {
+                    totalPages = data.totalElements / data.pageSize;
+                } else {
+                    totalPages = Math.floor(data.totalElements / data.pageSize) + 1;
+                }
+            }
+            return totalPages;
         },
         testing: function() {
             console.log(data);
@@ -71,13 +89,28 @@ var tableModel = (function() {
 var tableView = (function() {
 
     var DOMstrings = {
-        inputCriterion: '.input-cri',
-        inputRequirement: '.input-req',
-        inputDescription: '.input-des',
+        //Search
+        inputCriterion: '.select-criterion',
+        inputRequirement: '.select-requirement',
+        inputDescription: '.input-description',
         btnSearch: '.btn-search',
-        tableContent: 'ss-table-content',
+
+        //Form checklist
+        inputChecklistDesc: 'checklist-desc',
+        selectChecklistModel:'checklist-model',
+        selectChecklistType: 'checklist-type',
+
+
+        tableContent: '.ss-table-content',
         btnSave:'.btn-save',
-        btnUpdate:'.btn-update'
+        btnUpdate:'.btn-update',
+
+        //Pagination
+        pageLeft:'li.page-left',
+        pageMiddle:'li.page-middle',
+        pageRight:'li.page-right',
+        pagePrev:'li.page-prev',
+        pageNext:'li.page-next'
     };
 
 
@@ -89,16 +122,24 @@ var tableView = (function() {
 
 
     return {
-        getInput: function() {
+        getInputSearch: function() {
             return {
-                type: document.querySelector(DOMstrings.inputType).value, // Will be either inc or exp
+                criterion: document.querySelector(DOMstrings.inputCriterion).value,
                 description: document.querySelector(DOMstrings.inputDescription).value,
-                value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
+                requirement: document.querySelector(DOMstrings.inputRequirement).value
+            };
+        },
+
+        getInputForm: function() {
+            return {
+                description: document.getElementById(DOMstrings.inputChecklistDesc).value,
+                type: document.getElementById(DOMstrings.selectChecklistType).value,
+                model: document.getElementById(DOMstrings.selectChecklistModel).value
             };
         },
 
         updateDisplay: function(content, selectedIDs) {
-            var html, newHtml, se;
+        /*    var html, newHtml, se, tableContent;
             // Create HTML string with placeholder text
 
 
@@ -111,10 +152,39 @@ var tableView = (function() {
             newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
 
             // Insert the HTML into the DOM
-            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);*/
         },
 
+        updatePagination: function(data){
+            var currentPage = data.currentPage;
+            var maxPage = data.getTotalPages();
 
+            if( currentPage === 1){
+                document.querySelector(DOMstrings.pageLeft).classList.add('active');
+                document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
+                document.querySelector(DOMstrings.pageRight).classList.remove('active');
+
+                document.querySelector(DOMstrings.pagePrev).classList.add('disabled');
+
+            }else if( currentPage === maxPage ){
+                document.querySelector(DOMstrings.pageLeft).classList.remove('active');
+                document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
+                document.querySelector(DOMstrings.pageRight).classList.add('active');
+
+                document.querySelector(DOMstrings.pageNext).classList.add('disabled');
+            } else if( currentPage > 1) {
+                document.querySelector(DOMstrings.pageLeft).firstElementChild.textContent = currentPage - 1;
+                document.querySelector(DOMstrings.pageMiddle).firstElementChild.textContent = currentPage;
+                document.querySelector(DOMstrings.pageRight).firstElementChild.textContent = currentPage + 1;
+
+                document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
+
+                document.querySelector(DOMstrings.pageLeft).classList.remove('active');
+                document.querySelector(DOMstrings.pageMiddle).classList.add('active');
+                document.querySelector(DOMstrings.pageRight).classList.remove('active');
+            }
+
+        },
 
         getDOMstrings: function() {
             return DOMstrings;
@@ -129,15 +199,23 @@ var tableView = (function() {
 // GLOBAL APP CONTROLLER
 var controller = (function(model, view) {
 
-    var setupEventListeners = function() {
-        var DOM = model.getDOMstrings();
 
-        document.querySelector(DOM.tableContent).addEventListener('click', clickCheckbox);
+    var setupEventListeners = function() {
+        var DOM = view.getDOMstrings();
+
+        document.querySelector(DOM.tableContent).addEventListener('click', selectElement);
         document.querySelector(DOM.btnSearch).addEventListener('click', search);
+
+        //Pagination events
+        document.querySelector(DOM.pageLeft).addEventListener('click', selectPage);
+        document.querySelector(DOM.pageMiddle).addEventListener('click', selectPage);
+        document.querySelector(DOM.pageRight).addEventListener('click', selectPage);
+        document.querySelector(DOM.pageNext).addEventListener('click', selectNextPage);
+        document.querySelector(DOM.pagePrev).addEventListener('click', selectPrevPage);
     };
 
 
-    var clickCheckbox = function(event){
+    var selectElement = function(event){
         if( event.target.type === 'checkbox' ){
             //1. Inserir/remover id no modelo
             if( event.target.checked ) {
@@ -146,23 +224,52 @@ var controller = (function(model, view) {
                 model.unselectElement(event.target.value);
             }
         }
-    }
+    };
 
     var search = function(){
-        //1. update model content
-        model.loadData(view.updateDisplay)
-        //
-    }
+        //1. Update model and UI content
+        updateDataAndUI();
+    };
+
+    var selectPage = function(event){
+        var current = parseInt(event.target.textContent);
+        model.setCurrentPage(current);
+        view.updatePagination(model.data);
+
+    };
+
+    var selectPrevPage = function(){
+        if( model.getCurrentPage() > 1 ) {
+            var current = model.getCurrentPage() - 1;
+            model.setCurrentPage(current);
+            view.updatePagination(model.data);
+            updateDataAndUI();
+        }
+    };
+
+    var selectNextPage = function(){
+        if( model.getCurrentPage() < model.getTotalPages() ) {
+            var current = model.getCurrentPage() + 1;
+            model.setCurrentPage(current);
+            view.updatePagination(model.data);
+            updateDataAndUI();
+        }
+    };
+
+
+    var updateDataAndUI = function(){
+        //model.loadData(view.updateDisplay);
+    };
 
     return {
         init: function() {
             console.log('Application has started.');
-            model.displayBudget({
+/*            model.displayBudget({
                 budget: 0,
                 totalInc: 0,
                 totalExp: 0,
                 percentage: -1
-            });
+            });*/
             setupEventListeners();
         }
     };

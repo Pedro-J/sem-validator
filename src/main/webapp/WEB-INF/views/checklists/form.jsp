@@ -6,6 +6,10 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="${checklist['new'] ? 'checklist.add.title': 'checklist.update.title'}">
+    <jsp:attribute name="extraScripts">
+        <script type="text/javascript" src="/resources/js/selectSearchTable.js"></script>
+    </jsp:attribute>
+    <jsp:body>
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
@@ -19,68 +23,109 @@
                 </c:choose>
             </div>
             <div class="panel-body">
-                <s:url value="/checklists" var="formActionUrl"/>
 
-                <form:form class="form-horizontal" method="POST" modelAttribute="checklist"
-                           action="${formActionUrl}" acceptCharset="UTF-8">
+                <form class="form-horizontal" >
 
-                    <form:hidden path="id"/>
-
-                    <s:bind path="title">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
-                            <div class="col-sm-10">
-                                <form:input path="title" type="text" class="form-control " id="title"
-                                            placeholder="Title"/>
-                                <form:errors path="title" class="control-label"/>
-                            </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control " id="checklist-desc" />
                         </div>
-                    </s:bind>
-
-                    <s:bind path="checklistType">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="checklist.label"/>:</label>
-                            <div class="col-sm-5">
-                                <form:select path="checklistType" class="form-control">
-                                    <form:option value="0" label="--- Select ---"/>
-                                    <c:forEach items="${checklistTypes}" var="item" >
-                                        <s:message code="${item.messageCode}" var="typeDescription"/>
-                                        <form:option value="${item}" label="${typeDescription}" />
-                                    </c:forEach>
-                                </form:select>
-                                <form:errors path="checklistType" class="control-label"/>
-                            </div>
-                            <div class="col-sm-5"></div>
-                        </div>
-                    </s:bind>
-                    <s:message code="criterion.label" var="criterionLabel" />
-                    <s:message code="requirement.label" var="requirementLabel" />
-                    <s:message code="questions.label" var="questionLabel" />
-
-
-                    <div>
-                        <input type="text" class="form-control input-cri" placeholder="${criterionLabel}" />
-                        <input type="text" class="form-control input-req" placeholder="${requirementLabel}" />
-                        <input type="text" class="form-control input-des" placeholder="${questionLabel}" />
-                        <button class="btn btn-default btn-search">
-                            <s:message code="search.label" />
-                        </button>
+                        <div class="col-sm-5"></div>
                     </div>
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><s:message code="criterion.label" /></th>
-                            <th><s:message code="requirement.label" /></th>
-                            <th><s:message code="questions.label" /></th>
-                        </tr>
-                        </thead>
 
-                        <tbody class="ss-table-content" >
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><s:message code="checklistType.label"/>:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="checklist-type">
+                                <option value="0" label="--- Select ---"/>
+                                <c:forEach items="${checklistTypes}" var="item" >
+                                    <s:message code="${item.messageCode}" var="typeDescription"/>
+                                    <option value="${item}" label="${typeDescription}" />
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
 
-                        </tbody>
-                    </table>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><s:message code="app.entity.model"/>:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="checklist-model">
+                                <option value="0" label="--- Select ---"/>
+                                <c:forEach items="${models}" var="item" >
+                                    <option value="${item.id}" label="${item.title}" />
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-sm-5"></div>
+                    </div>
 
+                    <div class="form-group panel panel-primary panel-questions">
+                        <div class="panel-heading text-center">
+                            <h5><s:message code="questions.checklist.select"/></h5>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div style="margin:20px 0">
+                                <select class="form-control width200 input-search select-criterion" >
+                                    <option value="0" label="--- Select ---"/>
+                                    <c:forEach items="${criterions}" var="item" >
+                                        <option value="${item.id}" label="${item.description}" />
+                                    </c:forEach>
+                                </select>
+
+                                <select class="form-control width200 input-search select-requirement" >
+                                    <option value="0" label="--- Select ---"/>
+                                    <c:forEach items="${requirements}" var="item" >
+                                        <option value="${item.id}" label="${item.description}" />
+                                    </c:forEach>
+                                </select>
+
+                                <s:message code="questions.label" var="questionLabel" />
+                                <input type="text" class="form-control input-search input-description"
+                                       style="width:50%;" placeholder="${questionLabel}" />
+
+                                <button class="btn btn-primary btn-search glyphicon glyphicon-search width60"> </button>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th><s:message code="criterion.label" /></th>
+                                    <th><s:message code="requirement.label" /></th>
+                                    <th><div style="width:250px"><s:message code="questions.label" /></div></th>
+                                </tr>
+                                </thead>
+
+                                <tbody class="ss-table-content" >
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <nav aria-label="..." >
+                                <ul class="pagination">
+                                    <li class="page-item page-prev disabled">
+                                        <span class="page-link">Previous</span>
+                                    </li>
+                                    <li class="page-item page-left">
+                                        <span class="page-link" >1</span>
+                                    </li>
+                                    <li class="page-item page-middle active">
+                                        <span class="page-link">2</span>
+                                    </li>
+                                    <li class="page-item page-right">
+                                        <span class="page-link" >3</span>
+                                    </li>
+                                    <li class="page-item page-next">
+                                        <span class="page-link" >Next</span>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="form-group"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
@@ -98,8 +143,9 @@
                             </c:choose>
                         </div>
                     </div>
-                </form:form>
+                </form>
             </div>
         </div>
     </div>
+    </jsp:body>
 </tags:pageTemplate>

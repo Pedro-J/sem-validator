@@ -3,6 +3,7 @@ package com.semvalidator.controllers;
 import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.service.ChecklistService;
+import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.ModelService;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.validation.ChecklistFormValidator;
@@ -36,6 +37,9 @@ public class ChecklistController {
     private QuestionService questionService;
 
     @Autowired
+    private CriterionService criterionService;
+
+    @Autowired
     private ModelService modelService;
 
     @Autowired
@@ -50,8 +54,10 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/add", method = RequestMethod.GET)
     public String showAddForm(Model model){
-        model.addAttribute("checklist", new Checklist());
         model.addAttribute("checklistTypes", ChecklistType.values());
+        model.addAttribute("criterions", criterionService.findAll());
+        model.addAttribute("questions", questionService.findAll());
+        model.addAttribute("models", modelService.findAll());
         return "checklists/form";
     }
 
