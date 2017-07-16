@@ -1,11 +1,15 @@
 package com.semvalidator.controllers;
 
 import com.semvalidator.editor.CriterionPropertyEditor;
+import com.semvalidator.editor.RequirementPropertyEditor;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
+import com.semvalidator.model.Requirement;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.service.RequirementService;
+import com.semvalidator.util.RequestErrorException;
+import com.semvalidator.util.SearchQuestionParamsDTO;
 import com.semvalidator.validation.QuestionFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +54,8 @@ public class QuestionController {
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Criterion.class, new CriterionPropertyEditor(criterionService));
-        binder.setValidator(questionFormValidator);
+        binder.registerCustomEditor(Requirement.class, new RequirementPropertyEditor(requirementService));
+        //binder.setValidator(questionFormValidator);
     }
 
 
@@ -64,7 +70,17 @@ public class QuestionController {
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public @ResponseBody Page<Question> getAllUsers(
             @RequestParam("page") Integer page, @RequestParam("size") Integer size){
-        return questionService.findAllPageable(new PageRequest(page, size));
+        Pageable pageable = new PageRequest(page, size);
+        return questionService.findAllPageable(pageable);
+    }
+
+    @RequestMapping(value = "/questions/search", method = RequestMethod.POST)
+    public @ResponseBody Page<Question> search(@RequestBody SearchQuestionParamsDTO params) throws RequestErrorException {
+        try{
+            return questionService.search(params);
+        }catch(Exception e){
+            throw new RequestErrorException(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/questions/add", method = RequestMethod.GET)
@@ -130,6 +146,16 @@ public class QuestionController {
 
         logger.debug("handleEmptyData()");
         logger.error("Request: {}, error ", req.getRequestURL(), ex);
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("questions/detail");
+        model.addObject("msg", "question not found");
+
+        return model;
+    }
+
+    @ExceptionHandler(RequestErrorException.class)
+    public ModelAndView handleRequestError(HttpServletRequest req, Exception ex) {
 
         ModelAndView model = new ModelAndView();
         model.setViewName("questions/detail");

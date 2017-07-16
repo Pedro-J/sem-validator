@@ -1,5 +1,8 @@
 package com.semvalidator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tb_criterion")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Criterion extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +20,7 @@ public class Criterion extends GenericEntity{
 
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "criterion", cascade = CascadeType.REMOVE)
     private List<Question> questions;
 
@@ -29,6 +34,7 @@ public class Criterion extends GenericEntity{
         this.id = id;
     }
 
+    @JsonIgnore
     @Override
     public boolean isNew() {
         return (id == null ? true : false);

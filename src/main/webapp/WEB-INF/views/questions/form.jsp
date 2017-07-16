@@ -26,16 +26,6 @@
 
                     <form:hidden path="id"/>
 
-                    <s:bind path="number">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="number.label"/>:</label>
-                            <div class="col-sm-10">
-                                <form:input path="number" class="form-control" id="number" placeholder="Number"/>
-                                <form:errors path="number" class="control-label"/>
-                            </div>
-                        </div>
-                    </s:bind>
-
                     <s:bind path="description">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
                             <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>

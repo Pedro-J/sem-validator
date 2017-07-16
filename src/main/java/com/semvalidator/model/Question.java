@@ -17,11 +17,9 @@ public class Question extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonIgnore
     @ManyToOne//(optional = true)
     private Criterion criterion;
 
-    @JsonIgnore
     @ManyToOne//(optional = true)
     private Requirement requirement;
 
@@ -41,6 +39,7 @@ public class Question extends GenericEntity{
         return this.id;
     }
 
+    @JsonIgnore
     @Override
     public void setId(Integer id) {
         this.id = id;

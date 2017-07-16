@@ -61,7 +61,7 @@
                         <div class="col-sm-5"></div>
                     </div>
 
-                    <div class="form-group panel panel-primary panel-questions">
+                    <div class="panel panel-primary panel-questions">
                         <div class="panel-heading text-center">
                             <h5><s:message code="questions.checklist.select"/></h5>
                         </div>
@@ -85,7 +85,7 @@
                                 <input type="text" class="form-control input-search input-description"
                                        style="width:50%;" placeholder="${questionLabel}" />
 
-                                <button class="btn btn-primary btn-search glyphicon glyphicon-search width60"> </button>
+                                <button type="button" class="btn btn-primary btn-search glyphicon glyphicon-search width60"> </button>
                             </div>
                             <table class="table table-bordered">
                                 <thead>
@@ -109,10 +109,10 @@
                                     <li class="page-item page-prev disabled">
                                         <span class="page-link">Previous</span>
                                     </li>
-                                    <li class="page-item page-left">
+                                    <li class="page-item page-left active">
                                         <span class="page-link" >1</span>
                                     </li>
-                                    <li class="page-item page-middle active">
+                                    <li class="page-item page-middle">
                                         <span class="page-link">2</span>
                                     </li>
                                     <li class="page-item page-right">

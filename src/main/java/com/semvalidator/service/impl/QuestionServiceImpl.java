@@ -5,9 +5,12 @@ import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
 import com.semvalidator.repository.CriterionRepository;
 import com.semvalidator.repository.QuestionRepository;
+import com.semvalidator.repository.RequirementRepository;
 import com.semvalidator.service.QuestionService;
+import com.semvalidator.util.SearchQuestionParamsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Autowired
     private CriterionRepository criterionRepository;
+
+    @Autowired
+    private RequirementRepository requirementRepository;
 
     public Question save(Question entity) {
         return questionRepository.saveAndFlush(entity);
@@ -54,24 +60,62 @@ public class QuestionServiceImpl implements QuestionService{
         return questionRepository.findAll(pageable);
     }
 
-    @Override
     public List<Question> findAllAvailable() {
         return questionRepository.findAllAvailable();
     }
 
-    @Override
     public List<Question> findByCriterion(Criterion criterion) {
         return questionRepository.findByCriterion(criterion);
     }
 
-    @Override
     public List<Question> findByRequirement(Requirement requirement) {
         return questionRepository.findByRequirement(requirement);
     }
 
-    @Override
     public List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion) {
         return questionRepository.findByRequirementAndCriterion(requirement, criterion);
+    }
+
+    public Page<Question> search(SearchQuestionParamsDTO params){
+        Pageable pageable = new PageRequest(params.getPage(), params.getSize());
+
+        Requirement requirement = null;
+        Criterion criterion = null;
+        String description = null;
+
+        if( params.getRequirement() != null ){
+            requirement = requirementRepository.findOne(params.getRequirement());
+        }
+
+        if( params.getCriterion() != null ){
+            criterion = criterionRepository.findOne(params.getCriterion());
+        }
+
+        if( params.getQuestionDescription() != null ){
+            description = "%"+ params.getQuestionDescription()+ "%";
+        }
+
+        return searchExecuter(requirement, criterion, description, pageable);
+    }
+
+    private Page<Question> searchExecuter(Requirement requirement, Criterion criterion, String description, Pageable pageable) {
+        Page<Question> result = null;
+        if( requirement != null && criterion != null && description != null ){
+            result = questionRepository.findByRequirementAndCriterionAndDescriptionLike(requirement, criterion, description, pageable);
+        } else if( requirement != null && criterion != null ){
+            result = questionRepository.findByRequirementAndCriterion(requirement, criterion, pageable);
+        }else if( requirement != null && description != null ){
+            result = questionRepository.findByRequirementAndDescriptionLike(requirement, description, pageable);
+        }else if( criterion != null && description != null ){
+            result = questionRepository.findByCriterionAndDescriptionLike(criterion, description, pageable);
+        }else if( requirement != null ){
+            result = questionRepository.findByRequirement(requirement, pageable);
+        }else if( criterion != null ){
+            result = questionRepository.findByCriterion(criterion, pageable);
+        }else if( description != null ){
+            result = questionRepository.findByDescriptionLike(description, pageable);
+        }
+        return result;
     }
 
 }

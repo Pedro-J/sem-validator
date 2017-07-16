@@ -42,3 +42,7 @@ img.lang{
 .panel-questions{
     width: 95%;margin: 0 auto;
 }
+
+ul.hide{
+    display: none;
+}

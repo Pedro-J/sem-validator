@@ -9,33 +9,16 @@ var checklist = function(desc, model, type, questions){
 // Model CONTROLLER
 var tableModel = (function() {
 
-
     var data = {
         content: [],	  //json objects of current page
         selectedIDs: [], //just ids
         currentPage: 1,
         pageSize: 10,
-        totalElements: 0
+        totalElements: 0,
+        totalPages: 1,
     };
 
     return {
-        loadData: function(updateDisplay) {
-            //1. load data through ajax
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/questions');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    var obj = JSON.parse(xhr.responseText);
-                    data.content = obj.content;
-                    data.totalElements = obj.totalElements;
-                    data.pageSize = obj.numberOfElements;
-                    updateDisplay(data.content, data.selectedIDs);
-                }
-            };
-            xhr.send();
-        },
 
         selectElement: function(id){
             data.selectedIDs.push(id);
@@ -59,10 +42,21 @@ var tableModel = (function() {
         getCurrentPage: function(){
             return data.currentPage;
         },
+        getPageSize: function(){
+            return data.pageSize;
+        },
         getTotalElements: function(){
             return data.totalElements;
         },
         getTotalPages: function(){
+            return data.totalPages;
+        },
+        setData:function(resultData){
+            data.content = resultData.content;
+            data.totalElements = resultData.totalElements;
+            data.totalPages = resultData.totalPages;
+        },
+/*        getTotalPages: function(){
             var totalPages = 0;
             if( data.totalElements > 0) {
                 if( data.totalElements < data.pageSize ){
@@ -74,7 +68,7 @@ var tableModel = (function() {
                 }
             }
             return totalPages;
-        },
+        },*/
         testing: function() {
             console.log(data);
         }
@@ -106,6 +100,7 @@ var tableView = (function() {
         btnUpdate:'.btn-update',
 
         //Pagination
+        pagination: 'ul.pagination',
         pageLeft:'li.page-left',
         pageMiddle:'li.page-middle',
         pageRight:'li.page-right',
@@ -122,7 +117,7 @@ var tableView = (function() {
 
 
     return {
-        getInputSearch: function() {
+        getInputsSearch: function() {
             return {
                 criterion: document.querySelector(DOMstrings.inputCriterion).value,
                 description: document.querySelector(DOMstrings.inputDescription).value,
@@ -130,7 +125,7 @@ var tableView = (function() {
             };
         },
 
-        getInputForm: function() {
+        getInputsForm: function() {
             return {
                 description: document.getElementById(DOMstrings.inputChecklistDesc).value,
                 type: document.getElementById(DOMstrings.selectChecklistType).value,
@@ -138,28 +133,39 @@ var tableView = (function() {
             };
         },
 
-        updateDisplay: function(content, selectedIDs) {
-        /*    var html, newHtml, se, tableContent;
+        updateDisplay: function(content) {
+            var html, newHtml, tableContent;
             // Create HTML string with placeholder text
 
 
+            tableContent = document.querySelector(DOMstrings.tableContent);
+            tableContent.innerHTML = "";
 
-            html = '<tr><td><input type="checkbox" value="%id%"></td> <td></td> <td></td> <td></td></tr>';
+            content.forEach(function(obj){
 
-            // Replace the placeholder text with some actual data
-            newHtml = html.replace('%id%', obj.id);
-            newHtml = newHtml.replace('%description%', obj.description);
-            newHtml = newHtml.replace('%value%', formatNumber(obj.value, type));
+                html = '<tr><td><input type="checkbox" value="%id%"></td> <td>%criterion%</td> <td>%requirement%</td> <td>%description%</td></tr>';
 
-            // Insert the HTML into the DOM
-            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);*/
+                // Replace the placeholder text with some actual data
+                newHtml = html.replace('%id%', obj.id);
+                newHtml = newHtml.replace('%criterion%', obj.criterion.description);
+                newHtml = newHtml.replace('%requirement%', obj.requirement.description);
+                newHtml = newHtml.replace('%description%', obj.description);
+
+                // Insert the HTML into the DOM
+                tableContent.insertAdjacentHTML('beforeend', newHtml);
+
+            })
+
         },
 
-        updatePagination: function(data){
-            var currentPage = data.currentPage;
-            var maxPage = data.getTotalPages();
+        updatePagination: function(currentPage, maxPage){
+            var minPage = 1;
 
-            if( currentPage === 1){
+            if( maxPage == minPage ){
+                document.querySelector(DOMstrings.pagination).classList.add('hide');
+            }
+
+            if( currentPage === minPage){
                 document.querySelector(DOMstrings.pageLeft).classList.add('active');
                 document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
                 document.querySelector(DOMstrings.pageRight).classList.remove('active');
@@ -172,16 +178,20 @@ var tableView = (function() {
                 document.querySelector(DOMstrings.pageRight).classList.add('active');
 
                 document.querySelector(DOMstrings.pageNext).classList.add('disabled');
+
             } else if( currentPage > 1) {
                 document.querySelector(DOMstrings.pageLeft).firstElementChild.textContent = currentPage - 1;
                 document.querySelector(DOMstrings.pageMiddle).firstElementChild.textContent = currentPage;
                 document.querySelector(DOMstrings.pageRight).firstElementChild.textContent = currentPage + 1;
 
-                document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
-
                 document.querySelector(DOMstrings.pageLeft).classList.remove('active');
                 document.querySelector(DOMstrings.pageMiddle).classList.add('active');
                 document.querySelector(DOMstrings.pageRight).classList.remove('active');
+
+                document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
+                document.querySelector(DOMstrings.pageNext).classList.remove('disabled');
+                document.querySelector(DOMstrings.pageMiddle).classList.remove('disabled');
+                document.querySelector(DOMstrings.pageRight).classList.remove('disabled');
             }
 
         },
@@ -203,6 +213,13 @@ var controller = (function(model, view) {
     var setupEventListeners = function() {
         var DOM = view.getDOMstrings();
 
+        document.addEventListener('keypress', function(event) {
+            event.preventDefault();
+            if (event.keyCode === 13 || event.which === 13) {
+                search();
+            }
+        });
+
         document.querySelector(DOM.tableContent).addEventListener('click', selectElement);
         document.querySelector(DOM.btnSearch).addEventListener('click', search);
 
@@ -212,6 +229,49 @@ var controller = (function(model, view) {
         document.querySelector(DOM.pageRight).addEventListener('click', selectPage);
         document.querySelector(DOM.pageNext).addEventListener('click', selectNextPage);
         document.querySelector(DOM.pagePrev).addEventListener('click', selectPrevPage);
+    };
+
+    loadData = function() {
+        //1. load data through ajax
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/questions?page=' + (model.getCurrentPage() - 1) + '&size='+ model.getPageSize());
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                var resultData = JSON.parse(xhr.responseText);
+                model.setData(resultData);
+                view.updateDisplay(model.getContent());
+                view.updatePagination(model.getCurrentPage(), model.getTotalPages());
+            }
+        };
+        xhr.send();
+    };
+
+    var search = function(){
+        var inputsSearch = view.getInputsSearch();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/questions/search');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                var resultData = JSON.parse(xhr.responseText);
+                model.setData(resultData);
+                view.updateDisplay(model.getContent());
+                view.updatePagination(model.getCurrentPage(), model.getTotalPages());
+            }
+        };
+        var searchData = JSON.stringify({
+            page: (model.getCurrentPage() - 1),
+            size: model.getPageSize(),
+            criterion: inputsSearch.criterion,
+            requirement: inputsSearch.requirement,
+            questionDescription: inputsSearch.description
+        });
+        xhr.send(searchData);
     };
 
 
@@ -226,24 +286,19 @@ var controller = (function(model, view) {
         }
     };
 
-    var search = function(){
-        //1. Update model and UI content
-        updateDataAndUI();
-    };
-
     var selectPage = function(event){
         var current = parseInt(event.target.textContent);
         model.setCurrentPage(current);
-        view.updatePagination(model.data);
-
+        view.updatePagination(current, model.getTotalPages());
+        //search();
     };
 
     var selectPrevPage = function(){
         if( model.getCurrentPage() > 1 ) {
             var current = model.getCurrentPage() - 1;
             model.setCurrentPage(current);
-            view.updatePagination(model.data);
-            updateDataAndUI();
+            view.updatePagination(current, model.getTotalPages());
+            //search();
         }
     };
 
@@ -251,14 +306,9 @@ var controller = (function(model, view) {
         if( model.getCurrentPage() < model.getTotalPages() ) {
             var current = model.getCurrentPage() + 1;
             model.setCurrentPage(current);
-            view.updatePagination(model.data);
-            updateDataAndUI();
+            view.updatePagination(current, model.getTotalPages());
+            //search();
         }
-    };
-
-
-    var updateDataAndUI = function(){
-        //model.loadData(view.updateDisplay);
     };
 
     return {
@@ -270,6 +320,8 @@ var controller = (function(model, view) {
                 totalExp: 0,
                 percentage: -1
             });*/
+            loadData();
+
             setupEventListeners();
         }
     };

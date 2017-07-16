@@ -1,5 +1,7 @@
 package com.semvalidator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -33,6 +35,7 @@ public class Requirement extends GenericEntity{
         this.id = id;
     }
 
+    @JsonIgnore
     @Override
     public boolean isNew() {
         return (id == null ? true : false);

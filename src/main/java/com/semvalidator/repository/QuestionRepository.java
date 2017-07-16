@@ -3,6 +3,8 @@ package com.semvalidator.repository;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,4 +24,18 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     List<Question> findByRequirement(Requirement requirement);
 
     List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
+
+    Page<Question> findByRequirementAndCriterionAndDescriptionLike(
+            Requirement requirement, Criterion criterion, String description, Pageable pageable);
+
+    Page<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion, Pageable pageable);
+
+    Page<Question> findByRequirementAndDescriptionLike(Requirement requirement, String description, Pageable pageable);
+
+    Page<Question> findByCriterionAndDescriptionLike(Criterion criterion, String description, Pageable pageable);
+
+    Page<Question> findByRequirement(Requirement requirement, Pageable pageable);
+    Page<Question> findByCriterion(Criterion criterion, Pageable pageable);
+    Page<Question> findByDescriptionLike(String description, Pageable pageable);
+
 }
