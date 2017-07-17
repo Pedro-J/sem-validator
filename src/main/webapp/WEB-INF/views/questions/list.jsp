@@ -35,9 +35,9 @@
                     <c:forEach var="question" items="${questions}">
                         <tr>
                             <td><div style="width:400px">${question.description}</div></td>
-                            <td>${question.criterion.description}</td>
-                            <td>${question.requirement.description}</td>
-                            <td>${question.tip}</td>
+                            <td><div style="width:100px">${question.criterion.description}</div></td>
+                            <td><div style="width:100px">${question.requirement.description}</div></td>
+                            <td><div style="width:200px">${question.tip}</div></td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>

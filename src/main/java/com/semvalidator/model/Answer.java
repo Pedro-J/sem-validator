@@ -23,10 +23,6 @@ public class Answer extends GenericEntity{
     @JoinColumn(name = "id_question")
     private Question question;
 
-    @ManyToOne
-    @JoinColumn(name = "id_requirement")
-    private Requirement requirement;
-
     @Enumerated(EnumType.ORDINAL)
     private AnswerValue value;
 
@@ -75,17 +71,8 @@ public class Answer extends GenericEntity{
         this.value = value;
     }
 
-    public Requirement getRequirement() {
-        return requirement;
-    }
-
-    public void setRequirement(Requirement requirement) {
-        this.requirement = requirement;
-    }
-
     public void convertFromDTO(AnswerJsonDTO answer){
         this.checklist = new Checklist(answer.getChecklist());
-        this.requirement = new Requirement(answer.getRequirement());
         this.question = new Question(answer.getQuestion());
         this.value = AnswerValue.findByCode(answer.getValue());
     }

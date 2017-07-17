@@ -27,8 +27,6 @@
                         <th><s:message code="description.label" /></th>
                         <th><s:message code="objectives.label" /></th>
                         <th><s:message code="applicabilities.label" /></th>
-                        <th><s:message code="checklist.verification.label" /></th>
-                        <th><s:message code="checklist.validation.label" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
@@ -39,8 +37,6 @@
                             <td>${checklist.description}</td>
                             <td>${checklist.objectivesDesc}</td>
                             <td>${checklist.applicabilitiesDesc}</td>
-                            <td>${checklist.checklistVerification.title}</td>
-                            <td>${checklist.checklistValidation.title}</td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
@@ -55,14 +51,7 @@
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
                                         onclick="location.href='${updateUrl}'" title="${edit}"></button>
-                                <c:if test="${not empty checklist.checklistVerification}" >
-                                    <button class="btn btn-primary glyphicon glyphicon-question-sign" title="${verification}"
-                                            onclick="location.href='${verificatonAnswers}'" ></button>
-                                </c:if>
-                                <c:if test="${not empty checklist.checklistVerification}" >
-                                    <button class="btn btn-danger glyphicon glyphicon-question-sign" title="${validation}"
-                                            onclick="location.href='${validationAnswers}'" ></button>
-                                </c:if>
+
 <%--                                <button class="btn btn-danger glyphicon glyphicon-remove"
                                         onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>--%>
                             </td>

@@ -3,9 +3,6 @@ package com.semvalidator.service.impl;
 import com.semvalidator.model.Answer;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.repository.AnswerRepository;
-import com.semvalidator.repository.ModelRepository;
-import com.semvalidator.repository.QuestionRepository;
-import com.semvalidator.repository.RequirementRepository;
 import com.semvalidator.service.AnswerService;
 import com.semvalidator.util.AnswerJsonDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +23,6 @@ public class AnswerServiceImpl implements AnswerService{
 
     @Autowired
     private AnswerRepository answerRepository;
-
-    @Autowired
-    private ModelRepository modelRepository;
-
-    @Autowired
-    private RequirementRepository requirementRepository;
-
-    @Autowired
-    private QuestionRepository questionRepository;
 
     public Answer save(Answer entity) {
         return answerRepository.saveAndFlush(entity);
@@ -71,8 +59,8 @@ public class AnswerServiceImpl implements AnswerService{
             Answer answer = new Answer(dto);
 
             if( alreadyExist(answer) ){
-                answer = answerRepository.findByChecklistAndRequirementAndQuestion(
-                        answer.getChecklist(), answer.getRequirement(), answer.getQuestion() );
+                answer = answerRepository.findByChecklistAndQuestion(
+                        answer.getChecklist(), answer.getQuestion() );
                 answer.convertFromDTO(dto);
                 answerRepository.saveAndFlush(answer);
             }else {
@@ -83,19 +71,19 @@ public class AnswerServiceImpl implements AnswerService{
         answerRepository.save(answers);
     }
 
-    @Transactional(readOnly = true )
-    public List<Answer> findByChecklistOrderByRequirementAndCriterion(Checklist checklist) {
-        return answerRepository.findByChecklistOrderByRequirementAndCriterion(checklist);
+    @Override
+    public List<Answer> findByChecklist(Checklist checklist) {
+        return answerRepository.findByChecklist(checklist);
     }
 
     @Transactional(readOnly = true )
     public boolean alreadyExist(Answer answer){
-        Answer savedAnswer = answerRepository.findByChecklistAndRequirementAndQuestion(
-                answer.getChecklist(), answer.getRequirement(), answer.getQuestion());
+        Answer savedAnswer = answerRepository.findByChecklistAndQuestion(
+                answer.getChecklist(), answer.getQuestion());
+
         if( savedAnswer != null ){
             return true;
         }
-
         return false;
     }
 }

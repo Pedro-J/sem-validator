@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface AnswerService extends GenericService<Answer>{
     void saveAllDatas(List<AnswerJsonDTO> answersJson);
-    List<Answer> findByChecklistOrderByRequirementAndCriterion(Checklist checklist);
+
+    List<Answer> findByChecklist(Checklist checklist);
 }

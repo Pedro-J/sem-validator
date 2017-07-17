@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Author Created by comp-dev on 6/12/17.
@@ -23,6 +24,9 @@ public class Question extends GenericEntity{
     @ManyToOne//(optional = true)
     private Requirement requirement;
 
+    @ManyToMany(mappedBy = "questions")
+    private List<Checklist> checklists;
+
     private String description;
 
     private String tip;
@@ -39,12 +43,12 @@ public class Question extends GenericEntity{
         return this.id;
     }
 
-    @JsonIgnore
     @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @JsonIgnore
     @Override
     public boolean isNew() {
         return (id == null ? true : false);
@@ -80,5 +84,13 @@ public class Question extends GenericEntity{
 
     public void setRequirement(Requirement requirement) {
         this.requirement = requirement;
+    }
+
+    public List<Checklist> getChecklists() {
+        return checklists;
+    }
+
+    public void setChecklists(List<Checklist> checklists) {
+        this.checklists = checklists;
     }
 }

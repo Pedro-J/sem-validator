@@ -1,6 +1,5 @@
 package com.semvalidator.controllers;
 
-import com.semvalidator.editor.ChecklistPropertyEditor;
 import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.ModelSE;
@@ -48,7 +47,6 @@ public class ModelController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Checklist.class, new ChecklistPropertyEditor(checkListService));
         binder.setValidator(modelFormValidator);
     }
 
@@ -92,14 +90,12 @@ public class ModelController {
         }
     }
 
-/*    @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
     public String showQuestionDetails(@PathVariable("id") Integer id, Model model){
         ModelSE modelSE = modelService.findById(id);
-        List<Answer> answers = answerService.findByChecklistOrderByRequirementAndCriterion(modelSE);
         model.addAttribute("model", modelSE);
-        model.addAttribute("answers", answers);
         return "models/detail";
-    }*/
+    }
 
     @RequestMapping(value = "/models/{id}/delete", method = RequestMethod.POST)
     public String deleteQuestion(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
@@ -111,42 +107,6 @@ public class ModelController {
 
         return "redirect:/models/list";
     }
-
-/*    @RequestMapping(value = "/models/{id}/validation", method = RequestMethod.GET)
-    public String showAnswerValidationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        ModelSE modelSE = modelService.findById(id);
-        Checklist clValidation = checkListService.findByIdWithRequirements(
-                modelSE.getChecklistValidation().getId());
-
-        return validateAndRedirectAnswersForm(clValidation, modelSE, model, redirectAttributes);
-
-    }
-
-    @RequestMapping(value = "/models/{id}/verification", method = RequestMethod.GET)
-    public String showAnswerVerificationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        ModelSE modelSE = modelService.findById(id);
-        Checklist clVerification = checkListService.findByIdWithRequirements(
-                modelSE.getChecklistVerification().getId());
-
-
-        return validateAndRedirectAnswersForm(clVerification, modelSE, model, redirectAttributes);
-    }
-
-    private String validateAndRedirectAnswersForm(Checklist checklist, ModelSE modelSE,
-                                                  Model model, RedirectAttributes redirectAttributes){
-        if( !CollectionUtils.isEmpty(checklist.getRequirements()) ) {
-            model.addAttribute("model", modelSE);
-            model.addAttribute("checklistTitle", checklist.getTitle());
-            model.addAttribute("checklistId", checklist.getId());
-            model.addAttribute("requirements", checklist.getRequirements());
-            return "answers/form";
-        }else{
-            redirectAttributes.addFlashAttribute("msgCSS","warning");
-            redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.warn");
-            redirectAttributes.addFlashAttribute("msgContent","model.checklist.empty");
-            return "redirect:/models/list";
-        }
-    }*/
 
     private void loadForm(Model model){
         List<Checklist> clValidation = checkListService.findByChecklistType(ChecklistType.VALIDATION);

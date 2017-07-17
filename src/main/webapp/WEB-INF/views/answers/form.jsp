@@ -32,36 +32,21 @@
                 <s:message code="select.label" var="select" />
                 <form class="form-horizontal" method="POST" action="${formActionUrl}" acceptCharset="UTF-8">
                     <input id="init_value" type="hidden" value="${select}"/>
-                    <input id="id_model" type="hidden" value="${checklist.id}"/>
+                    <input id="id_checklist" type="hidden" value="${checklist.id}"/>
+
                     <div class="form-group">
                         <label class="col-sm-2"><s:message code="app.entity.checklist" />:</label>
                         <div class="col-sm-8">${checklist.title}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2"><s:message code="app.entity.checklist" />:</label>
-                        <div class="col-sm-8">${checklistTitle}</div>
+                        <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
+                        <div class="col-sm-8">${checklist.model.title}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2"><s:message code="requirements.label"/>:</label>
-                        <div class="col-sm-8">
-                            <select id="requirementSelect" class="form-control">
-                                <option value="0">--- ${select} ---</option>
-                                <c:forEach items="${requirements}" var="item">
-                                    <option value="${item.id}">${item.description}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2"><s:message code="criterions.label"/>:</label>
-                        <div id="divCriterion" class="col-sm-8">
-                            <select id="selectCriterions" class="form-control" >
-                                <option value="0">--- ${select} ---</option>
-                            </select>
-                        </div>
+                        <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
+                        <div class="col-sm-8">mais dados do modelo</div>
                     </div>
 
                     <div class="form-group">
@@ -82,6 +67,27 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <nav aria-label="..." >
+                                    <ul class="pagination">
+                                        <li class="page-item page-prev disabled">
+                                            <span class="page-link">Previous</span>
+                                        </li>
+                                        <li class="page-item page-left active">
+                                            <span class="page-link" >1</span>
+                                        </li>
+                                        <li class="page-item page-middle">
+                                            <span class="page-link">2</span>
+                                        </li>
+                                        <li class="page-item page-right">
+                                            <span class="page-link" >3</span>
+                                        </li>
+                                        <li class="page-item page-next">
+                                            <span class="page-link" >Next</span>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>

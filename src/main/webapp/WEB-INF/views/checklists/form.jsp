@@ -29,7 +29,7 @@
                     <div class="form-group ">
                         <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control " id="checklist-desc" />
+                            <input type="text" class="form-control" id="checklist-desc" />
                         </div>
                         <div class="col-sm-5"></div>
                     </div>

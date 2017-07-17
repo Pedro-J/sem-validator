@@ -21,7 +21,7 @@
             <div class="panel-body">
                 <s:url value="/models" var="formActionUrl"/>
 
-                <form:form class="form-horizontal" method="POST" modelAttribute="checklist"
+                <form:form class="form-horizontal" method="POST" modelAttribute="model"
                            action="${formActionUrl}" acceptCharset="UTF-8" enctype="multipart/form-data">
 
                     <form:hidden path="id"/>
@@ -78,34 +78,6 @@
                         </div>
                     </s:bind>
 
-                    <s:bind path="checklistVerification">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="checklist.verification.label"/>:</label>
-                            <div class="col-sm-7">
-                                <form:select path="checklistVerification" class="form-control">
-                                    <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${checklistsVerification}" itemLabel="title" itemValue="id"/>
-                                </form:select>
-                                <form:errors path="checklistVerification" class="control-label"/>
-                            </div>
-                            <div class="col-sm-3"></div>
-                        </div>
-                    </s:bind>
-
-                    <s:bind path="checklistValidation">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="checklist.validation.label"/>:</label>
-                            <div class="col-sm-7">
-                                <form:select path="checklistValidation" class="form-control">
-                                    <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${checklistsValidation}" itemLabel="title" itemValue="id"/>
-                                </form:select>
-                                <form:errors path="checklistValidation" class="control-label"/>
-                            </div>
-                            <div class="col-sm-3"></div>
-                        </div>
-                    </s:bind>
-
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="modelFile.label"/>: </label>
                         <div class="col-sm-7">
@@ -117,7 +89,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
-                                <c:when test="${checklist['new']}">
+                                <c:when test="${model['new']}">
                                     <button type="submit" class="btn btn-primary pull-right"><s:message
                                             code="general.save"/></button>
                                 </c:when>

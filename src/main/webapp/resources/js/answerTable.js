@@ -1,23 +1,16 @@
 
-var Checklist = function(title, model, type){
-    this.title = title;
-    this.model = model;
-    this.checklistType = type;
-    this.questions = [];
+var Answer = function(answerValue, checklistID, questionID){
+    this.value = answerValue;
+    this.model  = checklistID;
+    this.question = questionID;
 };
-
-Checklist.prototype.setQuestions = function(questions){
-    questions.forEach(function(current){
-        this.questions.push({id:current});
-    });
-}
 
 // Component Model
 var tableModel = (function() {
 
     var data = {
-        content: [],	  //json objects of current page
-        selectedIDs: [], //selected questions ids
+        content: [], //json objects of current page
+        answers: [],
         currentPage: 1,
         pageSize: 10,
         totalElements: 0,
@@ -26,15 +19,8 @@ var tableModel = (function() {
 
     return {
 
-        selectElement: function(id){
-            data.selectedIDs.push(id);
-        },
-        unselectElement: function(id){
-            var index = data.selectedIDs.indexOf(id);
-
-            if( index !== -1 ){
-                data.selectedIDs.splice(index, 1);
-            }
+        selectAnswer: function(value, checklistID, questionID){
+            data.answers.push(new Answer(value, checklistID, questionID));
         },
         getContent: function(){
             return data.content;
@@ -73,28 +59,15 @@ var tableModel = (function() {
 
 })();
 
-
-
-
 // Component UI
 var tableView = (function() {
 
     var DOMstrings = {
         //Search
-        inputCriterion: '.select-criterion',
-        inputRequirement: '.select-requirement',
-        inputDescription: '.input-description',
-        btnSearch: '.btn-search',
+        checklist: 'id_checklist',
 
-        //Form checklist
-        inputChecklistDesc: 'checklist-desc',
-        selectChecklistModel:'checklist-model',
-        selectChecklistType: 'checklist-type',
-
-
-        tableContent: '.ss-table-content',
+        tableContent: 'answers_questions',
         btnSave:'.btn-save',
-        btnUpdate:'.btn-update',
 
         //Pagination
         pagination: 'ul.pagination',
@@ -102,7 +75,8 @@ var tableView = (function() {
         pageMiddle:'li.page-middle',
         pageRight:'li.page-right',
         pagePrev:'li.page-prev',
-        pageNext:'li.page-next'
+        pageNext:'li.page-next',
+        selectIdPrefix:'select-q-'
     };
 
     var nodeListForEach = function(list, callback) {
@@ -111,53 +85,64 @@ var tableView = (function() {
         }
     };
 
+    var createSelect = function(idSelect, options){
+        var idSelectPrefix = DOMstrings.selectIdPrefix + idSelect;
+
+        selectHTML = document.createElement('select');
+        selectHTML.classList.add(['form-control','select-answers']);
+        selectHTML.setAttribute("id", idSelectPrefix);
+
+        options.forEach(function(option){
+            optionHTML = document.createElement('option');
+            var label = document.createTextNode(option.label);
+            optionHTML.appendChild(label);
+            optionHTML.setAttribute('value', option.value);
+
+        });
+        return selectHTML;
+    }
+
+    function createTextTD(text, colspan){
+        var td = document.createElement('td');
+        var textElement = document.createTextNode(text);
+        td.setAttribute('colspan', colspan);
+        td.appendChild(textElement);
+        return td;
+    }
+
+    function createTD(element, colspan){
+        var td = document.createElement('td');
+        td.setAttribute('colspan', colspan);
+        td.appendChild(element);
+        return td;
+    }
+
     return {
-        getInputsSearch: function() {
-            return {
-                criterion: document.querySelector(DOMstrings.inputCriterion).value,
-                description: document.querySelector(DOMstrings.inputDescription).value,
-                requirement: document.querySelector(DOMstrings.inputRequirement).value
-            };
-        },
 
         getInputsForm: function() {
             return {
-                description: document.getElementById(DOMstrings.inputChecklistDesc).value,
-                type: document.getElementById(DOMstrings.selectChecklistType).value,
-                model: document.getElementById(DOMstrings.selectChecklistModel).value
+                checklist: document.getElementById(DOMstrings.checklist).value,
             };
         },
 
-        updateDisplay: function(content, selectedIDs) {
-            var html, newHtml, tableContent;
+        updateDisplay: function(questions, answers) {
+            var html, newHtml, selectHTML, optionHTML;
             // Create HTML string with placeholder text
 
 
-            tableContent = document.querySelector(DOMstrings.tableContent);
+            tableContent = document.getElementById(DOMstrings.tableContent);
             tableContent.innerHTML = "";
 
-            content.forEach(function(obj){
+            questions.forEach(function(question){
+                var selectAnswers = createSelectAnswer(question.id, answers);
 
-                html = '<tr><td><input type="checkbox" value="%id%" %checked%></td> <td>%criterion%</td> <td>%requirement%</td> <td>%description%</td></tr>';
+                var tdQuestionLabel = createTextTD(question.description, '3');
+                var tdQuestionAnswer = createTD(selectAnswers, '1');
 
-                // Replace the placeholder text with some actual data
-                newHtml = html.replace('%id%', obj.id);
+                var trQuestion = document.createElement('tr');
 
-                newHtml = newHtml.replace('%criterion%', obj.criterion.description);
-                newHtml = newHtml.replace('%requirement%', obj.requirement.description);
-                newHtml = newHtml.replace('%description%', obj.description);
-
-                if( selectedIDs.indexOf(parseInt(obj.id)) !== -1 ){
-                    newHtml = newHtml.replace('%checked%', 'checked');
-                }else{
-                    newHtml = newHtml.replace('%checked%', '');
-                }
-
-                newHtml = newHtml.replace('%checked%', obj.description);
-
-                // Insert the HTML into the DOM
-                tableContent.insertAdjacentHTML('beforeend', newHtml);
-
+                trQuestion.appendChild(tdQuestionLabel).appendChild(tdQuestionAnswer);
+                tableContent.appendChild(trQuestion);
             });
 
         },
@@ -223,20 +208,14 @@ var controller = (function(model, view) {
     var setupEventListeners = function() {
         var DOM = view.getDOMstrings();
 
-        //Search execution events
-        document.querySelector(DOM.btnSearch).addEventListener('click', search);
         document.addEventListener('keypress', function(event) {
             event.preventDefault();
             if (event.keyCode === 13 || event.which === 13) {
-                search();
+
             }
         });
 
-        //Save button
-        document.querySelector(DOM.btnSave).addEventListener('click', save);
-
-        //Table select/unselect elements event
-        document.querySelector(DOM.tableContent).addEventListener('click', selectElement);
+        document.querySelector(DOM.tableContent).addEventListener('change', selectAnswer);
 
         //Pagination events
         document.querySelector(DOM.pageLeft).addEventListener('click', selectPage);
@@ -246,67 +225,61 @@ var controller = (function(model, view) {
         document.querySelector(DOM.pagePrev).addEventListener('click', selectPrevPage);
     };
 
-    loadData = function() {
+    //Insert answer in the model
+    var selectAnswer = function(event){
+        console.log('changed element: ' + event.target);
+
+        if( event.target.tagName === 'SELECT' ){
+            //model.selectAnswer(parseInt(event.target.value));
+        }
+    };
+
+    loadAnswersTypes = function(questionsResultData) {
         //1. load data through ajax
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/questions?page=' + (model.getCurrentPage() - 1) + '&size='+ model.getPageSize());
+        xhr.open('GET', '/answers/types');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 //2. Update model and UI
-                console.log(xhr.responseText);
-                var resultData = JSON.parse(xhr.responseText);
-                model.setData(resultData);
-                view.updateDisplay(model.getContent(), model.getSelectedIDs());
+                //console.log(xhr.responseText);
+                var answersTypes = JSON.parse(xhr.responseText);
+                view.updateDisplay(questionsResultData, answersTypes);
                 view.updatePagination(model.getCurrentPage(), model.getTotalPages());
             }
         };
         xhr.send();
     };
 
-    var search = function(){
-        var inputsSearch = view.getInputsSearch();
+    loadQuestions = function(){
 
+        var params = '?page='+model.getCurrentPage() + '&size' + model.getPageSize();
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/questions/search');
+        xhr.open('GET', '/checklists/' + view.getInputsForm().checklist + '/questions' + params);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
+                //2. Update model and UI
+                //console.log(xhr.responseText);
                 var resultData = JSON.parse(xhr.responseText);
                 model.setData(resultData);
-                view.updateDisplay(model.getContent(), model.getSelectedIDs());
-                view.updatePagination(model.getCurrentPage(), model.getTotalPages());
+                loadAnswersTypes(resultData);
             }
         };
-        var searchData = JSON.stringify({
-            page: (model.getCurrentPage() - 1),
-            size: model.getPageSize(),
-            criterion: inputsSearch.criterion,
-            requirement: inputsSearch.requirement,
-            questionDescription: inputsSearch.description
-        });
-        xhr.send(searchData);
+        xhr.send();
     };
 
-    //Insert/remove id in/from the model
-    var selectElement = function(event){
-        if( event.target.type === 'checkbox' ){
-            if( event.target.checked ) {
-                model.selectElement(parseInt(event.target.value));
-            }else{
-                model.unselectElement(parseInt(event.target.value));
-            }
-        }
-    };
+    loadData = function(){
+        loadQuestions();
+    }
 
     var selectPage = function(event){
         if( !event.target.parentNode.classList.contains('disabled') ) {
             var current = parseInt(event.target.textContent);
             model.setCurrentPage(current);
             view.updatePagination(current, model.getTotalPages());
-            search();
+            loadData();
         }
     };
 
@@ -315,7 +288,7 @@ var controller = (function(model, view) {
             var current = model.getCurrentPage() - 1;
             model.setCurrentPage(current);
             view.updatePagination(current, model.getTotalPages());
-            search();
+            loadData();
         }
     };
 
@@ -324,29 +297,9 @@ var controller = (function(model, view) {
             var current = model.getCurrentPage() + 1;
             model.setCurrentPage(current);
             view.updatePagination(current, model.getTotalPages());
-            search();
+            loadData();
         }
     };
-
-    var save = function(){
-        var inputs = view.getInputsForm();
-        var checklist = new Checklist(inputs.description, inputs.model, inputs.type);
-        checklist.setQuestions(model.getSelectedIDs());
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/checklists');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                var resultData = JSON.parse(xhr.responseText);
-            }
-        };
-        var checklistJSON = JSON.stringify(checklist);
-
-        xhr.send(checklistJSON);
-
-    }
 
     return {
         init: function() {

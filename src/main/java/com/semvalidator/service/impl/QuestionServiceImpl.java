@@ -114,8 +114,14 @@ public class QuestionServiceImpl implements QuestionService{
             result = questionRepository.findByCriterion(criterion, pageable);
         }else if( description != null ){
             result = questionRepository.findByDescriptionLike(description, pageable);
+        }else{
+            result = questionRepository.findAll(pageable);
         }
         return result;
+    }
+
+    public Page<Question> findByChecklist(Integer id, Pageable pageable) {
+        return questionRepository.findByChecklist(id, pageable);
     }
 
 }

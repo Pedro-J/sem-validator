@@ -5,6 +5,7 @@ import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
 import com.semvalidator.util.SearchQuestionParamsDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface QuestionService extends GenericService<Question>{
     List<Question> findByRequirement(Requirement requirement);
     List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
     Page<Question> search(SearchQuestionParamsDTO search);
+    Page<Question> findByChecklist(Integer id, Pageable pageable);
 }

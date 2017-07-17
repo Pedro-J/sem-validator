@@ -46,7 +46,40 @@
                         </c:forEach>
                     </div>
                 </div>
-                
+                <div class="row"><br/></div>
+
+                <div class="row">
+                    <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
+                        <div class="panel-heading text-center">
+                            <h5><s:message code="answers.label"/></h5>
+                        </div>
+                        <div class="panel-body ">
+                            <div id="questionsContainer" class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="3"><s:message code="app.entity.question" /> </th>
+                                        <th colspan="1"><s:message code="app.entity.answer" /> </th>
+                                        <th colspan="1"><s:message code="app.entity.requirement" /> </th>
+                                        <th colspan="1"><s:message code="app.entity.criterion" /> </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="answer" items="${answers}" >
+                                        <tr>
+                                            <td colspan="3">* ${answer.question.number} - ${answer.question.description}</td>
+                                            <td colspan="1"><s:message code="${answer.value.messageCode}" /></td>
+                                            <td colspan="1">${answer.requirement.description}</td>
+                                            <td colspan="1">${answer.question.criterion.description}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="panel-footer text-center" >
                 <c:url value="/" var="app_context" />

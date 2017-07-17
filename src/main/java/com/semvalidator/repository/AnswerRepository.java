@@ -1,9 +1,9 @@
 package com.semvalidator.repository;
 
-import com.semvalidator.model.*;
+import com.semvalidator.model.Answer;
+import com.semvalidator.model.Checklist;
+import com.semvalidator.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,8 +13,10 @@ import java.util.List;
  */
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Integer>{
-    Answer findByChecklistAndRequirementAndQuestion(Checklist checklist, Requirement requirement, Question question);
+    Answer findByChecklistAndQuestion(Checklist checklist, Question question);
 
-    @Query("select a from Answer a where a.checklist = :checklist order by a.requirement.description,a.question.criterion.description")
-    List<Answer> findByChecklistOrderByRequirementAndCriterion(@Param("checklist") Checklist checklist);
+/*    @Query("select a from Answer a where a.checklist = :checklist order by a.requirement.description,a.question.criterion.description")
+    List<Answer> findByChecklistOrderByRequirementAndCriterion(@Param("checklist") Checklist checklist);*/
+
+    List<Answer> findByChecklist(Checklist checklist);
 }
