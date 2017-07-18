@@ -55,9 +55,18 @@ public class ChecklistController {
     private ChecklistFormValidator checklistFormValidator;
 
     @RequestMapping(value = "/checklists/list", method = RequestMethod.GET)
-    public ModelAndView showAllChecklists(){
+    public ModelAndView showAllChecklists(
+            @RequestParam(value = "success", required = false) boolean success){
+
         ModelAndView modelAndView = new ModelAndView("checklists/list");
         modelAndView.addObject("checklists", checkListService.findAll());
+
+        if( success ){
+            modelAndView.addObject("msgCSS","success");
+            modelAndView.addObject("msgTitle","general.msg.title.info");
+            modelAndView.addObject("msgContent","general.msg.save");
+        }
+
         return modelAndView;
     }
 
@@ -68,6 +77,7 @@ public class ChecklistController {
         model.addAttribute("questions", questionService.findAll());
         model.addAttribute("requirements", requirementService.findAll());
         model.addAttribute("models", modelService.findAll());
+        model.addAttribute("newChecklist", true);
         return "checklists/form";
     }
 
@@ -75,6 +85,7 @@ public class ChecklistController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
         model.addAttribute("checklist", checkListService.findById(id));
         model.addAttribute("checklistTypes", ChecklistType.values());
+        model.addAttribute("newChecklist", false);
         return "checklists/form";
     }
 

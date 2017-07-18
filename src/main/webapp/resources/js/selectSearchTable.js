@@ -6,10 +6,12 @@ var Checklist = function(title, model, type){
     this.questions = [];
 };
 
-Checklist.prototype.setQuestions = function(questions){
-    questions.forEach(function(current){
-        this.questions.push({id:current});
+Checklist.prototype.setQuestions = function(data){
+    this.questions = data.map(function(current){
+        return {id:current};
     });
+
+    console.log(this.questions);
 }
 
 // Component Model
@@ -91,6 +93,9 @@ var tableView = (function() {
         selectChecklistModel:'checklist-model',
         selectChecklistType: 'checklist-type',
 
+        messageDesc: '.desc-message',
+        messageType: '.type-message',
+        messageModel: '.model-message',
 
         tableContent: '.ss-table-content',
         btnSave:'.btn-save',
@@ -125,6 +130,14 @@ var tableView = (function() {
                 description: document.getElementById(DOMstrings.inputChecklistDesc).value,
                 type: document.getElementById(DOMstrings.selectChecklistType).value,
                 model: document.getElementById(DOMstrings.selectChecklistModel).value
+            };
+        },
+
+        getMessagesForm: function() {
+            return {
+                description: document.querySelector(DOMstrings.messageDesc),
+                type: document.querySelector(DOMstrings.messageType),
+                model: document.querySelector(DOMstrings.messageModel)
             };
         },
 
@@ -225,9 +238,11 @@ var controller = (function(model, view) {
 
         //Search execution events
         document.querySelector(DOM.btnSearch).addEventListener('click', search);
+
         document.addEventListener('keypress', function(event) {
-            event.preventDefault();
+
             if (event.keyCode === 13 || event.which === 13) {
+                event.preventDefault();
                 search();
             }
         });
@@ -328,9 +343,15 @@ var controller = (function(model, view) {
         }
     };
 
-    var save = function(){
+    var save = function(event){
+        event.preventDefault();
+
+        if( !isFormValid() ){
+            return;
+        }
+
         var inputs = view.getInputsForm();
-        var checklist = new Checklist(inputs.description, inputs.model, inputs.type);
+        var checklist = new Checklist(inputs.description, {id:inputs.model}, inputs.type);
         checklist.setQuestions(model.getSelectedIDs());
 
         var xhr = new XMLHttpRequest();
@@ -338,13 +359,49 @@ var controller = (function(model, view) {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                var resultData = JSON.parse(xhr.responseText);
+                //console.log(xhr.responseText);
+                window.location.replace("/checklists/list?success=true");
             }
         };
         var checklistJSON = JSON.stringify(checklist);
+        //console.log('checklist json: '+ checklistJSON);
 
         xhr.send(checklistJSON);
+
+    };
+
+    var isFormValid = function(){
+        var inputs = view.getInputsForm();
+        var messages = view.getMessagesForm();
+
+        if( inputs.description === '' ){
+            messages.description.style.display = 'block';
+            messages.description.parentNode.parentNode.classList.add('has-error');
+            return false;
+        }else{
+            messages.description.style.display = 'none';
+            messages.description.parentNode.parentNode.classList.remove('has-error');
+        }
+
+        if( inputs.type === '' ){
+            messages.type.style.display = 'block';
+            messages.type.parentNode.parentNode.classList.add('has-error');
+            return false;
+        }else{
+            messages.type.style.display = 'none';
+            messages.type.parentNode.parentNode.classList.remove('has-error');
+        }
+
+        if( inputs.model === '' ){
+            messages.model.style.display = 'block';
+            messages.model.parentNode.parentNode.classList.add('has-error');
+            return false;
+        }else{
+            messages.model.style.display = 'none';
+            messages.model.parentNode.parentNode.classList.remove('has-error');
+        }
+
+        return true;
 
     }
 

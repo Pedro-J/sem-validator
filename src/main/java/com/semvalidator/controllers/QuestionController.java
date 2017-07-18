@@ -8,7 +8,7 @@ import com.semvalidator.model.Requirement;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.service.RequirementService;
-import com.semvalidator.util.RequestErrorException;
+import com.semvalidator.exception.RequestErrorException;
 import com.semvalidator.util.SearchQuestionParamsDTO;
 import com.semvalidator.validation.QuestionFormValidator;
 import org.slf4j.Logger;
@@ -71,7 +71,8 @@ public class QuestionController {
     public @ResponseBody Page<Question> getAllUsers(
             @RequestParam("page") Integer page, @RequestParam("size") Integer size){
         Pageable pageable = new PageRequest(page, size);
-        return questionService.findAllPageable(pageable);
+        Page<Question> questions =  questionService.findAllPageable(pageable);
+        return questions;
     }
 
     @RequestMapping(value = "/questions/search", method = RequestMethod.POST)

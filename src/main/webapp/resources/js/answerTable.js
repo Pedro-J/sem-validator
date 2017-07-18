@@ -1,7 +1,7 @@
 
 var Answer = function(answerValue, checklistID, questionID){
     this.value = answerValue;
-    this.model  = checklistID;
+    this.checklist = checklistID;
     this.question = questionID;
 };
 
@@ -25,8 +25,8 @@ var tableModel = (function() {
         getContent: function(){
             return data.content;
         },
-        getSelectedIDs: function(){
-            return data.selectedIDs;
+        getAnswers: function(){
+            return data.answers;
         },
         setCurrentPage: function(value){
             data.currentPage = value;
@@ -50,7 +50,7 @@ var tableModel = (function() {
         },
         print: function() {
             console.log('Content: '+ data.content);
-            console.log('Selected IDs: ' + data.selectedIDs);
+            console.log('Answers IDs: ' + JSON.stringify(data.answers));
             console.log('Current Page: '+ data.currentPage);
             console.log('Total Pages: ' + data.totalPages);
             console.log('Total Elements: ' + data.totalElements);
@@ -89,7 +89,8 @@ var tableView = (function() {
         var idSelectPrefix = DOMstrings.selectIdPrefix + idSelect;
 
         selectHTML = document.createElement('select');
-        selectHTML.classList.add(['form-control','select-answers']);
+        selectHTML.classList.add('select-answers');
+        selectHTML.classList.add('form-control');
         selectHTML.setAttribute("id", idSelectPrefix);
 
         options.forEach(function(option){
@@ -97,18 +98,11 @@ var tableView = (function() {
             var label = document.createTextNode(option.label);
             optionHTML.appendChild(label);
             optionHTML.setAttribute('value', option.value);
-
+            selectHTML.appendChild(optionHTML);
         });
         return selectHTML;
     }
 
-    function createTextTD(text, colspan){
-        var td = document.createElement('td');
-        var textElement = document.createTextNode(text);
-        td.setAttribute('colspan', colspan);
-        td.appendChild(textElement);
-        return td;
-    }
 
     function createTD(element, colspan){
         var td = document.createElement('td');
@@ -133,15 +127,20 @@ var tableView = (function() {
             tableContent = document.getElementById(DOMstrings.tableContent);
             tableContent.innerHTML = "";
 
+            console.log(questions);
             questions.forEach(function(question){
-                var selectAnswers = createSelectAnswer(question.id, answers);
+                var selectAnswers = createSelect(question.id, answers);
 
-                var tdQuestionLabel = createTextTD(question.description, '3');
-                var tdQuestionAnswer = createTD(selectAnswers, '1');
+                var colspanQuestion = '3';
+                var tdQuestionLabel = createTD(document.createTextNode(question.description), colspanQuestion);
+
+                var colspanAnswer = '1';
+                var tdQuestionAnswer = createTD(selectAnswers, colspanAnswer);
 
                 var trQuestion = document.createElement('tr');
 
-                trQuestion.appendChild(tdQuestionLabel).appendChild(tdQuestionAnswer);
+                trQuestion.appendChild(tdQuestionLabel);
+                trQuestion.appendChild(tdQuestionAnswer);
                 tableContent.appendChild(trQuestion);
             });
 
@@ -215,7 +214,7 @@ var controller = (function(model, view) {
             }
         });
 
-        document.querySelector(DOM.tableContent).addEventListener('change', selectAnswer);
+        document.getElementById(DOM.tableContent).addEventListener('change', selectAnswer);
 
         //Pagination events
         document.querySelector(DOM.pageLeft).addEventListener('click', selectPage);
@@ -227,10 +226,14 @@ var controller = (function(model, view) {
 
     //Insert answer in the model
     var selectAnswer = function(event){
-        console.log('changed element: ' + event.target);
+        var idPrefix = view.getDOMstrings().selectIdPrefix;
+
+        var checklistID = parseInt(view.getInputsForm().checklist);
+        var questionID = parseInt(event.target.id.replace(idPrefix,''));
+        var answerValueID = parseInt(event.target.value);
 
         if( event.target.tagName === 'SELECT' ){
-            //model.selectAnswer(parseInt(event.target.value));
+            model.selectAnswer(answerValueID, checklistID, questionID);
         }
     };
 
@@ -254,17 +257,17 @@ var controller = (function(model, view) {
 
     loadQuestions = function(){
 
-        var params = '?page='+model.getCurrentPage() + '&size' + model.getPageSize();
+        var params = '?page='+(model.getCurrentPage()-1) + '&size=' + model.getPageSize();
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/checklists/' + view.getInputsForm().checklist + '/questions' + params);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 //2. Update model and UI
-                //console.log(xhr.responseText);
+                console.log(xhr.responseText);
                 var resultData = JSON.parse(xhr.responseText);
                 model.setData(resultData);
-                loadAnswersTypes(resultData);
+                loadAnswersTypes(model.getContent());
             }
         };
         xhr.send();
@@ -313,3 +316,8 @@ var controller = (function(model, view) {
 
 
 controller.init();
+
+
+var td = document.createElement('td');
+console.log('td:' + typeof td);
+td.setAttribute('colspan', '1');

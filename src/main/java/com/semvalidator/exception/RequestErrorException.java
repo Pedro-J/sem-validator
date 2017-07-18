@@ -1,4 +1,4 @@
-package com.semvalidator.util;
+package com.semvalidator.exception;
 
 /**
  * @Author Created by Pedro-J on 7/15/17.

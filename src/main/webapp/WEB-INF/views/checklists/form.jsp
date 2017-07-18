@@ -14,7 +14,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <c:choose>
-                    <c:when test="${checklist['new']}">
+                    <c:when test="${newChecklist}">
                         <h4><s:message code="checklist.add.title"/></h4>
                     </c:when>
                     <c:otherwise>
@@ -30,6 +30,9 @@
                         <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
                         <div class="col-sm-5">
                             <input type="text" class="form-control" id="checklist-desc" />
+                            <span class="form-control alert-danger desc-message" style="display: none">
+                                <s:message code="form.notEmpty.description" />
+                            </span>
                         </div>
                         <div class="col-sm-5"></div>
                     </div>
@@ -37,13 +40,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="checklistType.label"/>:</label>
                         <div class="col-sm-5">
-                            <select class="form-control" id="checklist-type">
-                                <option value="0" label="--- Select ---"/>
+                            <select class="form-control" id="checklist-type" >
+                                <option value="" label="--- Select ---"/>
                                 <c:forEach items="${checklistTypes}" var="item" >
                                     <s:message code="${item.messageCode}" var="typeDescription"/>
                                     <option value="${item}" label="${typeDescription}" />
                                 </c:forEach>
                             </select>
+                            <span class="form-control alert-danger type-message" style="display: none">
+                                <s:message code="form.type.required" />
+                            </span>
                         </div>
                         <div class="col-sm-5"></div>
                     </div>
@@ -51,12 +57,15 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="app.entity.model"/>:</label>
                         <div class="col-sm-5">
-                            <select class="form-control" id="checklist-model">
-                                <option value="0" label="--- Select ---"/>
+                            <select class="form-control" id="checklist-model" >
+                                <option value="" label="--- Select ---"/>
                                 <c:forEach items="${models}" var="item" >
                                     <option value="${item.id}" label="${item.title}" />
                                 </c:forEach>
                             </select>
+                            <span class="form-control alert-danger model-message" style="display: none">
+                                <s:message code="form.model.required" />
+                            </span>
                         </div>
                         <div class="col-sm-5"></div>
                     </div>
@@ -129,7 +138,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
-                                <c:when test="${checklist['new']}">
+                                <c:when test="${newChecklist}">
                                     <button type="submit" class="btn btn-primary pull-right btn-save"><s:message
                                             code="general.save"/></button>
                                 </c:when>

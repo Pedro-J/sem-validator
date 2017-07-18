@@ -24,6 +24,7 @@ public class Question extends GenericEntity{
     @ManyToOne//(optional = true)
     private Requirement requirement;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "questions")
     private List<Checklist> checklists;
 
