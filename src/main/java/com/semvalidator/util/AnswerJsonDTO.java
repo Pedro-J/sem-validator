@@ -7,7 +7,6 @@ public class AnswerJsonDTO {
     private Integer value;
     private Integer question;
     private Integer checklist;
-    private Integer requirement;
 
     public Integer getQuestion() {
         return question;
@@ -31,12 +30,5 @@ public class AnswerJsonDTO {
 
     public void setValue(Integer value) {
         this.value = value;
-    }
-
-    public Integer getRequirement() {
-        return requirement;
-    }
-    public void setRequirement(Integer requirement) {
-        this.requirement = requirement;
     }
 }

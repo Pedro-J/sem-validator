@@ -19,4 +19,6 @@ public interface QuestionService extends GenericService<Question>{
     List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
     Page<Question> search(SearchQuestionParamsDTO search);
     Page<Question> findByChecklist(Integer id, Pageable pageable);
+
+    List<Question> findByChecklist(Integer id);
 }

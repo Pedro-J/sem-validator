@@ -11,14 +11,19 @@ var tableModel = (function() {
     var data = {
         content: [], //json objects of current page
         answers: [],
+        answersType:[],
         currentPage: 1,
         pageSize: 10,
-        totalElements: 0,
-        totalPages: 1,
+        totalElements: 0
     };
 
     return {
+        getCurrentData: function(){
+            var start = (this.getCurrentPage() - 1) * this.getPageSize();
+            var end = (this.getCurrentPage() * this.getPageSize()) - 1;
 
+            return data.content.slice(start, end);
+        },
         selectAnswer: function(value, checklistID, questionID){
             data.answers.push(new Answer(value, checklistID, questionID));
         },
@@ -41,12 +46,39 @@ var tableModel = (function() {
             return data.totalElements;
         },
         getTotalPages: function(){
-            return data.totalPages;
+            var totalSize = data.content.length;
+
+            if( totalSize === 0){
+                return 0;
+            }else if( totalSize > 0 && totalSize < this.getPageSize() ){
+                return 1;
+            }else if( (totalSize % this.getPageSize()) === 0){
+                return (totalSize / this.getPageSize());
+            }else if( (totalSize % this.getPageSize()) !== 0){
+                return (Math.floor((totalSize / this.getPageSize())) + 1);
+            }
         },
-        setData:function(resultData){
-            data.content = resultData.content;
-            data.totalElements = resultData.totalElements;
-            data.totalPages = resultData.totalPages;
+        setData: function(resultData){
+            data.content = resultData;
+            data.totalElements = resultData.length;
+        },
+        getAnswersType: function(){
+            return data.answersType;
+        },
+        setAnswersType: function(answersType){
+            data.answersType = answersType;
+        },
+        findAnswerByQuestionID: function(questionID){
+            var wantedAnswer = null;
+
+            for(var i = 0; i < data.answers.length; i++){
+                if( data.answers[i].question === questionID){
+                    wantedAnswer = data.answers[i];
+                    break;
+                }
+            }
+
+            return wantedAnswer;
         },
         print: function() {
             console.log('Content: '+ data.content);
@@ -79,13 +111,7 @@ var tableView = (function() {
         selectIdPrefix:'select-q-'
     };
 
-    var nodeListForEach = function(list, callback) {
-        for (var i = 0; i < list.length; i++) {
-            callback(list[i], i);
-        }
-    };
-
-    var createSelect = function(idSelect, options){
+    var createSelect = function(idSelect, options, answerChoosed){
         var idSelectPrefix = DOMstrings.selectIdPrefix + idSelect;
 
         selectHTML = document.createElement('select');
@@ -98,104 +124,128 @@ var tableView = (function() {
             var label = document.createTextNode(option.label);
             optionHTML.appendChild(label);
             optionHTML.setAttribute('value', option.value);
+
+            if( answerChoosed !== null && answerChoosed.value === option.value){
+                optionHTML.setAttribute('selected', 'selected');
+            }
+
             selectHTML.appendChild(optionHTML);
         });
+
         return selectHTML;
-    }
+    };
 
-
-    function createTD(element, colspan){
+    var createTD = function (element, colspan){
         var td = document.createElement('td');
         td.setAttribute('colspan', colspan);
         td.appendChild(element);
         return td;
-    }
+    };
+
+    var updateTable = function(model) {
+        var html, newHtml, selectHTML, optionHTML;
+
+        var questions = model.getCurrentData();
+        var answers = model.getAnswersType();
+
+        tableContent = document.getElementById(DOMstrings.tableContent);
+        tableContent.innerHTML = "";
+
+        questions.forEach(function(question){
+
+            var selectAnswers = null;
+
+            var answerChoosed = model.findAnswerByQuestionID(question.id);
+
+            selectAnswers = createSelect(question.id, answers, answerChoosed);
+
+            var colspanQuestion = '3';
+            var tdQuestionLabel = createTD(document.createTextNode(question.description), colspanQuestion);
+
+            var colspanAnswer = '1';
+            var tdQuestionAnswer = createTD(selectAnswers, colspanAnswer);
+
+            var trQuestion = document.createElement('tr');
+
+            trQuestion.appendChild(tdQuestionLabel);
+            trQuestion.appendChild(tdQuestionAnswer);
+            tableContent.appendChild(trQuestion);
+        });
+
+    };
+
+    var updatePagination = function(model){
+
+        var currentPage = model.getCurrentPage();
+        var maxPage = model.getTotalPages();
+        var minPage = 1;
+
+        document.querySelector(DOMstrings.pagination).classList.remove('hide');
+
+        if( maxPage == minPage ){
+            document.querySelector(DOMstrings.pagination).classList.add('hide');
+        }else if( maxPage == 2){
+            document.querySelector(DOMstrings.pageRight).classList.add('disabled');
+
+            if( currentPage == maxPage)
+                document.querySelector(DOMstrings.pageNext).classList.add('disabled');
+            else
+                document.querySelector(DOMstrings.pageNext).classList.remove('disabled');
+        }else{
+            document.querySelector(DOMstrings.pageRight).classList.remove('disabled');
+            document.querySelector(DOMstrings.pageNext).classList.remove('disabled');
+        }
+
+        if( currentPage === minPage){
+            document.querySelector(DOMstrings.pageLeft).classList.add('active');
+            document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
+            document.querySelector(DOMstrings.pageRight).classList.remove('active');
+
+            document.querySelector(DOMstrings.pagePrev).classList.add('disabled');
+
+        } else if( currentPage === maxPage && maxPage > 2){
+            document.querySelector(DOMstrings.pageLeft).classList.remove('active');
+            document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
+            document.querySelector(DOMstrings.pageRight).classList.add('active');
+
+            document.querySelector(DOMstrings.pageNext).classList.add('disabled');
+            document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
+        }else if( currentPage > 1) {
+            document.querySelector(DOMstrings.pageLeft).firstElementChild.textContent = currentPage - 1;
+            document.querySelector(DOMstrings.pageMiddle).firstElementChild.textContent = currentPage;
+            document.querySelector(DOMstrings.pageRight).firstElementChild.textContent = currentPage + 1;
+
+            document.querySelector(DOMstrings.pageLeft).classList.remove('active');
+            document.querySelector(DOMstrings.pageMiddle).classList.add('active');
+            document.querySelector(DOMstrings.pageRight).classList.remove('active');
+
+            document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
+        }
+    };
+
+    var nodeListForEach = function(list, callback) {
+        for (var i = 0; i < list.length; i++) {
+            callback(list[i], i);
+        }
+    };
 
     return {
 
-        getInputsForm: function() {
+        getInputsForm: function () {
             return {
                 checklist: document.getElementById(DOMstrings.checklist).value,
             };
         },
 
-        updateDisplay: function(questions, answers) {
-            var html, newHtml, selectHTML, optionHTML;
-            // Create HTML string with placeholder text
-
-
-            tableContent = document.getElementById(DOMstrings.tableContent);
-            tableContent.innerHTML = "";
-
-            console.log(questions);
-            questions.forEach(function(question){
-                var selectAnswers = createSelect(question.id, answers);
-
-                var colspanQuestion = '3';
-                var tdQuestionLabel = createTD(document.createTextNode(question.description), colspanQuestion);
-
-                var colspanAnswer = '1';
-                var tdQuestionAnswer = createTD(selectAnswers, colspanAnswer);
-
-                var trQuestion = document.createElement('tr');
-
-                trQuestion.appendChild(tdQuestionLabel);
-                trQuestion.appendChild(tdQuestionAnswer);
-                tableContent.appendChild(trQuestion);
-            });
-
-        },
-
-        updatePagination: function(currentPage, maxPage){
-            var minPage = 1;
-
-
-            document.querySelector(DOMstrings.pagination).classList.remove('hide');
-
-            if( maxPage == minPage ){
-                document.querySelector(DOMstrings.pagination).classList.add('hide');
-            }else if( maxPage == 2){
-                document.querySelector(DOMstrings.pageRight).classList.add('disabled');
-
-                if( currentPage == maxPage)
-                    document.querySelector(DOMstrings.pageNext).classList.add('disabled');
-                else
-                    document.querySelector(DOMstrings.pageNext).classList.remove('disabled');
-            }else{
-                document.querySelector(DOMstrings.pageRight).classList.remove('disabled');
-                document.querySelector(DOMstrings.pageNext).classList.remove('disabled');
-            }
-
-            if( currentPage === minPage){
-                document.querySelector(DOMstrings.pageLeft).classList.add('active');
-                document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
-                document.querySelector(DOMstrings.pageRight).classList.remove('active');
-
-                document.querySelector(DOMstrings.pagePrev).classList.add('disabled');
-
-            } else if( currentPage === maxPage && maxPage > 2){
-                document.querySelector(DOMstrings.pageLeft).classList.remove('active');
-                document.querySelector(DOMstrings.pageMiddle).classList.remove('active');
-                document.querySelector(DOMstrings.pageRight).classList.add('active');
-
-                document.querySelector(DOMstrings.pageNext).classList.add('disabled');
-                document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
-            }else if( currentPage > 1) {
-                document.querySelector(DOMstrings.pageLeft).firstElementChild.textContent = currentPage - 1;
-                document.querySelector(DOMstrings.pageMiddle).firstElementChild.textContent = currentPage;
-                document.querySelector(DOMstrings.pageRight).firstElementChild.textContent = currentPage + 1;
-
-                document.querySelector(DOMstrings.pageLeft).classList.remove('active');
-                document.querySelector(DOMstrings.pageMiddle).classList.add('active');
-                document.querySelector(DOMstrings.pageRight).classList.remove('active');
-
-                document.querySelector(DOMstrings.pagePrev).classList.remove('disabled');
-            }
-        },
-
-        getDOMstrings: function() {
+        getDOMstrings: function () {
             return DOMstrings;
+        },
+
+        updateDisplay: function (model) {
+            updateTable(model);
+            updatePagination(model);
         }
+
     };
 
 })();
@@ -214,6 +264,7 @@ var controller = (function(model, view) {
             }
         });
 
+        document.querySelector(DOM.btnSave).addEventListener('click', saveAnswers);
         document.getElementById(DOM.tableContent).addEventListener('change', selectAnswer);
 
         //Pagination events
@@ -237,71 +288,81 @@ var controller = (function(model, view) {
         }
     };
 
-    loadAnswersTypes = function(questionsResultData) {
-        //1. load data through ajax
+    //1. Load answer type data through ajax
+    //2. On success -> Update model and view
+    loadAnswersTypes = function(view) {
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/answers/types');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
-                //2. Update model and UI
-                //console.log(xhr.responseText);
                 var answersTypes = JSON.parse(xhr.responseText);
-                view.updateDisplay(questionsResultData, answersTypes);
-                view.updatePagination(model.getCurrentPage(), model.getTotalPages());
+                model.setAnswersType(answersTypes);
+                view.updateDisplay(model);
             }
         };
         xhr.send();
     };
 
-    loadQuestions = function(){
+    //1. Load questions data through ajax
+    //2. On success -> Update model and load answers
+    loadQuestions = function(callback, view){
 
-        var params = '?page='+(model.getCurrentPage()-1) + '&size=' + model.getPageSize();
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/checklists/' + view.getInputsForm().checklist + '/questions' + params);
+        xhr.open('GET', '/checklists/' + view.getInputsForm().checklist + '/questions');
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
-                //2. Update model and UI
-                console.log(xhr.responseText);
                 var resultData = JSON.parse(xhr.responseText);
                 model.setData(resultData);
-                loadAnswersTypes(model.getContent());
+                callback(view);
             }
         };
         xhr.send();
     };
 
     loadData = function(){
-        loadQuestions();
+        loadQuestions(loadAnswersTypes, view);
     }
 
     var selectPage = function(event){
-        if( !event.target.parentNode.classList.contains('disabled') ) {
-            var current = parseInt(event.target.textContent);
-            model.setCurrentPage(current);
-            view.updatePagination(current, model.getTotalPages());
-            loadData();
-        }
+        updatePage(event, parseInt(event.target.textContent));
     };
 
     var selectPrevPage = function(event){
-        if( !event.target.parentNode.classList.contains('disabled')) {
-            var current = model.getCurrentPage() - 1;
-            model.setCurrentPage(current);
-            view.updatePagination(current, model.getTotalPages());
-            loadData();
-        }
+        updatePage(event, model.getCurrentPage() - 1);
     };
 
     var selectNextPage = function(event){
+        updatePage(event, model.getCurrentPage() + 1);
+    };
+
+    var updatePage = function(event, pageNumber){
         if( !event.target.parentNode.classList.contains('disabled') ) {
-            var current = model.getCurrentPage() + 1;
-            model.setCurrentPage(current);
-            view.updatePagination(current, model.getTotalPages());
-            loadData();
+            model.setCurrentPage(pageNumber);
+            view.updateDisplay(model);
         }
+    };
+
+    var saveAnswers = function(event){
+        event.preventDefault();
+
+        var answersJSON = JSON.stringify(model.getAnswers());
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/answers');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+                //window.location.replace('/checklists/'+ view.getInputsForm().checklist);
+            }
+        };
+
+        xhr.send(answersJSON);
+
+        console.log(answersJSON);
     };
 
     return {
@@ -314,10 +375,4 @@ var controller = (function(model, view) {
 
 })(tableModel, tableView);
 
-
 controller.init();
-
-
-var td = document.createElement('td');
-console.log('td:' + typeof td);
-td.setAttribute('colspan', '1');

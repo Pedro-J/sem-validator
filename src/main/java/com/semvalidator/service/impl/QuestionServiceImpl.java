@@ -124,4 +124,9 @@ public class QuestionServiceImpl implements QuestionService{
         return questionRepository.findByChecklist(id, pageable);
     }
 
+    @Override
+    public List<Question> findByChecklist(Integer id) {
+        return questionRepository.findByChecklist(id);
+    }
+
 }

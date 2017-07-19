@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -103,7 +101,7 @@ public class ChecklistController {
     @RequestMapping(value = "/checklists/{id}", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
         Checklist checklist = checkListService.findById(id);
-        List<Answer> answers = answerService.findByChecklist(checklist);
+        List<Answer> answers = answerService.findByChecklist(checklist.getId());
         model.addAttribute("checklist", checklist);
         model.addAttribute("answers", answers);
         return "checklists/detail";
@@ -118,7 +116,7 @@ public class ChecklistController {
         return "redirect:/checklists/list";
     }
 
-    @RequestMapping(value = "/checklists/{id}/answers", method = RequestMethod.GET)
+    @RequestMapping(value = "/checklists/{id}/answers/form", method = RequestMethod.GET)
     public String showAnswerValidationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         Checklist checklist = checkListService.findById(id);
 
@@ -134,11 +132,22 @@ public class ChecklistController {
     }
 
 
-    @RequestMapping(value = "/checklists/{id}/questions", method = RequestMethod.GET)
-    public @ResponseBody Page<Question> getCriterionQuestions(
+/*    @RequestMapping(value = "/checklists/{id}/questions", method = RequestMethod.GET)
+    public @ResponseBody
+    Page<Question> getQuestion(
             @PathVariable("id") Integer id, @RequestParam("page") Integer page, @RequestParam("size") Integer size){
-        Page<Question> questions = questionService.findByChecklist(id, new PageRequest(page, size));
-        return questions;
+        return questionService.findByChecklist(id, new PageRequest(page, size));
+    }*/
+
+    @RequestMapping(value = "/checklists/{id}/questions", method = RequestMethod.GET)
+    public @ResponseBody List<Question> getQuestions(@PathVariable("id") Integer id){
+        return questionService.findByChecklist(id);
+    }
+
+
+    @RequestMapping(value = "/checklists/{id}/answers", method = RequestMethod.GET)
+    public List<Answer> getAnswers(@PathVariable("id") Integer id){
+        return answerService.findByChecklist(id);
     }
 
 

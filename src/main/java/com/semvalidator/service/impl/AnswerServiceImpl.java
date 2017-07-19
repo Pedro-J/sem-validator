@@ -1,7 +1,6 @@
 package com.semvalidator.service.impl;
 
 import com.semvalidator.model.Answer;
-import com.semvalidator.model.Checklist;
 import com.semvalidator.repository.AnswerRepository;
 import com.semvalidator.service.AnswerService;
 import com.semvalidator.util.AnswerJsonDTO;
@@ -72,8 +71,8 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public List<Answer> findByChecklist(Checklist checklist) {
-        return answerRepository.findByChecklist(checklist);
+    public List<Answer> findByChecklist(Integer id) {
+        return answerRepository.findByChecklist(id);
     }
 
     @Transactional(readOnly = true )

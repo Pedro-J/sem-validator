@@ -29,6 +29,9 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     @Query("select q from Question q inner join q.checklists c where c.id = :id")
     Page<Question> findByChecklist(@Param("id") Integer id, Pageable pageable);
 
+    @Query("select q from Question q inner join q.checklists c where c.id = :id")
+    List<Question> findByChecklist(@Param("id")Integer id);
+
     Page<Question> findByRequirementAndCriterionAndDescriptionLike(
             Requirement requirement, Criterion criterion, String description, Pageable pageable);
     Page<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion, Pageable pageable);

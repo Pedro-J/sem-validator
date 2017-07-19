@@ -42,7 +42,7 @@
                                 <s:url value="/checklists/${checklist.id}" var="detailUrl" />
                                 <s:url value="/checklists/${checklist.id}/delete" var="deleteUrl" />
                                 <s:url value="/checklists/${checklist.id}/update" var="updateUrl" />
-                                <s:url value="/checklists/${checklist.id}/answers" var="checklistAnswers" />
+                                <s:url value="/checklists/${checklist.id}/answers/form" var="checklistAnswers" />
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
