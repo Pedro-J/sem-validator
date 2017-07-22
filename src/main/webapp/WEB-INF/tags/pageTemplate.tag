@@ -8,6 +8,8 @@
 <!doctype html>
     <head>
         <meta charset="UTF-8">
+        <s:message code="app.lang" var="cur_lang_value" />
+        <meta name="cur_lang" content="${cur_lang_value}"/>
 <%--    <meta name="_csrf" content="${_csrf.token}"/>
         <meta name="_csrf_header" content="${_csrf.headerName}"/>--%>
         <c:url value="/resources/css" var="cssPath" />
@@ -16,11 +18,11 @@
         <link rel="stylesheet" href="${cssPath}/dataTable/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="${cssPath}/style.css">
 
-
         <script type="text/javascript" src="${jsPath}/jquery/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="${jsPath}/bootstrap.js"></script>
         <script type="text/javascript" src="${jsPath}/dataTable/dataTables.min.js"></script>
         <script type="text/javascript" src="${jsPath}/dataTable/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="${jsPath}/dataTable/dataTablesLanguage.js"></script>
 
         <title>
             <c:if test="${not empty title and not title.contains('')}" >

@@ -7,8 +7,9 @@
 <tags:pageTemplate title="question.list.title" >
     <jsp:attribute name="extraScripts">
         <script type="text/javascript">
+
             $(document).ready(function() {
-                $('.data-table-pagination').DataTable();
+                $('.data-table-pagination').DataTable(getCurrentLanguage());
             } );
         </script>
     </jsp:attribute>
