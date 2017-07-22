@@ -28,10 +28,11 @@
 
                     <s:bind path="description">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
+                            <s:message code="description.label" var="criDesc"/>
+                            <label class="col-sm-2 control-label">${criDesc}:</label>
                             <div class="col-sm-10">
                                 <form:input path="description" type="text" class="form-control " id="description"
-                                            placeholder="Description"/>
+                                            placeholder="${criDesc}"/>
                                 <form:errors path="description" class="control-label"/>
                             </div>
                         </div>

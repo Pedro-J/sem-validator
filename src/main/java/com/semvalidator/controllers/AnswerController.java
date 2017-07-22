@@ -50,6 +50,7 @@ public class AnswerController {
             answerService.saveAllDatas(answersJson);
             return new ResponseEntity<>("Answers saved successfully", HttpStatus.OK);
         }catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("Save operation fails", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

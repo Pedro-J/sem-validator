@@ -28,12 +28,26 @@
 
                     <s:bind path="description">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
-                            <div class="col-sm-10">
+                            <s:message code="description.label" var="qDesc"/>
+                            <label class="col-sm-2 control-label">${qDesc}:</label>
+                            <div class="col-sm-8">
                                 <form:input path="description" type="text" class="form-control " id="description"
-                                            placeholder="Description"/>
+                                            placeholder="${qDesc}"/>
                                 <form:errors path="description" class="control-label"/>
                             </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </s:bind>
+
+                    <s:bind path="tip">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <s:message code="tip.label" var="qTip"/>
+                            <label class="col-sm-2 control-label">${qTip}:</label>
+                            <div class="col-sm-8">
+                                <form:input path="tip" class="form-control" id="tip" placeholder="${qTip}"/>
+                                <form:errors path="tip" class="control-label"/>
+                            </div>
+                            <div class="col-sm-2"></div>
                         </div>
                     </s:bind>
 
@@ -62,16 +76,6 @@
                                 <form:errors path="requirement" class="control-label"/>
                             </div>
                             <div class="col-sm-5"></div>
-                        </div>
-                    </s:bind>
-
-                    <s:bind path="tip">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="tip.label"/>:</label>
-                            <div class="col-sm-10">
-                                <form:input path="tip" class="form-control" id="tip" placeholder="Tip"/>
-                                <form:errors path="tip" class="control-label"/>
-                            </div>
                         </div>
                     </s:bind>
 

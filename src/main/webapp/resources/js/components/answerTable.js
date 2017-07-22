@@ -25,6 +25,12 @@ var tableModel = (function() {
             return data.content.slice(start, end);
         },
         selectAnswer: function(value, checklistID, questionID){
+            var index = this.findAnswerIndexByQuestionID(questionID);
+
+            if( index !== -1 ){
+                data.answers.splice(index, 1);
+            }
+
             data.answers.push(new Answer(value, checklistID, questionID));
         },
         getContent: function(){
@@ -79,6 +85,14 @@ var tableModel = (function() {
             }
 
             return wantedAnswer;
+        },
+        findAnswerIndexByQuestionID: function(questionID){
+            for(var i = 0; i < data.answers.length; i++){
+                if( data.answers[i].question === questionID){
+                    return i;
+                }
+            }
+            return -1;
         },
         print: function() {
             console.log('Content: '+ data.content);
@@ -348,26 +362,30 @@ var controller = (function(model, view) {
     var saveAnswers = function(event){
         event.preventDefault();
 
-        var answersJSON = JSON.stringify(model.getAnswers());
+        var answersJSON;
+
+        if( model.getAnswers().length > 0 ) {
+            answersJSON = JSON.stringify(model.getAnswers());
+        }else{
+            answersJSON = JSON.stringify(new Answer(0, view.getInputsForm().checklist, 0));
+        }
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/answers');
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
+        xhr.onload = function () {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
-                //window.location.replace('/checklists/'+ view.getInputsForm().checklist);
+                //console.log(xhr.responseText);
+                window.location.replace('/checklists/' + view.getInputsForm().checklist);
             }
         };
 
         xhr.send(answersJSON);
 
-        console.log(answersJSON);
     };
 
     return {
         init: function() {
-            console.log('Application has started.');
             loadData();
             setupEventListeners();
         }

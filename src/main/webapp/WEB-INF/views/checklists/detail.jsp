@@ -5,6 +5,14 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="checklist.detail.title">
+    <jsp:attribute name="extraScripts">
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.data-table-pagination').DataTable(getCurrentLanguage());
+            } );
+        </script>
+    </jsp:attribute>
+    <jsp:body>
     <div class="container">
 
         <c:if test="${not empty msgContent}">
@@ -42,6 +50,37 @@
 
                 <div class="row"><br/></div>
 
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <label class="col-sm-2"><s:message code="title.label"/>:</label>
+                    <div class="col-sm-9">${checklist.model.title}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <label class="col-sm-2"><s:message code="description.label"/>:</label>
+                    <div class="col-sm-9">${checklist.model.description}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
+                    <div class="col-sm-9">${checklist.model.objectivesDesc}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-1"></div>
+                    <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
+                    <div class="col-sm-9">${checklist.model.applicabilitiesDesc}</div>
+                </div>
+
+                <div class="row"><br/></div>
+
                 <c:if test="${not empty answers}">
                     <div class="row">
                         <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
@@ -50,18 +89,18 @@
                             </div>
                             <div class="panel-body ">
                                 <div id="questionsContainer" class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover data-table-pagination">
                                         <thead>
                                         <tr>
-                                            <th colspan="3"><s:message code="app.entity.question" /> </th>
-                                            <th colspan="1"><s:message code="app.entity.answer" /> </th>
+                                            <th><s:message code="app.entity.question" /> </th>
+                                            <th><s:message code="app.entity.answer" /> </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="answer" items="${answers}" >
                                             <tr>
-                                                <td colspan="3">${answer.question.description}</td>
-                                                <td colspan="1"><s:message code="${answer.value.messageCode}" /></td>
+                                                <td >${answer.question.description}</td>
+                                                <td ><s:message code="${answer.value.messageCode}" /></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -79,4 +118,5 @@
             </div>
         </div>
     </div>
+    </jsp:body>
 </tags:pageTemplate>
