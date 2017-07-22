@@ -7,7 +7,7 @@
 
 <tags:pageTemplate title="answer.add.title">
     <jsp:attribute name="extraScripts">
-        <script type="text/javascript" src="/resources/js/answerTable.js"></script>
+        <script type="text/javascript" src="/resources/js/components/answerTable.js"></script>
     </jsp:attribute>
 
     <jsp:body>
@@ -75,19 +75,19 @@
                                 <div class="form-group text-center">
                                     <nav aria-label="..." >
                                         <ul class="pagination">
-                                            <li class="page-item page-prev disabled">
+                                            <li class="page-item page-prev btn-page disabled">
                                                 <span class="page-link">Previous</span>
                                             </li>
-                                            <li class="page-item page-left active">
+                                            <li class="page-item page-left btn-page active">
                                                 <span class="page-link" >1</span>
                                             </li>
-                                            <li class="page-item page-middle">
+                                            <li class="page-item page-middle btn-page">
                                                 <span class="page-link">2</span>
                                             </li>
-                                            <li class="page-item page-right">
+                                            <li class="page-item page-right btn-page">
                                                 <span class="page-link" >3</span>
                                             </li>
-                                            <li class="page-item page-next">
+                                            <li class="page-item page-next btn-page">
                                                 <span class="page-link" >Next</span>
                                             </li>
                                         </ul>
@@ -99,9 +99,11 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
+                                <c:url value="/" var="app_context" />
                                 <button type="button" class="btn btn-primary pull-right btn-save">
                                     <s:message code="general.save"/>
                                 </button>
+                                <a href="${app_context}checklists/list" class="btn btn-default"><s:message code="general.back" /> </a>
                             </div>
                         </div>
                     </form>

@@ -7,7 +7,7 @@
 
 <tags:pageTemplate title="${checklist['new'] ? 'checklist.add.title': 'checklist.update.title'}">
     <jsp:attribute name="extraScripts">
-        <script type="text/javascript" src="/resources/js/selectSearchTable.js"></script>
+        <script type="text/javascript" src="/resources/js/components/questionsSelectAndSearchTable.js"></script>
     </jsp:attribute>
     <jsp:body>
     <div class="container">
@@ -115,19 +115,19 @@
                         <div class="form-group text-center">
                             <nav aria-label="..." >
                                 <ul class="pagination">
-                                    <li class="page-item page-prev disabled">
+                                    <li class="page-item page-prev btn-page disabled">
                                         <span class="page-link">Previous</span>
                                     </li>
-                                    <li class="page-item page-left active">
+                                    <li class="page-item page-left btn-page active">
                                         <span class="page-link" >1</span>
                                     </li>
-                                    <li class="page-item page-middle">
+                                    <li class="page-item page-middle btn-page">
                                         <span class="page-link">2</span>
                                     </li>
-                                    <li class="page-item page-right">
+                                    <li class="page-item page-right btn-page">
                                         <span class="page-link" >3</span>
                                     </li>
-                                    <li class="page-item page-next">
+                                    <li class="page-item page-next btn-page">
                                         <span class="page-link" >Next</span>
                                     </li>
                                 </ul>

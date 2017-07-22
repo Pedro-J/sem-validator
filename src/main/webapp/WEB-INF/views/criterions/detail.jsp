@@ -32,7 +32,7 @@
                     <label class="col-sm-2"><s:message code="questions.label"/>:</label>
                     <div class="col-sm-10">
                         <c:forEach var="question" items="${questions}" >
-                            ${question.number} - ${question.description}<br/>
+                            - ${question.description}<br/>
                         </c:forEach>
                     </div>
                 </div>

@@ -25,13 +25,15 @@
             <div class="panel-body">
 
                 <div class="row">
+                    <div class="col-sm-1"></div>
                     <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                    <div class="col-sm-10">${checklist.title}</div>
+                    <div class="col-sm-9">${checklist.title}</div>
                 </div>
 
                 <div class="row">
+                    <div class="col-sm-1"></div>
                     <label class="col-sm-2"><s:message code="checklistType.label"/>:</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                         <c:if test="${not empty checklist.checklistType}">
                             <s:message code="${checklist.checklistType.messageCode}"/>
                         </c:if>
@@ -40,39 +42,37 @@
 
                 <div class="row"><br/></div>
 
-                <div class="row">
-                    <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
-                        <div class="panel-heading text-center">
-                            <h5><s:message code="answers.label"/></h5>
-                        </div>
-                        <div class="panel-body ">
-                            <div id="questionsContainer" class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th colspan="3"><s:message code="app.entity.question" /> </th>
-                                        <th colspan="1"><s:message code="app.entity.answer" /> </th>
-                                        <th colspan="1"><s:message code="app.entity.requirement" /> </th>
-                                        <th colspan="1"><s:message code="app.entity.criterion" /> </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="answer" items="${answers}" >
+                <c:if test="${not empty answers}">
+                    <div class="row">
+                        <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
+                            <div class="panel-heading text-center">
+                                <h5><s:message code="answers.label"/></h5>
+                            </div>
+                            <div class="panel-body ">
+                                <div id="questionsContainer" class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
                                         <tr>
-                                            <td colspan="3">* ${answer.question.number} - ${answer.question.description}</td>
-                                            <td colspan="1"><s:message code="${answer.value.messageCode}" /></td>
-                                            <td colspan="1">${answer.requirement.description}</td>
-                                            <td colspan="1">${answer.question.criterion.description}</td>
+                                            <th colspan="3"><s:message code="app.entity.question" /> </th>
+                                            <th colspan="1"><s:message code="app.entity.answer" /> </th>
                                         </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="answer" items="${answers}" >
+                                            <tr>
+                                                <td colspan="3">${answer.question.description}</td>
+                                                <td colspan="1"><s:message code="${answer.value.messageCode}" /></td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </c:if>
 
-            </div>
             <div class="panel-footer text-center" >
                 <c:url value="/" var="app_context" />
                 <a href="${app_context}checklists/list" class="btn btn-default"><s:message code="general.back" /> </a>

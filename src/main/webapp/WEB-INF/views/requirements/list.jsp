@@ -5,6 +5,15 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="requirement.list.title" >
+    <jsp:attribute name="extraScripts">
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.data-table-pagination').DataTable();
+            } );
+        </script>
+    </jsp:attribute>
+
+    <jsp:body>
     <div class="container">
         <c:if test="${not empty msgContent}">
             <div class="alert alert-${msgCSS} alert-dismissible" role="alert">
@@ -20,7 +29,7 @@
             </div>
             <div class="panel-body">
 
-                <table class="table table-bordered">
+                <table class="table table-bordered data-table-pagination">
                     <thead>
                     <tr>
                         <th><s:message code="description.label" /></th>
@@ -53,4 +62,5 @@
             </div>
         </div>
     </div>
+    </jsp:body>
 </tags:pageTemplate>

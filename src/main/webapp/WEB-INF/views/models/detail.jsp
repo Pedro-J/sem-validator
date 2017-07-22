@@ -25,30 +25,30 @@
             <div class="panel-body">
                 <div class="row">
                     <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                    <div class="col-sm-10">${checklist.title}</div>
+                    <div class="col-sm-10">${model.title}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                    <div class="col-sm-10">${checklist.description}</div>
+                    <div class="col-sm-10">${model.description}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                    <div class="col-sm-10">${checklist.objectivesDesc}</div>
+                    <div class="col-sm-10">${model.objectivesDesc}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                    <div class="col-sm-10">${checklist.applicabilitiesDesc}</div>
+                    <div class="col-sm-10">${model.applicabilitiesDesc}</div>
                 </div>
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="modelFile.label"/>:</label>
                     <div class="col-sm-10">
-                        <c:if test="${not empty checklist.modelFileUrl}" >
+                        <c:if test="${not empty model.modelFileUrl}" >
                             <c:url value="/" var="contextPath" />
-                            <img src="${contextPath}${checklist.modelFileUrl}" class="img-responsive" />
+                            <img src="${contextPath}${model.modelFileUrl}" class="img-responsive" />
                         </c:if>
                     </div>
                 </div>

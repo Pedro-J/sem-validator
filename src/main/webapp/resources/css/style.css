@@ -46,3 +46,7 @@ img.lang{
 ul.hide{
     display: none;
 }
+
+.btn-page{
+    cursor: pointer;
+}
