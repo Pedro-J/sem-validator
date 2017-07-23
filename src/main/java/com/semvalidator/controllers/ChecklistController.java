@@ -126,8 +126,8 @@ public class ChecklistController {
         }else{
             redirectAttributes.addFlashAttribute("msgCSS","warning");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.warn");
-            redirectAttributes.addFlashAttribute("msgContent","model.checklist.empty");
-            return "redirect:/models/list";
+            redirectAttributes.addFlashAttribute("msgContent","checklist.questions.empty");
+            return "redirect:/checklists/list";
         }
     }
 

@@ -34,6 +34,7 @@
                     <tr>
                         <th><s:message code="title.label" /></th>
                         <th><s:message code="checklistType.label" /></th>
+                        <th><s:message code="app.entity.model" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
@@ -42,6 +43,7 @@
                         <tr>
                             <td>${checklist.title}</td>
                             <td><s:message code="${checklist.checklistType.messageCode}" /></td>
+                            <td>${checklist.model.title}</td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>

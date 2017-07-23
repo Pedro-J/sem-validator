@@ -367,7 +367,7 @@ var controller = (function(model, view) {
         if( model.getAnswers().length > 0 ) {
             answersJSON = JSON.stringify(model.getAnswers());
         }else{
-            answersJSON = JSON.stringify(new Answer(0, view.getInputsForm().checklist, 0));
+            answersJSON = JSON.stringify([new Answer(0, view.getInputsForm().checklist, 0)]);
         }
 
         var xhr = new XMLHttpRequest();

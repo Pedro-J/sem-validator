@@ -52,9 +52,9 @@
                                     <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
                                 </form>
                             </div>
-                            <div class="panel-footer text-center">
+<%--                            <div class="panel-footer text-center">
                                 <a href=""><s:message code="login.message.newAccount"/></a>
-                            </div>
+                            </div>--%>
                         </div>
                     </div>
                 </div>

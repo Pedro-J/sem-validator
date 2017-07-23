@@ -38,25 +38,57 @@
                         <input id="init_value" type="hidden" value="${select}"/>
                         <input id="id_checklist" type="hidden" value="${checklist.id}"/>
 
-                        <div class="form-group">
-                            <label class="col-sm-2"><s:message code="app.entity.checklist" />:</label>
-                            <div class="col-sm-8">${checklist.title}</div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="title.label" />:</label>
+                            <div class="col-sm-9">${checklist.title}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="checklistType.label"/>:</label>
+                            <div class="col-sm-9">
+                                <c:if test="${not empty checklist.checklistType}">
+                                    <s:message code="${checklist.checklistType.messageCode}"/>
+                                </c:if>
+                            </div>
+                        </div>
+
+                        <div class="row"><br/></div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="title.label"/>:</label>
+                            <div class="col-sm-9">${checklist.model.title}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="description.label"/>:</label>
+                            <div class="col-sm-9">${checklist.model.description}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
+                            <div class="col-sm-9">${checklist.model.objectivesDesc}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
+                            <div class="col-sm-9">${checklist.model.applicabilitiesDesc}</div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
-                            <div class="col-sm-8">${checklist.model.title}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2"><s:message code="app.entity.model" />:</label>
-                            <div class="col-sm-8">mais dados do modelo</div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="panel panel-primary" style="width: 80%;margin: 10px auto;">
+                            <div class="panel panel-primary" style="width: 90%;margin: 10px auto;">
                                 <div class="panel-heading text-center">
-                                    <h5><s:message code="answers.label"/></h5>
+                                    <h5><s:message code="answer.checklist.question"/></h5>
                                 </div>
                                 <div class="panel-body ">
                                     <div id="questionsContainer" class="table-responsive">
@@ -103,7 +135,9 @@
                                 <button type="button" class="btn btn-primary pull-right btn-save">
                                     <s:message code="general.save"/>
                                 </button>
-                                <a href="${app_context}checklists/list" class="btn btn-default"><s:message code="general.back" /> </a>
+                                <a href="${app_context}checklists/list" style="margin-right: 10px;" class="btn btn-default pull-right">
+                                    <s:message code="general.back" />
+                                </a>
                             </div>
                         </div>
                     </form>
