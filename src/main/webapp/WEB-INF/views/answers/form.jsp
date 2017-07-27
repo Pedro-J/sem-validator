@@ -7,7 +7,8 @@
 
 <tags:pageTemplate title="answer.add.title">
     <jsp:attribute name="extraScripts">
-        <script type="text/javascript" src="/resources/js/components/answerTable.js"></script>
+        <c:url value="/resources/js" var="jsPath" />
+        <script type="text/javascript" src="${jsPath}/components/answerTable.js"></script>
     </jsp:attribute>
 
     <jsp:body>

@@ -82,6 +82,8 @@ var tableModel = (function() {
 var tableView = (function() {
 
     var DOMstrings = {
+
+        appContext: 'meta[name="appContext"]',
         //Search
         inputCriterion: '.select-criterion',
         inputRequirement: '.select-requirement',
@@ -117,6 +119,13 @@ var tableView = (function() {
     };
 
     return {
+
+        getViewParams: function () {
+            return {
+                appContext: document.querySelector(DOMstrings.appContext).content
+            };
+        },
+
         getInputsSearch: function() {
             return {
                 criterion: document.querySelector(DOMstrings.inputCriterion).value,
@@ -261,11 +270,15 @@ var controller = (function(model, view) {
         document.querySelector(DOM.pagePrev).addEventListener('click', selectPrevPage);
     };
 
+    var addContext = function (url){
+        return (view.getViewParams().appContext + url);
+    }
+
     loadData = function() {
         //1. load data through ajax
-
+        var reqUrl = addContext('questions?page=' + (model.getCurrentPage() - 1) + '&size='+ model.getPageSize());
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/questions?page=' + (model.getCurrentPage() - 1) + '&size='+ model.getPageSize());
+        xhr.open('GET', reqUrl);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -284,7 +297,7 @@ var controller = (function(model, view) {
         var inputsSearch = view.getInputsSearch();
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/questions/search');
+        xhr.open('POST', addContext('questions/search'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -355,12 +368,12 @@ var controller = (function(model, view) {
         checklist.setQuestions(model.getSelectedIDs());
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/checklists');
+        xhr.open('POST', addContext('checklists'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
                 //console.log(xhr.responseText);
-                window.location.replace("/checklists/list?success=true");
+                window.location.replace(addContext('checklists/list?success=true'));
             }
         };
         var checklistJSON = JSON.stringify(checklist);

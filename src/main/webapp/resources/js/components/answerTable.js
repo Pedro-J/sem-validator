@@ -109,6 +109,7 @@ var tableModel = (function() {
 var tableView = (function() {
 
     var DOMstrings = {
+        appContext: 'meta[name="appContext"]',
         //Search
         checklist: 'id_checklist',
 
@@ -245,9 +246,10 @@ var tableView = (function() {
 
     return {
 
-        getInputsForm: function () {
+        getViewParams: function () {
             return {
                 checklist: document.getElementById(DOMstrings.checklist).value,
+                appContext: document.querySelector(DOMstrings.appContext).content
             };
         },
 
@@ -289,11 +291,15 @@ var controller = (function(model, view) {
         document.querySelector(DOM.pagePrev).addEventListener('click', selectPrevPage);
     };
 
+    var addContext = function (url){
+        return (view.getViewParams().appContext + url);
+    }
+
     //Insert answer in the model
     var selectAnswer = function(event){
         var idPrefix = view.getDOMstrings().selectIdPrefix;
 
-        var checklistID = parseInt(view.getInputsForm().checklist);
+        var checklistID = parseInt(view.getViewParams().checklist);
         var questionID = parseInt(event.target.id.replace(idPrefix,''));
         var answerValueID = parseInt(event.target.value);
 
@@ -307,7 +313,7 @@ var controller = (function(model, view) {
     loadAnswersTypes = function(view) {
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/answers/types');
+        xhr.open('GET', addContext('answers/types'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -324,7 +330,7 @@ var controller = (function(model, view) {
     loadQuestions = function(callback, view){
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/checklists/' + view.getInputsForm().checklist + '/questions');
+        xhr.open('GET', addContext('checklists/' + view.getViewParams().checklist + '/questions'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -367,16 +373,16 @@ var controller = (function(model, view) {
         if( model.getAnswers().length > 0 ) {
             answersJSON = JSON.stringify(model.getAnswers());
         }else{
-            answersJSON = JSON.stringify([new Answer(0, view.getInputsForm().checklist, 0)]);
+            answersJSON = JSON.stringify([new Answer(0, view.getViewParams().checklist, 0)]);
         }
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/answers');
+        xhr.open('POST', addContext('answers'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             if (xhr.status === 200) {
                 //console.log(xhr.responseText);
-                window.location.replace('/checklists/' + view.getInputsForm().checklist);
+                window.location.replace(addContext('checklists/' + view.getViewParams().checklist));
             }
         };
 

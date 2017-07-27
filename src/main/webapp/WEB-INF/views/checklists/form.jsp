@@ -7,7 +7,8 @@
 
 <tags:pageTemplate title="${checklist['new'] ? 'checklist.add.title': 'checklist.update.title'}">
     <jsp:attribute name="extraScripts">
-        <script type="text/javascript" src="/resources/js/components/questionsSelectAndSearchTable.js"></script>
+        <c:url value="/resources/js" var="jsPath" />
+        <script type="text/javascript" src="${jsPath}/components/questionsSelectAndSearchTable.js"></script>
     </jsp:attribute>
     <jsp:body>
     <div class="container">

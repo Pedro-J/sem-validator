@@ -10,6 +10,9 @@
         <meta charset="UTF-8">
         <s:message code="app.lang" var="cur_lang_value" />
         <meta name="cur_lang" content="${cur_lang_value}"/>
+
+        <c:url value="/" var="appContext" />
+        <meta name="appContext" content="${appContext}"/>
 <%--    <meta name="_csrf" content="${_csrf.token}"/>
         <meta name="_csrf_header" content="${_csrf.headerName}"/>--%>
         <c:url value="/resources/css" var="cssPath" />

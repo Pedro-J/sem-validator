@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="/" style="padding-top: 17px">
+            <a class="navbar-brand" href="${app_context}" style="padding-top: 17px">
                 <s:message code="app.title.abbreviation" />
             </a>
         </div>
