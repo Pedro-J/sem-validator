@@ -39,17 +39,22 @@ public class QuestionController {
 
     private final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
-    @Autowired
     private QuestionService questionService;
 
-    @Autowired
     private CriterionService criterionService;
 
-    @Autowired
     private RequirementService requirementService;
 
-    @Autowired
     private QuestionFormValidator questionFormValidator;
+
+    @Autowired
+    public QuestionController(QuestionService questionService, CriterionService criterionService,
+                              RequirementService requirementService, QuestionFormValidator questionFormValidator){
+        this.questionService = questionService;
+        this.criterionService = criterionService;
+        this.requirementService = requirementService;
+        this.questionFormValidator = questionFormValidator;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -68,7 +73,7 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
-    public @ResponseBody Page<Question> getAllUsers(
+    public @ResponseBody Page<Question> getAllUsersPageble(
             @RequestParam("page") Integer page, @RequestParam("size") Integer size){
         Pageable pageable = new PageRequest(page, size);
         Page<Question> questions =  questionService.findAllPageable(pageable);
