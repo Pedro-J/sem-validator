@@ -2,13 +2,13 @@ package com.semvalidator.controllers;
 
 import com.semvalidator.editor.CriterionPropertyEditor;
 import com.semvalidator.editor.RequirementPropertyEditor;
+import com.semvalidator.exception.RequestErrorException;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.service.RequirementService;
-import com.semvalidator.exception.RequestErrorException;
 import com.semvalidator.util.SearchQuestionParamsDTO;
 import com.semvalidator.validation.QuestionFormValidator;
 import org.slf4j.Logger;
@@ -18,6 +18,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -80,7 +81,7 @@ public class QuestionController {
         return questions;
     }
 
-    @RequestMapping(value = "/questions/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/questions/search", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
     public @ResponseBody Page<Question> search(@RequestBody SearchQuestionParamsDTO params) throws RequestErrorException {
         try{
             return questionService.search(params);
