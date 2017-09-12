@@ -33,7 +33,7 @@ function post(path, params, method) {
 }
 
 
-function ajaxGetJson(linkElementId) {
+/*function ajaxGetJson(linkElementId) {
     $("#"+linkElementId).click(function () {
         var link = $(this);
         $.ajax({
@@ -195,4 +195,4 @@ function saveAnswers() {
             setTimeout(function() { messager.hide(); }, 10000);
         }
     });
-}
+}*/

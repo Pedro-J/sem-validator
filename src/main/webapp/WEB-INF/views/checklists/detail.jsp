@@ -50,37 +50,6 @@
 
                 <div class="row"><br/></div>
 
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.title}</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.description}</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.objectivesDesc}</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.applicabilitiesDesc}</div>
-                </div>
-
-                <div class="row"><br/></div>
-
                 <c:if test="${not empty answers}">
                     <div class="row">
                         <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">

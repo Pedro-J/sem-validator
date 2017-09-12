@@ -26,6 +26,11 @@
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
+                    <div class="col-sm-10">${question.numeracao}</div>
+                </div>
+
+                <div class="row">
+                    <label class="col-sm-2"><s:message code="description.label"/>:</label>
                     <div class="col-sm-10">${question.description}</div>
                 </div>
 
@@ -33,7 +38,20 @@
                     <label class="col-sm-2"><s:message code="criterion.label"/>:</label>
                     <div class="col-sm-10">
                         <c:if test="${not empty question.criterion}">
-                            ${question.criterion.description}
+                            <span style="margin-right: 20px;">${question.criterion.description}</span>
+
+
+                            <s:message code="general.delete" var="delete"/>
+                            <s:message code="general.edit" var="edit"/>
+
+                            <s:url value="/criterions/${question.criterion.id}/delete" var="deleteUrl" />
+                            <s:url value="/criterions/${question.criterion.id}/update" var="updateUrl" />
+
+                            <img class="btn btn-primary glyphicon glyphicon-edit"
+                                    onclick="location.href='${updateUrl}'" title="${edit}" />
+
+                            <img class="btn btn-danger glyphicon glyphicon-remove"
+                                    onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}" />
                         </c:if>
                     </div>
                 </div>

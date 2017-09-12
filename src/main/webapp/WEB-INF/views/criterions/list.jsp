@@ -43,14 +43,10 @@
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
-                                <s:message code="general.seeDetail" var="detail"/>
 
-                                <s:url value="/criterions/${criterion.id}" var="detailUrl" />
                                 <s:url value="/criterions/${criterion.id}/delete" var="deleteUrl" />
                                 <s:url value="/criterions/${criterion.id}/update" var="updateUrl" />
 
-                                <button class="btn btn-info glyphicon glyphicon-zoom-in"
-                                        onclick="location.href='${detailUrl}'" title="${detail}"></button>
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
                                         onclick="location.href='${updateUrl}'" title="${edit}"></button>
                                 <button class="btn btn-danger glyphicon glyphicon-remove"

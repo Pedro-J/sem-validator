@@ -43,32 +43,6 @@
                     </li>
 
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"
-                           role="button" aria-haspopup="true" aria-expanded="false">
-                            <s:message code="app.entity.criterion" />
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${app_context}criterions/add"><s:message code="general.register" /></a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="${app_context}criterions/list"><s:message code="general.list" /></a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                           role="button" aria-haspopup="true" aria-expanded="false">
-                            <s:message code="app.entity.requirement" />
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${app_context}requirements/add"><s:message code="general.register" /></a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="${app_context}requirements/list"><s:message code="general.list" /></a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
                             <s:message code="app.entity.checklist" />
@@ -93,6 +67,10 @@
                             <li><a href="${app_context}models/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
+
+                    <li><a href="${app_context}persona"> <s:message code="app.entity.persona" /></a></li>
+                    <li><a href="#${app_context}scenario" > <s:message code="app.entity.cenario" /></a></li>
+
                 </sec:authorize>
 
             </ul>

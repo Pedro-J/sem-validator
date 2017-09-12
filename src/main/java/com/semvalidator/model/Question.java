@@ -24,6 +24,8 @@ public class Question extends GenericEntity{
     @ManyToOne//(optional = true)
     private Requirement requirement;
 
+    private String numeracao;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "questions")
     private List<Checklist> checklists;
@@ -93,6 +95,14 @@ public class Question extends GenericEntity{
 
     public void setChecklists(List<Checklist> checklists) {
         this.checklists = checklists;
+    }
+
+    public String getNumeracao() {
+        return numeracao;
+    }
+
+    public void setNumeracao(String numeracao) {
+        this.numeracao = numeracao;
     }
 
     @Override

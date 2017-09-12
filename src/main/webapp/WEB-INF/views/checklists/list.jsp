@@ -48,12 +48,12 @@
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>
-                                <s:message code="answer.checklist.question" var="answerQuestions"/>
+
 
                                 <s:url value="/checklists/${checklist.id}" var="detailUrl" />
                                 <s:url value="/checklists/${checklist.id}/delete" var="deleteUrl" />
                                 <s:url value="/checklists/${checklist.id}/update" var="updateUrl" />
-                                <s:url value="/checklists/${checklist.id}/answers/form" var="checklistAnswers" />
+
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
@@ -62,8 +62,6 @@
                                 <button class="btn btn-danger glyphicon glyphicon-remove"
                                         onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
 
-                                <button class="btn btn-primary glyphicon glyphicon-question-sign" title="${answerQuestions}"
-                                        onclick="location.href='${checklistAnswers}'" ></button>
 
                             </td>
                         </tr>

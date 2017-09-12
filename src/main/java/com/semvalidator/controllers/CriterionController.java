@@ -82,9 +82,11 @@ public class CriterionController {
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");
             }
             criterionService.save(criterion);
-            return "redirect:/criterions/list";
+            return "redirect:/questions/add";
         }
     }
+
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showCriterion(@PathVariable("id") Integer id, Model model){
         Criterion criterion = criterionService.findById(id);

@@ -4,10 +4,9 @@ package com.semvalidator.enums;
  * @Author Created by comp-dev on 6/12/17.
  */
 public enum AnswerValue {
-    APPLY(0, "enum.answer.apply"),
-    NOT_APPLY(1, "enum.answer.not_apply"),
-    NOT_KNOW(2, "enum.answer.not_know"),
-    NOT_UNDERSTAND(3, "enum.answer.not_understand");
+    PLEASED(0, "enum.answer.pleased"),
+    NOT_PLEASED(1, "enum.answer.not_pleased"),
+    PARTIALY_PLEASED(2, "enum.answer.partialy_pleased");
 
     private Integer code;
     private String messageCode;
