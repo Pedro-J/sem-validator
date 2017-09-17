@@ -34,26 +34,24 @@
                     <tr>
                         <th><s:message code="title.label" /></th>
                         <th><s:message code="checklistType.label" /></th>
-                        <th><s:message code="app.entity.model" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
 
                     <c:forEach var="checklist" items="${checklists}">
                         <tr>
-                            <td>${checklist.title}</td>
-                            <td><s:message code="${checklist.checklistType.messageCode}" /></td>
-                            <td>${checklist.model.title}</td>
-                            <td>
+                            <td class="width600"><div class="long-text-column">${checklist.title}</div></td>
+                            <td class="width200"><div class="long-text-column"><s:message code="${checklist.checklistType.messageCode}" /></div></td>
+                            <td class="actions-column">
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>
-                                <s:message code="answer.checklist.question" var="answerQuestions"/>
+
 
                                 <s:url value="/checklists/${checklist.id}" var="detailUrl" />
                                 <s:url value="/checklists/${checklist.id}/delete" var="deleteUrl" />
                                 <s:url value="/checklists/${checklist.id}/update" var="updateUrl" />
-                                <s:url value="/checklists/${checklist.id}/answers/form" var="checklistAnswers" />
+
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
@@ -62,8 +60,6 @@
                                 <button class="btn btn-danger glyphicon glyphicon-remove"
                                         onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
 
-                                <button class="btn btn-primary glyphicon glyphicon-question-sign" title="${answerQuestions}"
-                                        onclick="location.href='${checklistAnswers}'" ></button>
 
                             </td>
                         </tr>

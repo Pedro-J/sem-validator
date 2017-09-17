@@ -19,7 +19,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-		
+
 		logger.error("[URL] : {}", req.getRequestURL(), e);
 		
 		// If the exception is annotated with @ResponseStatus rethrow it and let

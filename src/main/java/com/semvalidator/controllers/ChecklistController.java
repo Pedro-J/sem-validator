@@ -101,9 +101,9 @@ public class ChecklistController {
     @RequestMapping(value = "/checklists/{id}", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
         Checklist checklist = checkListService.findById(id);
-        List<Answer> answers = answerService.findByChecklist(checklist.getId());
+        List<Question> questions = questionService.findByChecklist(id);
         model.addAttribute("checklist", checklist);
-        model.addAttribute("answers", answers);
+        model.addAttribute("questions", questions);
         return "checklists/detail";
     }
 
@@ -131,14 +131,6 @@ public class ChecklistController {
         }
     }
 
-
-/*    @RequestMapping(value = "/checklists/{id}/questions", method = RequestMethod.GET)
-    public @ResponseBody
-    Page<Question> getQuestion(
-            @PathVariable("id") Integer id, @RequestParam("page") Integer page, @RequestParam("size") Integer size){
-        return questionService.findByChecklist(id, new PageRequest(page, size));
-    }*/
-
     @RequestMapping(value = "/checklists/{id}/questions", method = RequestMethod.GET)
     public @ResponseBody List<Question> getQuestions(@PathVariable("id") Integer id){
         return questionService.findByChecklist(id);
@@ -147,7 +139,7 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/{id}/answers", method = RequestMethod.GET)
     public List<Answer> getAnswers(@PathVariable("id") Integer id){
-        return answerService.findByChecklist(id);
+        return answerService.findByEvaluation(id);
     }
 
 

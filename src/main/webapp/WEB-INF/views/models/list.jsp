@@ -42,11 +42,12 @@
 
                     <c:forEach var="checklist" items="${models}">
                         <tr>
-                            <td>${checklist.title}</td>
-                            <td>${checklist.description}</td>
-                            <td>${checklist.objectivesDesc}</td>
-                            <td>${checklist.applicabilitiesDesc}</td>
-                            <td>
+                            <td class="width260"><div class="long-text-column">${checklist.title}</div></td>
+                            <td class="width140"><div class="long-text-column">${checklist.description}</div></td>
+                            <td class="width140"><div class="long-text-column">${checklist.objectivesDesc}</div></td>
+                            <td class="width140"><div class="long-text-column">${checklist.applicabilitiesDesc}</div></td>
+                            <td class="actions-column">
+
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>
@@ -58,11 +59,13 @@
 
                                 <button class="btn btn-info glyphicon glyphicon-zoom-in"
                                         onclick="location.href='${detailUrl}'" title="${detail}"></button>
+
                                 <button class="btn btn-primary glyphicon glyphicon-edit"
                                         onclick="location.href='${updateUrl}'" title="${edit}"></button>
 
-<%--                                <button class="btn btn-danger glyphicon glyphicon-remove"
-                                        onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>--%>
+                               <button class="btn btn-danger glyphicon glyphicon-remove"
+                                        onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
+
                             </td>
                         </tr>
                     </c:forEach>

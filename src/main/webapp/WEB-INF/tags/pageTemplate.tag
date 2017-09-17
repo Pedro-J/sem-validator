@@ -26,6 +26,7 @@
         <script type="text/javascript" src="${jsPath}/dataTable/dataTables.min.js"></script>
         <script type="text/javascript" src="${jsPath}/dataTable/dataTables.bootstrap.min.js"></script>
         <script type="text/javascript" src="${jsPath}/dataTable/dataTablesLanguage.js"></script>
+        <script type="text/javascript" src="${jsPath}/scriptUtils.js"></script>
 
         <title>
             <c:if test="${not empty title and not title.contains('')}" >

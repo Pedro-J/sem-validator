@@ -26,6 +26,19 @@
 
                     <form:hidden path="id"/>
 
+                    <s:bind path="numeration">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <s:message code="numeration.label" var="numeration"/>
+                            <label class="col-sm-2 control-label">${numeration}:</label>
+                            <div class="col-sm-8">
+                                <form:input path="numeration" type="text" class="form-control " id="description"
+                                            placeholder="${numeration}"/>
+                                <form:errors path="numeration" class="control-label"/>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </s:bind>
+
                     <s:bind path="description">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
                             <s:message code="description.label" var="qDesc"/>
@@ -53,6 +66,7 @@
 
                     <s:bind path="criterion">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
+
                             <label class="col-sm-2 control-label"><s:message code="criterion.label"/>:</label>
                             <div class="col-sm-5">
                                 <form:select path="criterion" class="form-control">
@@ -61,7 +75,12 @@
                                 </form:select>
                                 <form:errors path="criterion" class="control-label"/>
                             </div>
-                            <div class="col-sm-5"></div>
+                            <div class="col-sm-1">
+                                <s:message code="criterion.add.title" var="addCriterion"/>
+                                <a class="btn btn-primary glyphicon glyphicon-plus"
+                                        href="${app_context}/criterions/add" title="${addCriterion}"></a>
+                            </div>
+                            <div class="col-sm-4"></div>
                         </div>
                     </s:bind>
 
@@ -75,7 +94,12 @@
                                 </form:select>
                                 <form:errors path="requirement" class="control-label"/>
                             </div>
-                            <div class="col-sm-5"></div>
+                            <div class="col-sm-1">
+                                <s:message code="requirement.add.title" var="addRequirement"/>
+                                <a class="btn btn-primary glyphicon glyphicon-plus"
+                                        href="${app_context}/requirements/add" title="${addRequirement}"></a>
+                            </div>
+                            <div class="col-sm-4"></div>
                         </div>
                     </s:bind>
 
@@ -83,15 +107,13 @@
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
                                 <c:when test="${question['new']}">
-                                    <button type="submit" class="btn btn-primary pull-right"><s:message
-                                            code="general.save"/></button>
+                                    <button type="submit" class="btn btn-primary pull-right">
+                                        <s:message code="general.save"/></button>
                                 </c:when>
                                 <c:otherwise>
-                                    <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message
-                                            code="general.update"/></button>
+                                    <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message code="general.update"/></button>
                                     <c:url value="/" var="app_context" />
                                     <a href="${app_context}questions/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
-
                                 </c:otherwise>
                             </c:choose>
                         </div>

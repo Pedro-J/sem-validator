@@ -6,7 +6,7 @@ package com.semvalidator.util;
 public class AnswerJsonDTO {
     private Integer value;
     private Integer question;
-    private Integer checklist;
+    private Integer evalution;
 
     public Integer getQuestion() {
         return question;
@@ -16,12 +16,12 @@ public class AnswerJsonDTO {
         this.question = question;
     }
 
-    public Integer getChecklist() {
-        return checklist;
+    public Integer getEvalution() {
+        return evalution;
     }
 
-    public void setChecklist(Integer checklist) {
-        this.checklist = checklist;
+    public void setEvalution(Integer evalution) {
+        this.evalution = evalution;
     }
 
     public Integer getValue() {
@@ -31,4 +31,6 @@ public class AnswerJsonDTO {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+
 }

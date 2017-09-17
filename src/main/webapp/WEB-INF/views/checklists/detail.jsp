@@ -50,57 +50,26 @@
 
                 <div class="row"><br/></div>
 
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.title}</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.description}</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.objectivesDesc}</div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                    <div class="col-sm-9">${checklist.model.applicabilitiesDesc}</div>
-                </div>
-
-                <div class="row"><br/></div>
-
-                <c:if test="${not empty answers}">
+                <c:if test="${not empty questions}">
                     <div class="row">
                         <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
                             <div class="panel-heading text-center">
-                                <h5><s:message code="answers.label"/></h5>
+                                <h5><s:message code="questions.label"/></h5>
                             </div>
                             <div class="panel-body ">
                                 <div id="questionsContainer" class="table-responsive">
                                     <table class="table table-hover data-table-pagination">
                                         <thead>
                                         <tr>
+                                            <th><s:message code="numeration.label" /> </th>
                                             <th><s:message code="app.entity.question" /> </th>
-                                            <th><s:message code="app.entity.answer" /> </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="answer" items="${answers}" >
+                                        <c:forEach var="question" items="${questions}" >
                                             <tr>
-                                                <td >${answer.question.description}</td>
-                                                <td ><s:message code="${answer.value.messageCode}" /></td>
+                                                <td>${question.numeration}</td>
+                                                <td class="long-text-column width800">${question.description}</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

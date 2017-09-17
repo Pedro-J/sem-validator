@@ -1,7 +1,7 @@
 
-var Answer = function(answerValue, checklistID, questionID){
+var Answer = function(answerValue, evaluationID, questionID){
     this.value = answerValue;
-    this.checklist = checklistID;
+    this.evaluation = evaluationID;
     this.question = questionID;
 };
 
@@ -24,14 +24,14 @@ var tableModel = (function() {
 
             return data.content.slice(start, end);
         },
-        selectAnswer: function(value, checklistID, questionID){
+        selectAnswer: function(value, evaluationID, questionID){
             var index = this.findAnswerIndexByQuestionID(questionID);
 
             if( index !== -1 ){
                 data.answers.splice(index, 1);
             }
 
-            data.answers.push(new Answer(value, checklistID, questionID));
+            data.answers.push(new Answer(value, evaluationID, questionID));
         },
         getContent: function(){
             return data.content;
@@ -111,7 +111,7 @@ var tableView = (function() {
     var DOMstrings = {
         appContext: 'meta[name="appContext"]',
         //Search
-        checklist: 'id_checklist',
+        evaluation: 'id_evaluation',
 
         tableContent: 'answers_questions',
         btnSave:'.btn-save',
@@ -248,7 +248,7 @@ var tableView = (function() {
 
         getViewParams: function () {
             return {
-                checklist: document.getElementById(DOMstrings.checklist).value,
+                evaluation: document.getElementById(DOMstrings.evaluation).value,
                 appContext: document.querySelector(DOMstrings.appContext).content
             };
         },
@@ -299,12 +299,12 @@ var controller = (function(model, view) {
     var selectAnswer = function(event){
         var idPrefix = view.getDOMstrings().selectIdPrefix;
 
-        var checklistID = parseInt(view.getViewParams().checklist);
+        var evaluationID = parseInt(view.getViewParams().evaluation);
         var questionID = parseInt(event.target.id.replace(idPrefix,''));
         var answerValueID = parseInt(event.target.value);
 
         if( event.target.tagName === 'SELECT' ){
-            model.selectAnswer(answerValueID, checklistID, questionID);
+            model.selectAnswer(answerValueID, evaluationID, questionID);
         }
     };
 
@@ -330,7 +330,7 @@ var controller = (function(model, view) {
     loadQuestions = function(callback, view){
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', addContext('checklists/' + view.getViewParams().checklist + '/questions'));
+        xhr.open('GET', addContext('evaluations/' + view.getViewParams().evaluation + '/questions'));
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function() {
             if (xhr.status === 200) {
@@ -373,7 +373,7 @@ var controller = (function(model, view) {
         if( model.getAnswers().length > 0 ) {
             answersJSON = JSON.stringify(model.getAnswers());
         }else{
-            answersJSON = JSON.stringify([new Answer(0, view.getViewParams().checklist, 0)]);
+            answersJSON = JSON.stringify([new Answer(0, view.getViewParams().evaluation, 0)]);
         }
 
         var xhr = new XMLHttpRequest();
@@ -382,7 +382,7 @@ var controller = (function(model, view) {
         xhr.onload = function () {
             if (xhr.status === 200) {
                 //console.log(xhr.responseText);
-                window.location.replace(addContext('checklists/' + view.getViewParams().checklist));
+                window.location.replace(addContext('evaluations/' + view.getViewParams().evaluation));
             }
         };
 

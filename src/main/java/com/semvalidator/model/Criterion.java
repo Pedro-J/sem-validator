@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_criterion")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NamedQuery(name = "Criterion.findAll", query="select c from Criterion c order by c.description asc")
 public class Criterion extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

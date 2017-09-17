@@ -13,7 +13,5 @@ import java.util.List;
 
 @Repository
 public interface ChecklistRepository extends JpaRepository<Checklist, Integer> {
-
     List<Checklist> findByChecklistType(ChecklistType type);
-    
 }

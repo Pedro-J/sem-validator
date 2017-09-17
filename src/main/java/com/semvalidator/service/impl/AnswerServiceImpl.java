@@ -63,7 +63,7 @@ public class AnswerServiceImpl implements AnswerService{
     public void saveAllDatas(List<AnswerJsonDTO> answersJson) {
 
         if( answersJson != null && !answersJson.isEmpty() ) {
-            Integer currentChecklist = answersJson.get(0).getChecklist();
+            Integer currentChecklist = answersJson.get(0).getEvalution();
             List<Question> questionsNotAnswered = questionRepository.findByChecklist(currentChecklist);
 
             if( isSaveAll(answersJson) ){
@@ -79,8 +79,8 @@ public class AnswerServiceImpl implements AnswerService{
                 questionsNotAnswered.remove(answer.getQuestion());
 
                 if (alreadyExist(answer)) {
-                    answer = answerRepository.findByChecklistAndQuestion(
-                            answer.getChecklist(), answer.getQuestion());
+                    answer = answerRepository.findByEvaluationAndQuestion(
+                            answer.getEvaluation(), answer.getQuestion());
                     answer.convertFromDTO(dto);
                     answerRepository.saveAndFlush(answer);
 
@@ -103,19 +103,19 @@ public class AnswerServiceImpl implements AnswerService{
         return false;
     }
 
-    private void saveNotAnsweredQuestions(List<Question> questionsNotAnswered, Integer currentChecklistID) {
+    private void saveNotAnsweredQuestions(List<Question> questionsNotAnswered, Integer currentEvaluationID) {
 
         for(Question question : questionsNotAnswered){
             AnswerJsonDTO dto = new AnswerJsonDTO();
             dto.setQuestion(question.getId());
-            dto.setChecklist(currentChecklistID);
-            dto.setValue(AnswerValue.APPLY.getCode()); //Default answer
+            dto.setEvalution(currentEvaluationID);
+            dto.setValue(AnswerValue.PLEASED.getCode()); //Default answer
 
             Answer answer = new Answer(dto);
 
             if (alreadyExist(answer)) {
-                answer = answerRepository.findByChecklistAndQuestion(
-                        answer.getChecklist(), answer.getQuestion());
+                answer = answerRepository.findByEvaluationAndQuestion(
+                        answer.getEvaluation(), answer.getQuestion());
                 answer.convertFromDTO(dto);
                 answerRepository.saveAndFlush(answer);
             }else{
@@ -125,14 +125,14 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public List<Answer> findByChecklist(Integer id) {
-        return answerRepository.findByChecklist(id);
+    public List<Answer> findByEvaluation(Integer id) {
+        return answerRepository.findByEvaluation(id);
     }
 
     @Transactional(readOnly = true )
     public boolean alreadyExist(Answer answer){
-        Answer savedAnswer = answerRepository.findByChecklistAndQuestion(
-                answer.getChecklist(), answer.getQuestion());
+        Answer savedAnswer = answerRepository.findByEvaluationAndQuestion(
+                answer.getEvaluation(), answer.getQuestion());
 
         if( savedAnswer != null ){
             return true;

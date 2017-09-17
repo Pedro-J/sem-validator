@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "tb_requirement")
+@NamedQuery(name = "Requirement.findAll", query="select r from Requirement r order by r.description asc ")
 public class Requirement extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

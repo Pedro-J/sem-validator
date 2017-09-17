@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_question")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NamedQuery(name = "Question.findAll", query="select q from Question q order by q.requirement.description asc ")
 public class Question extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +25,16 @@ public class Question extends GenericEntity{
     @ManyToOne//(optional = true)
     private Requirement requirement;
 
+    private String numeration;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "questions")
     private List<Checklist> checklists;
 
+    @Lob
     private String description;
 
+    @Lob
     private String tip;
 
     public Question(Integer id) {
@@ -93,6 +98,14 @@ public class Question extends GenericEntity{
 
     public void setChecklists(List<Checklist> checklists) {
         this.checklists = checklists;
+    }
+
+    public String getNumeration() {
+        return numeration;
+    }
+
+    public void setNumeration(String numeration) {
+        this.numeration = numeration;
     }
 
     @Override

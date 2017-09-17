@@ -25,10 +25,6 @@ public class Checklist extends GenericEntity{
     @Enumerated(EnumType.ORDINAL)
     private ChecklistType checklistType;
 
-    @ManyToOne
-    @JoinColumn(name = "id_model")
-    private ModelSE model;
-
     @ManyToMany
     @JoinTable(name = "tb_checklist_question", joinColumns = {
             @JoinColumn(name = "id_checklist", nullable = false) },
@@ -80,14 +76,6 @@ public class Checklist extends GenericEntity{
 
     public void setChecklistType(ChecklistType checklistType) {
         this.checklistType = checklistType;
-    }
-
-    public ModelSE getModel() {
-        return model;
-    }
-
-    public void setModel(ModelSE model) {
-        this.model = model;
     }
 
     public List<Question> getQuestions() {

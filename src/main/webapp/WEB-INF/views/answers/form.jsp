@@ -37,20 +37,20 @@
                     <s:message code="select.label" var="select" />
                     <form class="form-horizontal" method="POST" action="${formActionUrl}" acceptCharset="UTF-8">
                         <input id="init_value" type="hidden" value="${select}"/>
-                        <input id="id_checklist" type="hidden" value="${checklist.id}"/>
+                        <input id="id_evaluation" type="hidden" value="${evaluation.id}"/>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="title.label" />:</label>
-                            <div class="col-sm-9">${checklist.title}</div>
+                            <div class="col-sm-9">${evaluation.checklist.title}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="checklistType.label"/>:</label>
                             <div class="col-sm-9">
-                                <c:if test="${not empty checklist.checklistType}">
-                                    <s:message code="${checklist.checklistType.messageCode}"/>
+                                <c:if test="${not empty evaluation.checklist.checklistType}">
+                                    <s:message code="${evaluation.checklist.checklistType.messageCode}"/>
                                 </c:if>
                             </div>
                         </div>
@@ -65,31 +65,31 @@
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                            <div class="col-sm-9">${checklist.model.title}</div>
+                            <div class="col-sm-9">${evaluation.checklist.model.title}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                            <div class="col-sm-9">${checklist.model.description}</div>
+                            <div class="col-sm-9">${evaluation.checklist.model.description}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                            <div class="col-sm-9">${checklist.model.objectivesDesc}</div>
+                            <div class="col-sm-9">${evaluation.checklist.model.objectivesDesc}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                            <div class="col-sm-9">${checklist.model.applicabilitiesDesc}</div>
+                            <div class="col-sm-9">${evaluation.checklist.model.applicabilitiesDesc}</div>
                         </div>
 
                         <div class="form-group">
                             <div class="panel panel-primary" style="width: 90%;margin: 10px auto;">
                                 <div class="panel-heading text-center">
-                                    <h5><s:message code="answer.checklist.question"/></h5>
+                                    <h5>${evaluation.checklist.title}</h5>
                                 </div>
                                 <div class="panel-body ">
                                     <div id="questionsContainer" class="table-responsive">

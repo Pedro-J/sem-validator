@@ -120,38 +120,12 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 		return new CookieLocaleResolver();
 	}
 
-/*	@Autowired
-	private CriterionConverter criterionConverter;
-
-	@Bean(name="conversionService")
-	public ConversionService getConversionService() {
-		ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
-		bean.setConverters( getConverters() );
-		bean.afterPropertiesSet();
-		ConversionService object = bean.getObject();
-		return object;
-	}
-
-	private Set<Converter<?, ?>> getConverters() {
-		Set<Converter<?, ?>> converters = new HashSet<Converter<?, ?>>();
-
-		converters.add( criterionConverter );
-		// add here more custom converters, either as spring bean references or directly instantiated
-
-		return converters;
-	}
-
-	@Override
-	public void addFormatters(FormatterRegistry formatterRegistry) {
-		formatterRegistry.addConverter(criterionConverter);
-	}*/
-
 /*	@Bean
 	public MailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		mailSender.setHost("smtp.gmail.com");
-		mailSender.setUsername("alura.springmvc@gmail.com");
-		mailSender.setPassword("alura2015");
+		mailSender.setUsername("test@gmail.com");
+		mailSender.setPassword("test");
 		mailSender.setPort(587);
 
 		Properties mailProperties = new Properties();

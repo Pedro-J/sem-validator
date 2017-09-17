@@ -1,6 +1,6 @@
 package com.semvalidator.service.impl;
 
-import com.semvalidator.infra.FileSaver;
+import com.semvalidator.infra.FileService;
 import com.semvalidator.model.ModelSE;
 import com.semvalidator.repository.ModelRepository;
 import com.semvalidator.service.ModelService;
@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -16,25 +17,37 @@ import java.util.List;
  * @Author Created by Pedro-J on 6/14/17.
  */
 @Service
+@Transactional
 public class ModelServiceImpl implements ModelService{
+    private final String APP_BASE_DIR = "uploaded_files/models";
+
     @Autowired
     private ModelRepository modelRepository;
 
     @Autowired
-    private FileSaver fileSaver;
+    private FileService fileService;
 
     public ModelSE save(ModelSE entity, MultipartFile modelFile) {
-        ModelSE storedModel = modelRepository.saveAndFlush(entity);
+        ModelSE savedModel = null;
+        if( !entity.isNew() ){
+            savedModel = modelRepository.findOne(entity.getId());
+            if(savedModel.getModelFileUrl() != null && !savedModel.getModelFileUrl().equals("") )
+                fileService.deleteOnExist(savedModel.getModelFileUrl());
+        }else {
+            modelRepository.saveAndFlush(entity);
+        }
 
         if (modelFile != null && !modelFile.getOriginalFilename().isEmpty()) {
-            String baseName = "model_" + storedModel.getId() + "_";
-            String path = fileSaver.write("uploaded_files/models", baseName, modelFile);
+            String baseName = "model_" + entity.getId() + "_";
+            String path = fileService.write(APP_BASE_DIR, baseName, modelFile);
             entity.setModelFileUrl(path);
         }else{
             entity.setModelFileUrl(null);
         }
 
-        return storedModel;
+        savedModel = modelRepository.saveAndFlush(entity);
+
+        return savedModel;
     }
 
     @Override
@@ -48,11 +61,13 @@ public class ModelServiceImpl implements ModelService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ModelSE findById(Integer id) {
         return modelRepository.findOne(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ModelSE> findAll() {
         return modelRepository.findAll();
     }
@@ -63,6 +78,7 @@ public class ModelServiceImpl implements ModelService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ModelSE> findAllPageable(Pageable pageable) {
         return modelRepository.findAll(pageable);
     }

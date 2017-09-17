@@ -1,7 +1,6 @@
 
 var Checklist = function(title, model, type){
     this.title = title;
-    this.model = model;
     this.checklistType = type;
     this.questions = [];
 };
@@ -92,7 +91,6 @@ var tableView = (function() {
 
         //Form checklist
         inputChecklistDesc: 'checklist-desc',
-        selectChecklistModel:'checklist-model',
         selectChecklistType: 'checklist-type',
 
         messageDesc: '.desc-message',
@@ -137,16 +135,14 @@ var tableView = (function() {
         getInputsForm: function() {
             return {
                 description: document.getElementById(DOMstrings.inputChecklistDesc).value,
-                type: document.getElementById(DOMstrings.selectChecklistType).value,
-                model: document.getElementById(DOMstrings.selectChecklistModel).value
+                type: document.getElementById(DOMstrings.selectChecklistType).value
             };
         },
 
         getMessagesForm: function() {
             return {
                 description: document.querySelector(DOMstrings.messageDesc),
-                type: document.querySelector(DOMstrings.messageType),
-                model: document.querySelector(DOMstrings.messageModel)
+                type: document.querySelector(DOMstrings.messageType)
             };
         },
 
@@ -400,18 +396,9 @@ var controller = (function(model, view) {
             messages.type.style.display = 'block';
             messages.type.parentNode.parentNode.classList.add('has-error');
             return false;
-        }else{
+        }else {
             messages.type.style.display = 'none';
             messages.type.parentNode.parentNode.classList.remove('has-error');
-        }
-
-        if( inputs.model === '' ){
-            messages.model.style.display = 'block';
-            messages.model.parentNode.parentNode.classList.add('has-error');
-            return false;
-        }else{
-            messages.model.style.display = 'none';
-            messages.model.parentNode.parentNode.classList.remove('has-error');
         }
 
         return true;

@@ -55,22 +55,6 @@
                         <div class="col-sm-5"></div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label"><s:message code="app.entity.model"/>:</label>
-                        <div class="col-sm-5">
-                            <select class="form-control" id="checklist-model" >
-                                <option value="" label="--- Select ---"/>
-                                <c:forEach items="${models}" var="item" >
-                                    <option value="${item.id}" label="${item.title}" />
-                                </c:forEach>
-                            </select>
-                            <span class="form-control alert-danger model-message" style="display: none">
-                                <s:message code="form.model.required" />
-                            </span>
-                        </div>
-                        <div class="col-sm-5"></div>
-                    </div>
-
                     <div class="panel panel-primary panel-questions">
                         <div class="panel-heading text-center">
                             <h5><s:message code="questions.checklist.select"/></h5>

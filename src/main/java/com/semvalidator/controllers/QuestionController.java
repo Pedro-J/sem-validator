@@ -2,13 +2,13 @@ package com.semvalidator.controllers;
 
 import com.semvalidator.editor.CriterionPropertyEditor;
 import com.semvalidator.editor.RequirementPropertyEditor;
+import com.semvalidator.exception.RequestErrorException;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
 import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.service.RequirementService;
-import com.semvalidator.exception.RequestErrorException;
 import com.semvalidator.util.SearchQuestionParamsDTO;
 import com.semvalidator.validation.QuestionFormValidator;
 import org.slf4j.Logger;
@@ -18,6 +18,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,17 +40,22 @@ public class QuestionController {
 
     private final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
-    @Autowired
     private QuestionService questionService;
 
-    @Autowired
     private CriterionService criterionService;
 
-    @Autowired
     private RequirementService requirementService;
 
-    @Autowired
     private QuestionFormValidator questionFormValidator;
+
+    @Autowired
+    public QuestionController(QuestionService questionService, CriterionService criterionService,
+                              RequirementService requirementService, QuestionFormValidator questionFormValidator){
+        this.questionService = questionService;
+        this.criterionService = criterionService;
+        this.requirementService = requirementService;
+        this.questionFormValidator = questionFormValidator;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -61,21 +67,21 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions/list", method = RequestMethod.GET)
     public ModelAndView showAllUsers(){
-        List<Question> questions = questionService.findAll();
+        List<Question> questions = questionService.findAllOrderByRequirementAndCriterion();
         ModelAndView modelAndView = new ModelAndView("questions/list");
         modelAndView.addObject("questions",questions);
         return modelAndView;
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
-    public @ResponseBody Page<Question> getAllUsers(
+    public @ResponseBody Page<Question> getAllUsersPageble(
             @RequestParam("page") Integer page, @RequestParam("size") Integer size){
         Pageable pageable = new PageRequest(page, size);
         Page<Question> questions =  questionService.findAllPageable(pageable);
         return questions;
     }
 
-    @RequestMapping(value = "/questions/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/questions/search", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
     public @ResponseBody Page<Question> search(@RequestBody SearchQuestionParamsDTO params) throws RequestErrorException {
         try{
             return questionService.search(params);
@@ -113,7 +119,7 @@ public class QuestionController {
 
             redirectAttributes.addFlashAttribute("msgCSS","success");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
-            if( question.getId() == null){
+            if( question.getId() == null ){
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.save");
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");

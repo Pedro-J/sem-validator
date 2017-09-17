@@ -16,8 +16,8 @@ public class Answer extends GenericEntity{
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_checklist")
-    private Checklist checklist;
+    @JoinColumn(name = "id_evaluation")
+    private Evaluation evaluation;
 
     @ManyToOne
     @JoinColumn(name = "id_question")
@@ -47,14 +47,6 @@ public class Answer extends GenericEntity{
         return (id == null ? true : false);
     }
 
-    public Checklist getChecklist() {
-        return checklist;
-    }
-
-    public void setChecklist(Checklist checklist) {
-        this.checklist = checklist;
-    }
-
     public Question getQuestion() {
         return question;
     }
@@ -71,9 +63,19 @@ public class Answer extends GenericEntity{
         this.value = value;
     }
 
+    public Evaluation getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(Evaluation evaluation) {
+        this.evaluation = evaluation;
+    }
+
     public void convertFromDTO(AnswerJsonDTO answer){
-        this.checklist = new Checklist(answer.getChecklist());
+        this.evaluation = new Evaluation(answer.getEvalution());
         this.question = new Question(answer.getQuestion());
         this.value = AnswerValue.findByCode(answer.getValue());
     }
+
+
 }

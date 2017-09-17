@@ -20,6 +20,9 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     @Query("select q from Question q where q.criterion is null")
     List<Question> findAllAvailable();
 
+    @Query("select q from Question q order by q.requirement.description, q.criterion.description")
+    List<Question> findAllOrderByRequirementAndCriterion();
+
     List<Question> findByCriterion(Criterion criterion);
 
     List<Question> findByRequirement(Requirement requirement);
@@ -30,7 +33,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Page<Question> findByChecklist(@Param("id") Integer id, Pageable pageable);
 
     @Query("select q from Question q inner join q.checklists c where c.id = :id")
-    List<Question> findByChecklist(@Param("id")Integer id);
+    List<Question> findByChecklist(@Param("id") Integer id);
 
     Page<Question> findByRequirementAndCriterionAndDescriptionLike(
             Requirement requirement, Criterion criterion, String description, Pageable pageable);
@@ -40,5 +43,13 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Page<Question> findByRequirement(Requirement requirement, Pageable pageable);
     Page<Question> findByCriterion(Criterion criterion, Pageable pageable);
     Page<Question> findByDescriptionLike(String description, Pageable pageable);
+
+    @Query
+    @Override
+    Page<Question> findAll(Pageable pageable);
+
+    @Query
+    @Override
+    List<Question> findAll();
 
 }
