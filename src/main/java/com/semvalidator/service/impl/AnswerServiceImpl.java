@@ -125,7 +125,7 @@ public class AnswerServiceImpl implements AnswerService{
     }
 
     @Override
-    public List<Answer> findByChecklist(Integer id) {
+    public List<Answer> findByEvaluation(Integer id) {
         return answerRepository.findByEvaluation(id);
     }
 

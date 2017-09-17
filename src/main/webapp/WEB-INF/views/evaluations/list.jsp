@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="checklist.list.title" >
+<tags:pageTemplate title="evaluation.list.title" >
     <jsp:attribute name="extraScripts">
         <script type="text/javascript">
             $(document).ready(function() {
@@ -25,7 +25,7 @@
             </c:if>
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h4><s:message code="checklist.list.title" /></h4>
+                    <h4><s:message code="evaluation.list.title" /></h4>
                 </div>
                 <div class="panel-body">
 
@@ -44,7 +44,7 @@
                                 <td>${evaluation.title}</td>
                                 <td>${evaluation.description}</td>
                                 <td>${evaluation.applicabilitiesDesc}</td>
-                                <td>
+                                <td class="actions-column">
                                     <s:message code="general.delete" var="delete"/>
                                     <s:message code="general.edit" var="edit"/>
                                     <s:message code="general.seeDetail" var="detail"/>
@@ -61,11 +61,12 @@
                                     <button class="btn btn-primary glyphicon glyphicon-edit"
                                             onclick="location.href='${updateUrl}'" title="${edit}"></button>
 
+                                    <button class="btn btn-danger glyphicon glyphicon-remove"
+                                            onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>
+
                                     <button class="btn btn-primary glyphicon glyphicon-question-sign" title="${answerQuestions}"
                                             onclick="location.href='${evaluationAnswers}'" ></button>
 
-                                        <%--                                <button class="btn btn-danger glyphicon glyphicon-remove"
-                                                                                onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}"></button>--%>
                                 </td>
                             </tr>
                         </c:forEach>

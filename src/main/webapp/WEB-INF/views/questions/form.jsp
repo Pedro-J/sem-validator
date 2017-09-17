@@ -26,14 +26,14 @@
 
                     <form:hidden path="id"/>
 
-                    <s:bind path="numeracao">
+                    <s:bind path="numeration">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <s:message code="numeracao.label" var="numeracao"/>
-                            <label class="col-sm-2 control-label">${numeracao}:</label>
+                            <s:message code="numeration.label" var="numeration"/>
+                            <label class="col-sm-2 control-label">${numeration}:</label>
                             <div class="col-sm-8">
-                                <form:input path="numeracao" type="text" class="form-control " id="description"
-                                            placeholder="${numeracao}"/>
-                                <form:errors path="numeracao" class="control-label"/>
+                                <form:input path="numeration" type="text" class="form-control " id="description"
+                                            placeholder="${numeration}"/>
+                                <form:errors path="numeration" class="control-label"/>
                             </div>
                             <div class="col-sm-2"></div>
                         </div>

@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Component
-public class FileSaver {
+public class FileService {
 
 	@Autowired
 	private HttpServletRequest request;
@@ -35,10 +35,19 @@ public class FileSaver {
 			File uploadedFile = new File((filePath + fileName));
 			file.transferTo(uploadedFile);
 			
-			return baseFolder + "/" + fileName;
+			return baseFolder + fileName;
 		} catch (IllegalStateException | IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void deleteOnExist(String dirAndFileName){
+
+		String realPathName = request.getServletContext().getRealPath("/"+ dirAndFileName);
+
+		File uploadedFile = new File(realPathName);
+
+		uploadedFile.deleteOnExit();
 	}
 	
 }

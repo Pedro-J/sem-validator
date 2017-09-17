@@ -9,6 +9,6 @@ public class ScenarioController {
 
     @GetMapping("/scenario")
     public String redirectScenarioPage(){
-        return "redirect:/scenario";
+        return "scenario";
     }
 }

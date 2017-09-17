@@ -39,7 +39,7 @@
 
                     <c:forEach var="criterion" items="${criterions}">
                         <tr>
-                            <td>${criterion.description}</td>
+                            <td><div class="long-text-column">${criterion.description}</div></td>
                             <td>
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>

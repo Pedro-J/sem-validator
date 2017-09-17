@@ -34,17 +34,15 @@
                     <tr>
                         <th><s:message code="title.label" /></th>
                         <th><s:message code="checklistType.label" /></th>
-                        <th><s:message code="app.entity.model" /></th>
                         <th><s:message code="actions.label" /></th>
                     </tr>
                     </thead>
 
                     <c:forEach var="checklist" items="${checklists}">
                         <tr>
-                            <td>${checklist.title}</td>
-                            <td><s:message code="${checklist.checklistType.messageCode}" /></td>
-                            <td>${checklist.model.title}</td>
-                            <td>
+                            <td class="width600"><div class="long-text-column">${checklist.title}</div></td>
+                            <td class="width200"><div class="long-text-column"><s:message code="${checklist.checklistType.messageCode}" /></div></td>
+                            <td class="actions-column">
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>

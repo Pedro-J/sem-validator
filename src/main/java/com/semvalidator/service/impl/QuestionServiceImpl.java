@@ -64,6 +64,11 @@ public class QuestionServiceImpl implements QuestionService{
         return questionRepository.findAllAvailable();
     }
 
+    @Override
+    public List<Question> findAllOrderByRequirementAndCriterion() {
+        return questionRepository.findAllOrderByRequirementAndCriterion();
+    }
+
     public List<Question> findByCriterion(Criterion criterion) {
         return questionRepository.findByCriterion(criterion);
     }

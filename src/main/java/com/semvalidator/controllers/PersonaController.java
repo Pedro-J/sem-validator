@@ -9,7 +9,7 @@ public class PersonaController {
 
     @GetMapping("/persona")
     public String redirectPersonaPage(){
-        return "redirect:/persona";
+        return "persona";
     }
 
 }

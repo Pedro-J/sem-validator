@@ -89,7 +89,7 @@
                         <div class="form-group">
                             <div class="panel panel-primary" style="width: 90%;margin: 10px auto;">
                                 <div class="panel-heading text-center">
-                                    <h5><s:message code="answer.checklist.question"/></h5>
+                                    <h5>${evaluation.checklist.title}</h5>
                                 </div>
                                 <div class="panel-body ">
                                     <div id="questionsContainer" class="table-responsive">

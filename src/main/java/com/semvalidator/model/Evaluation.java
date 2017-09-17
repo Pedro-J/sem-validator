@@ -11,7 +11,7 @@ public class Evaluation extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String titulo;
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "id_model")
@@ -61,11 +61,11 @@ public class Evaluation extends GenericEntity{
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

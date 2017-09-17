@@ -33,7 +33,7 @@
                 <table class="table table-bordered data-table-pagination">
                     <thead>
                         <tr>
-
+                            <th><s:message code="numeration.label" /></th>
                             <th><s:message code="description.label" /></th>
                             <th><s:message code="criterion.label" /></th>
                             <th><s:message code="requirement.label" /></th>
@@ -44,11 +44,12 @@
                     <tbody>
                     <c:forEach var="question" items="${questions}">
                         <tr>
-                            <td><div style="width:400px">${question.description}</div></td>
-                            <td><div style="width:100px">${question.criterion.description}</div></td>
-                            <td><div style="width:100px">${question.requirement.description}</div></td>
-                            <td><div style="width:200px">${question.tip}</div></td>
-                            <td>
+                            <td >${question.numeration}</td>
+                            <td class="width260"><div class="long-text-column">${question.description}</div></td>
+                            <td class="width200"><div class="long-text-column">${question.criterion.description}</div></td>
+                            <td class="width200"><div class="long-text-column">${question.requirement.description}</div></td>
+                            <td class="width140"><div class="long-text-column">${question.tip}</div></td>
+                            <td class="actions-column">
                                 <s:message code="general.delete" var="delete"/>
                                 <s:message code="general.edit" var="edit"/>
                                 <s:message code="general.seeDetail" var="detail"/>

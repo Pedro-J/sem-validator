@@ -50,26 +50,26 @@
 
                 <div class="row"><br/></div>
 
-                <c:if test="${not empty answers}">
+                <c:if test="${not empty questions}">
                     <div class="row">
                         <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
                             <div class="panel-heading text-center">
-                                <h5><s:message code="answers.label"/></h5>
+                                <h5><s:message code="questions.label"/></h5>
                             </div>
                             <div class="panel-body ">
                                 <div id="questionsContainer" class="table-responsive">
                                     <table class="table table-hover data-table-pagination">
                                         <thead>
                                         <tr>
+                                            <th><s:message code="numeration.label" /> </th>
                                             <th><s:message code="app.entity.question" /> </th>
-                                            <th><s:message code="app.entity.answer" /> </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="answer" items="${answers}" >
+                                        <c:forEach var="question" items="${questions}" >
                                             <tr>
-                                                <td >${answer.question.description}</td>
-                                                <td ><s:message code="${answer.value.messageCode}" /></td>
+                                                <td>${question.numeration}</td>
+                                                <td class="long-text-column width800">${question.description}</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

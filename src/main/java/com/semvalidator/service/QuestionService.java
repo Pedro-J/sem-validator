@@ -14,11 +14,13 @@ import java.util.List;
  */
 public interface QuestionService extends GenericService<Question>{
     List<Question> findAllAvailable();
+    List<Question> findAllOrderByRequirementAndCriterion();
     List<Question> findByCriterion(Criterion criterion);
     List<Question> findByRequirement(Requirement requirement);
     List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
     Page<Question> search(SearchQuestionParamsDTO search);
     Page<Question> findByChecklist(Integer id, Pageable pageable);
+
 
     List<Question> findByChecklist(Integer id);
 }

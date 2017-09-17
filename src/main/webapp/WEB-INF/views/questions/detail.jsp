@@ -26,7 +26,7 @@
 
                 <div class="row">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                    <div class="col-sm-10">${question.numeracao}</div>
+                    <div class="col-sm-10">${question.numeration}</div>
                 </div>
 
                 <div class="row">

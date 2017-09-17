@@ -67,7 +67,7 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions/list", method = RequestMethod.GET)
     public ModelAndView showAllUsers(){
-        List<Question> questions = questionService.findAll();
+        List<Question> questions = questionService.findAllOrderByRequirementAndCriterion();
         ModelAndView modelAndView = new ModelAndView("questions/list");
         modelAndView.addObject("questions",questions);
         return modelAndView;
@@ -119,7 +119,7 @@ public class QuestionController {
 
             redirectAttributes.addFlashAttribute("msgCSS","success");
             redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
-            if( question.getId() == null){
+            if( question.getId() == null ){
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.save");
             }else{
                 redirectAttributes.addFlashAttribute("msgContent","general.msg.update");

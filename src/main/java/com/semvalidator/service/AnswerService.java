@@ -11,5 +11,5 @@ import java.util.List;
 public interface AnswerService extends GenericService<Answer>{
     void saveAllDatas(List<AnswerJsonDTO> answersJson);
 
-    List<Answer> findByChecklist(Integer id);
+    List<Answer> findByEvaluation(Integer id);
 }
