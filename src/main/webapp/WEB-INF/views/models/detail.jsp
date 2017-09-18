@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="checklist.detail.title">
+<tags:pageTemplate title="model.detail.title">
     <div class="container">
 
         <c:if test="${not empty msgContent}">
@@ -13,14 +13,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <strong><s:message code="${msgTitle}"/>
-                    <s:message code="app.entity.checklist"/>&nbsp;<s:message code="${msgContent}" />
+                    <s:message code="app.entity.model"/>&nbsp;<s:message code="${msgContent}" />
                 </strong>
             </div>
         </c:if>
         <br/>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
-                <h4><s:message code="checklist.detail.title"/></h4>
+                <h4><s:message code="model.detail.title"/></h4>
             </div>
             <div class="panel-body">
                 <div class="row">

@@ -63,7 +63,7 @@ public class AnswerServiceImpl implements AnswerService{
     public void saveAllDatas(List<AnswerJsonDTO> answersJson) {
 
         if( answersJson != null && !answersJson.isEmpty() ) {
-            Integer currentChecklist = answersJson.get(0).getEvalution();
+            Integer currentChecklist = answersJson.get(0).getEvaluation();
             List<Question> questionsNotAnswered = questionRepository.findByChecklist(currentChecklist);
 
             if( isSaveAll(answersJson) ){
@@ -108,7 +108,7 @@ public class AnswerServiceImpl implements AnswerService{
         for(Question question : questionsNotAnswered){
             AnswerJsonDTO dto = new AnswerJsonDTO();
             dto.setQuestion(question.getId());
-            dto.setEvalution(currentEvaluationID);
+            dto.setEvaluation(currentEvaluationID);
             dto.setValue(AnswerValue.PLEASED.getCode()); //Default answer
 
             Answer answer = new Answer(dto);

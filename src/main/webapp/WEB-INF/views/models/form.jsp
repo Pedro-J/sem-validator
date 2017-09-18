@@ -5,16 +5,16 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="${checklist['new'] ? 'checklist.add.title': 'checklist.update.title'}">
+<tags:pageTemplate title="${model['new'] ? 'model.add.title': 'model.update.title'}">
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <c:choose>
-                    <c:when test="${checklist['new']}">
-                        <h4><s:message code="checklist.add.title"/></h4>
+                    <c:when test="${model['new']}">
+                        <h4><s:message code="model.add.title"/></h4>
                     </c:when>
                     <c:otherwise>
-                        <h4><s:message code="checklist.update.title"/></h4>
+                        <h4><s:message code="model.update.title"/></h4>
                     </c:otherwise>
                 </c:choose>
             </div>

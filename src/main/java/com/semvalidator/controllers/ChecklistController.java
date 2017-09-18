@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -72,9 +71,7 @@ public class ChecklistController {
     public String showAddForm(Model model){
         model.addAttribute("checklistTypes", ChecklistType.values());
         model.addAttribute("criterions", criterionService.findAll());
-        model.addAttribute("questions", questionService.findAll());
         model.addAttribute("requirements", requirementService.findAll());
-        model.addAttribute("models", modelService.findAll());
         model.addAttribute("newChecklist", true);
         return "checklists/form";
     }
@@ -83,6 +80,8 @@ public class ChecklistController {
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
         model.addAttribute("checklist", checkListService.findById(id));
         model.addAttribute("checklistTypes", ChecklistType.values());
+        model.addAttribute("criterions", criterionService.findAll());
+        model.addAttribute("requirements", requirementService.findAll());
         model.addAttribute("newChecklist", false);
         return "checklists/form";
     }
@@ -114,26 +113,6 @@ public class ChecklistController {
         redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
         redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
         return "redirect:/checklists/list";
-    }
-
-    @RequestMapping(value = "/checklists/{id}/answers/form", method = RequestMethod.GET)
-    public String showAnswerValidationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        Checklist checklist = checkListService.findById(id);
-
-        if( !CollectionUtils.isEmpty(checklist.getQuestions()) ) {
-            model.addAttribute("checklist", checklist);
-            return "answers/form";
-        }else{
-            redirectAttributes.addFlashAttribute("msgCSS","warning");
-            redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.warn");
-            redirectAttributes.addFlashAttribute("msgContent","checklist.questions.empty");
-            return "redirect:/checklists/list";
-        }
-    }
-
-    @RequestMapping(value = "/checklists/{id}/questions", method = RequestMethod.GET)
-    public @ResponseBody List<Question> getQuestions(@PathVariable("id") Integer id){
-        return questionService.findByChecklist(id);
     }
 
 

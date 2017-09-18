@@ -72,7 +72,7 @@ public class Answer extends GenericEntity{
     }
 
     public void convertFromDTO(AnswerJsonDTO answer){
-        this.evaluation = new Evaluation(answer.getEvalution());
+        this.evaluation = new Evaluation(answer.getEvaluation());
         this.question = new Question(answer.getQuestion());
         this.value = AnswerValue.findByCode(answer.getValue());
     }

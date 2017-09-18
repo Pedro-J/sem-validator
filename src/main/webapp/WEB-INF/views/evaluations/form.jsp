@@ -19,7 +19,7 @@
                 </c:choose>
             </div>
             <div class="panel-body">
-                <s:url value="/evaluation" var="formActionUrl"/>
+                <s:url value="/evaluations" var="formActionUrl"/>
 
                 <form:form class="form-horizontal" method="POST" modelAttribute="evaluation"
                            action="${formActionUrl}" acceptCharset="UTF-8" enctype="multipart/form-data">
@@ -45,7 +45,7 @@
                             <div class="col-sm-5">
                                 <form:select path="model" class="form-control">
                                     <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${models}" itemLabel="description" itemValue="id"/>
+                                    <form:options items="${models}" itemLabel="title" itemValue="id"/>
                                 </form:select>
                                 <form:errors path="model" class="control-label"/>
                             </div>
@@ -59,7 +59,7 @@
                             <div class="col-sm-5">
                                 <form:select path="checklist" class="form-control">
                                     <form:option value="0" label="--- Select ---"/>
-                                    <form:options items="${checklists}" itemLabel="description" itemValue="id"/>
+                                    <form:options items="${checklists}" itemLabel="title" itemValue="id"/>
                                 </form:select>
                                 <form:errors path="checklist" class="control-label"/>
                             </div>
@@ -70,7 +70,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <c:choose>
-                                <c:when test="${model['new']}">
+                                <c:when test="${evaluation['new']}">
                                     <button type="submit" class="btn btn-primary pull-right"><s:message
                                             code="general.save"/></button>
                                 </c:when>

@@ -20,7 +20,7 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <strong><s:message code="${msgTitle}" />&nbsp;<s:message code="app.entity.checklist"/>&nbsp;<s:message code="${msgContent}" /></strong>
+                    <strong><s:message code="${msgTitle}" />&nbsp;<s:message code="app.entity.evaluation"/>&nbsp;<s:message code="${msgContent}" /></strong>
                 </div>
             </c:if>
             <div class="panel panel-primary">
@@ -39,12 +39,12 @@
                         </tr>
                         </thead>
 
-                        <c:forEach var="checklist" items="${models}">
+                        <c:forEach var="evaluation" items="${evaluations}">
                             <tr>
-                                <td>${evaluation.title}</td>
-                                <td>${evaluation.description}</td>
-                                <td>${evaluation.applicabilitiesDesc}</td>
-                                <td class="actions-column">
+                                <td class="width260"><div class="long-text-column"> ${evaluation.title}</div></td>
+                                <td class="width200"><div class="long-text-column">${evaluation.model.title}</div></td>
+                                <td class="width200"><div class="long-text-column">${evaluation.checklist.title}</div></td>
+                                <td class="actions-column-4">
                                     <s:message code="general.delete" var="delete"/>
                                     <s:message code="general.edit" var="edit"/>
                                     <s:message code="general.seeDetail" var="detail"/>

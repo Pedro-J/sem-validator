@@ -25,7 +25,7 @@
         </c:if>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
-                <h4><s:message code="checklist.list.title" /></h4>
+                <h4><s:message code="model.list.title" /></h4>
             </div>
             <div class="panel-body">
 

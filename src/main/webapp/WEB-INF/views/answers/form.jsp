@@ -6,6 +6,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="answer.add.title">
+
     <jsp:attribute name="extraScripts">
         <c:url value="/resources/js" var="jsPath" />
         <script type="text/javascript" src="${jsPath}/components/answerTable.js"></script>
@@ -65,25 +66,25 @@
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.checklist.model.title}</div>
+                            <div class="col-sm-9">${evaluation.model.title}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.checklist.model.description}</div>
+                            <div class="col-sm-9">${evaluation.model.description}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.checklist.model.objectivesDesc}</div>
+                            <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.checklist.model.applicabilitiesDesc}</div>
+                            <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
                         </div>
 
                         <div class="form-group">
@@ -136,7 +137,7 @@
                                 <button type="button" class="btn btn-primary pull-right btn-save">
                                     <s:message code="general.save"/>
                                 </button>
-                                <a href="${app_context}checklists/list" style="margin-right: 10px;" class="btn btn-default pull-right">
+                                <a href="${app_context}evaluations/list" style="margin-right: 10px;" class="btn btn-default pull-right">
                                     <s:message code="general.back" />
                                 </a>
                             </div>
@@ -145,6 +146,7 @@
                 </div>
             </div>
         </div>
+
     <%--    <script type="text/javascript">
             $(document).ready(function() {
 

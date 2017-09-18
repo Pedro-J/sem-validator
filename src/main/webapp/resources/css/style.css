@@ -75,6 +75,10 @@ ul.hide{
     width:140px;
 }
 
+actions-column-4{
+   width:180px;
+}
+
 .long-text-column{
     max-height:60px;
     overflow-y: auto;
