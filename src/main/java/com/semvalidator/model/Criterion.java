@@ -25,6 +25,9 @@ public class Criterion extends GenericEntity{
     @OneToMany(mappedBy = "criterion", cascade = CascadeType.REMOVE)
     private List<Question> questions;
 
+    @JsonIgnore
+    private transient float satisfactionValue;
+
     @Override
     public Integer getId() {
         return this.id;
@@ -55,5 +58,13 @@ public class Criterion extends GenericEntity{
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public float getSatisfactionValue() {
+        return satisfactionValue;
+    }
+
+    public void setSatisfactionValue(float satisfactionValue) {
+        this.satisfactionValue = satisfactionValue;
     }
 }

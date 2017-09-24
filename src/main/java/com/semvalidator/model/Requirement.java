@@ -19,6 +19,9 @@ public class Requirement extends GenericEntity{
 
     private String description;
 
+    @JsonIgnore
+    private transient float satisfactionValue;
+
     public Requirement(Integer id) {
         this.id = id;
     }
@@ -50,4 +53,11 @@ public class Requirement extends GenericEntity{
         this.description = description;
     }
 
+    public float getSatisfactionValue() {
+        return satisfactionValue;
+    }
+
+    public void setSatisfactionValue(float satisfactionValue) {
+        this.satisfactionValue = satisfactionValue;
+    }
 }

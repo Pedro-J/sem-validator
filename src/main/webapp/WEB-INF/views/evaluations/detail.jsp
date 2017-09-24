@@ -85,28 +85,34 @@
                         <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <label class="col-sm-2"><s:message code="general.satisfaction.label"/>:</label>
+                        <div class="col-sm-9">${generalSatisfaction * 100}%</div>
+                    </div>
+
                     <div class="row"><br/></div>
 
-                    <c:if test="${not empty answers}">
                     <div class="row">
-                        <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
+                        <c:if test="${not empty requirements}">
+                        <div class="panel panel-primary" style="width: 43%;float:left;margin-left: 58px;">
                             <div class="panel-heading text-center">
-                                <h5><s:message code="answers.label"/></h5>
+                                <h5><s:message code="criterions.satisfaction.label"/></h5>
                             </div>
                             <div class="panel-body ">
-                                <div id="questionsContainer" class="table-responsive">
+                                <div id="requirementStatistics" class="table-responsive">
                                     <table class="table table-hover data-table-pagination">
                                         <thead>
                                         <tr>
-                                            <th><s:message code="app.entity.question" /> </th>
-                                            <th><s:message code="app.entity.answer" /> </th>
-                                        </tr>
+                                            <th><s:message code="app.entity.requirement" /> </th>
+                                            <th><s:message code="app.entity.satisfaction" /> </th>
+                                        </tr >
                                         </thead>
                                         <tbody>
-                                        <c:forEach var="answer" items="${answers}" >
+                                        <c:forEach var="requirement" items="${requirements}" >
                                             <tr>
-                                                <td >${answer.question.description}</td>
-                                                <td ><s:message code="${answer.value.messageCode}" /></td>
+                                                <td class="long-text-column width300">${requirement.description}</td>
+                                                <td class="width40">${requirement.satisfactionValue * 100}%</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -114,9 +120,70 @@
                                 </div>
                             </div>
                         </div>
+                        </c:if>
+
+                        <c:if test="${not empty criterions}">
+                            <div class="panel panel-primary" style="width: 43%;float:right;margin-right:58px;">
+                                <div class="panel-heading text-center">
+                                    <h5><s:message code="requirements.satisfaction.label"/></h5>
+                                </div>
+                                <div class="panel-body ">
+                                    <div id="criterionStatistics" class="table-responsive">
+                                        <table class="table table-hover data-table-pagination">
+                                            <thead>
+                                            <tr>
+                                                <th><s:message code="app.entity.criterion" /> </th>
+                                                <th><s:message code="app.entity.satisfaction" /> </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach var="criterion" items="${criterions}" >
+                                                <tr>
+                                                    <td class="long-text-column width300">${criterion.description}</td>
+                                                    <td class="width40">${criterion.satisfactionValue * 100}%</td>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
+
+                    <div class="row"><br/></div>
+
+                    <c:if test="${not empty answers}">
+                        <div class="row">
+                            <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
+                                <div class="panel-heading text-center">
+                                    <h5><s:message code="answers.label"/></h5>
+                                </div>
+                                <div class="panel-body ">
+                                    <div id="questionsContainer" class="table-responsive">
+                                        <table class="table table-hover data-table-pagination">
+                                            <thead>
+                                            <tr>
+                                                <th><s:message code="app.entity.question" /> </th>
+                                                <th><s:message code="app.entity.answer" /> </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach var="answer" items="${answers}" >
+                                                <tr>
+                                                    <td >${answer.question.description}</td>
+                                                    <td ><s:message code="${answer.value.messageCode}" /></td>
+                                                </tr>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
-                </c:if>
+
 
                 <div class="panel-footer text-center" >
                     <c:url value="/" var="app_context" />

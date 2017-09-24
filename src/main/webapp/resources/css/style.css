@@ -23,6 +23,10 @@ img.lang{
     width: 400px;
 }
 
+.width300{
+    width: 300px;
+}
+
 .width260{
     width: 260px;
 }
@@ -82,4 +86,9 @@ actions-column-4{
 .long-text-column{
     max-height:60px;
     overflow-y: auto;
+}
+
+.tip-info-img{
+    width: 20px;
+    height: 20px;
 }

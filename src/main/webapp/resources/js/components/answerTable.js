@@ -150,9 +150,17 @@ var tableView = (function() {
         return selectHTML;
     };
 
-    var createTD = function (element, colspan){
+    var createTipImg = function(tip){
+        var img = document.createElement('img');
+        img.setAttribute('src', '/resources/images/tip_info.png');
+        img.setAttribute('title', tip);
+        img.classList.add('tip-info-img');
+        return img;
+    };
+
+    var createTD = function (element){
         var td = document.createElement('td');
-        td.setAttribute('colspan', colspan);
+        //td.setAttribute('colspan', colspan);
         td.appendChild(element);
         return td;
     };
@@ -168,21 +176,27 @@ var tableView = (function() {
 
         questions.forEach(function(question){
 
-            var selectAnswers = null;
-
             var answerChoosed = model.findAnswerByQuestionID(question.id);
 
-            selectAnswers = createSelect(question.id, answers, answerChoosed);
+            var selectAnswers = createSelect(question.id, answers, answerChoosed);
+            var imgQuestionTip = createTipImg(question.tip);
 
-            var colspanQuestion = '3';
-            var tdQuestionLabel = createTD(document.createTextNode(question.description), colspanQuestion);
+            //var colspanQuestion = '8';
+            var tdQuestionDescription = createTD(document.createTextNode(question.description));
+            tdQuestionDescription.classList.add('width400');
 
-            var colspanAnswer = '1';
-            var tdQuestionAnswer = createTD(selectAnswers, colspanAnswer);
+            //var colspanTip = '1';
+            var tdQuestionTip = createTD(imgQuestionTip);
+            tdQuestionTip.classList.add('text-center', 'width100')
+
+            //var colspanAnswer = '1';
+            var tdQuestionAnswer = createTD(selectAnswers);
+            tdQuestionAnswer.classList.add('text-center', 'width140');
 
             var trQuestion = document.createElement('tr');
 
-            trQuestion.appendChild(tdQuestionLabel);
+            trQuestion.appendChild(tdQuestionDescription);
+            trQuestion.appendChild(tdQuestionTip)
             trQuestion.appendChild(tdQuestionAnswer);
             tableContent.appendChild(trQuestion);
         });

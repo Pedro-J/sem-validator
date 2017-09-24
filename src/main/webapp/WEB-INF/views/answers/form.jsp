@@ -97,8 +97,9 @@
                                         <table class="table table-hover">
                                             <thead>
                                             <tr>
-                                                <th colspan="3" class="text-center"><s:message code="app.entity.question" /> </th>
-                                                <th colspan="1" class="text-center"><s:message code="app.entity.answer" /> </th>
+                                                <th class="text-center width400"><s:message code="app.entity.question" /> </th>
+                                                <th class="text-center width100"><s:message code="tip.label" /> </th>
+                                                <th class="text-center width200"><s:message code="app.entity.answer" /> </th>
                                             </tr>
                                             </thead>
                                             <tbody id="answers_questions">

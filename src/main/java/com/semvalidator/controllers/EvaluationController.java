@@ -6,10 +6,7 @@ import com.semvalidator.model.Checklist;
 import com.semvalidator.model.Evaluation;
 import com.semvalidator.model.ModelSE;
 import com.semvalidator.model.Question;
-import com.semvalidator.service.ChecklistService;
-import com.semvalidator.service.EvaluationService;
-import com.semvalidator.service.ModelService;
-import com.semvalidator.service.QuestionService;
+import com.semvalidator.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +24,8 @@ public class EvaluationController {
 
     EvaluationService evaluationService;
 
+    AnswerService answerService;
+
     ModelService modelService;
 
     ChecklistService checklistService;
@@ -34,11 +33,13 @@ public class EvaluationController {
     QuestionService questionService;
 
     @Autowired
-    public EvaluationController(EvaluationService evaluationService, ModelService modelService, ChecklistService checklistService, QuestionService questionService) {
+    public EvaluationController(EvaluationService evaluationService, ModelService modelService, ChecklistService checklistService,
+                                QuestionService questionService, AnswerService answerService) {
         this.evaluationService = evaluationService;
         this.modelService = modelService;
         this.checklistService = checklistService;
         this.questionService = questionService;
+        this.answerService = answerService;
     }
 
     @InitBinder
@@ -101,6 +102,11 @@ public class EvaluationController {
     @GetMapping("/evaluations/{id}")
     public String showDetails(@PathVariable("id") Integer id, Model model){
         model.addAttribute("evaluation", evaluationService.findById(id));
+        model.addAttribute("generalSatisfaction", evaluationService.calculateGeneralSatisfaction(id));
+        model.addAttribute("answers", answerService.findByEvaluation(id));
+
+        model.addAttribute("requirements", evaluationService.calculateRequirementsSatisfaction(id));
+        model.addAttribute("criterions", evaluationService.calculateCriterionsSatisfaction(id));
         return "evaluations/detail";
     }
 

@@ -51,6 +51,7 @@
                 <div class="row"><br/></div>
 
                 <c:if test="${not empty questions}">
+                    <c:url value="/resources/images" var="imagesPath" />
                     <div class="row">
                         <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
                             <div class="panel-heading text-center">
@@ -63,6 +64,7 @@
                                         <tr>
                                             <th><s:message code="numeration.label" /> </th>
                                             <th><s:message code="app.entity.question" /> </th>
+                                            <th><s:message code="tip.label" /> </th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -70,6 +72,7 @@
                                             <tr>
                                                 <td>${question.numeration}</td>
                                                 <td class="long-text-column width800">${question.description}</td>
+                                                <td> <img src="${imagesPath}/tip_info.png" title="${question.tip}" class="tip-info-img" /></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
