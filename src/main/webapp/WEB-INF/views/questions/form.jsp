@@ -7,6 +7,7 @@
 
 <tags:pageTemplate title="${question['new'] ? 'question.add.title': 'question.update.title'}">
     <div class="container">
+        <c:url value="/" var="app_context"/>
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <c:choose>
@@ -78,7 +79,7 @@
                             <div class="col-sm-1">
                                 <s:message code="criterion.add.title" var="addCriterion"/>
                                 <a class="btn btn-primary glyphicon glyphicon-plus"
-                                        href="${app_context}/criterions/add" title="${addCriterion}"></a>
+                                        href="${app_context}criterions/add" title="${addCriterion}"></a>
                             </div>
                             <div class="col-sm-4"></div>
                         </div>
@@ -97,7 +98,7 @@
                             <div class="col-sm-1">
                                 <s:message code="requirement.add.title" var="addRequirement"/>
                                 <a class="btn btn-primary glyphicon glyphicon-plus"
-                                        href="${app_context}/requirements/add" title="${addRequirement}"></a>
+                                        href="${app_context}requirements/add" title="${addRequirement}"></a>
                             </div>
                             <div class="col-sm-4"></div>
                         </div>
@@ -112,7 +113,6 @@
                                 </c:when>
                                 <c:otherwise>
                                     <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px"><s:message code="general.update"/></button>
-                                    <c:url value="/" var="app_context" />
                                     <a href="${app_context}questions/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
                                 </c:otherwise>
                             </c:choose>
