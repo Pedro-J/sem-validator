@@ -24,14 +24,18 @@ import java.util.List;
 @Transactional
 public class AnswerServiceImpl implements AnswerService{
 
-    @Autowired
     private AnswerRepository answerRepository;
 
-    @Autowired
     private QuestionRepository questionRepository;
 
-    @Autowired
     private ChecklistRepository checklistRepository;
+
+    @Autowired
+    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository, ChecklistRepository checklistRepository) {
+        this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
+        this.checklistRepository = checklistRepository;
+    }
 
     public Answer save(Answer entity) {
         return answerRepository.saveAndFlush(entity);

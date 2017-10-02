@@ -81,8 +81,8 @@
                         </ul>
                     </li>
 
-                    <li><a href="${app_context}persona"> <s:message code="app.entity.persona" /></a></li>
-                    <li><a href="${app_context}scenario" > <s:message code="app.entity.scenario" /></a></li>
+                    <li><a href="${app_context}personas/list"> <s:message code="app.entity.persona" /></a></li>
+                    <li><a href="${app_context}scenarios/list" > <s:message code="app.entity.scenario" /></a></li>
 
                 </sec:authorize>
 

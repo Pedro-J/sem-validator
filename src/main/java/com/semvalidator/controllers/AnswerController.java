@@ -26,11 +26,15 @@ import java.util.List;
 @Controller
 public class AnswerController {
 
-    @Autowired
     private AnswerService answerService;
 
-    @Autowired
     private ApplicationContext context;
+
+    @Autowired
+    public AnswerController(AnswerService answerService, ApplicationContext context) {
+        this.answerService = answerService;
+        this.context = context;
+    }
 
     @RequestMapping(value = "/answers/types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<OptionHTML> getAnswers(){

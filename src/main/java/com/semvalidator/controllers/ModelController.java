@@ -33,17 +33,21 @@ public class ModelController {
 
     private final Logger logger = LoggerFactory.getLogger(ModelController.class);
 
-    @Autowired
     private ModelService modelService;
 
-    @Autowired
     private ChecklistService checkListService;
 
-    @Autowired
     private AnswerService answerService;
 
-    @Autowired
     private ModelFormValidator modelFormValidator;
+
+    @Autowired
+    public ModelController(ModelService modelService, ChecklistService checkListService, AnswerService answerService, ModelFormValidator modelFormValidator) {
+        this.modelService = modelService;
+        this.checkListService = checkListService;
+        this.answerService = answerService;
+        this.modelFormValidator = modelFormValidator;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {

@@ -22,15 +22,15 @@ import java.util.List;
 @Controller
 public class EvaluationController {
 
-    EvaluationService evaluationService;
+    private EvaluationService evaluationService;
 
-    AnswerService answerService;
+    private AnswerService answerService;
 
-    ModelService modelService;
+    private ModelService modelService;
 
-    ChecklistService checklistService;
+    private ChecklistService checklistService;
 
-    QuestionService questionService;
+    private QuestionService questionService;
 
     @Autowired
     public EvaluationController(EvaluationService evaluationService, ModelService modelService, ChecklistService checklistService,

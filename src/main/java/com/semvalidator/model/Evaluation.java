@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "tb_evaluation")
 public class Evaluation extends GenericEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

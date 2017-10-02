@@ -24,8 +24,12 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService{
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -18,8 +18,13 @@ import java.util.List;
 @Service
 @Transactional
 public class CheckListServiceImpl implements ChecklistService {
-    @Autowired
+
     private ChecklistRepository checklistRepository;
+
+    @Autowired
+    public CheckListServiceImpl(ChecklistRepository checklistRepository) {
+        this.checklistRepository = checklistRepository;
+    }
 
     public Checklist save(Checklist entity) {
         return checklistRepository.saveAndFlush(entity);

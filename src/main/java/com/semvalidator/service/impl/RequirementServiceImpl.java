@@ -18,11 +18,15 @@ import java.util.List;
 @Service
 @Transactional
 public class RequirementServiceImpl implements RequirementService{
-    @Autowired
     private RequirementRepository requirementRepository;
 
-    @Autowired
     private ChecklistRepository checkListRepository;
+
+    @Autowired
+    public RequirementServiceImpl(RequirementRepository requirementRepository, ChecklistRepository checkListRepository) {
+        this.requirementRepository = requirementRepository;
+        this.checkListRepository = checkListRepository;
+    }
 
     public Requirement save(Requirement entity) {
         return requirementRepository.saveAndFlush(entity);

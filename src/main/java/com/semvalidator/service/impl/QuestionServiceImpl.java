@@ -24,14 +24,18 @@ import java.util.List;
 @Transactional
 public class QuestionServiceImpl implements QuestionService{
 
-    @Autowired
     private QuestionRepository questionRepository;
 
-    @Autowired
     private CriterionRepository criterionRepository;
 
-    @Autowired
     private RequirementRepository requirementRepository;
+
+    @Autowired
+    public QuestionServiceImpl(QuestionRepository questionRepository, CriterionRepository criterionRepository, RequirementRepository requirementRepository) {
+        this.questionRepository = questionRepository;
+        this.criterionRepository = criterionRepository;
+        this.requirementRepository = requirementRepository;
+    }
 
     public Question save(Question entity) {
         return questionRepository.saveAndFlush(entity);

@@ -62,9 +62,6 @@ public class EvaluationServiceImpl implements EvaluationService {
         return evaluationRepository.findAll(pageable);
     }
 
-
-
-
     @Override
     public List<Requirement> calculateRequirementsSatisfaction(Integer evaluationId) {
         List<Answer> answers = answerRepository.findByEvaluation(evaluationId);

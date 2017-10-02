@@ -22,14 +22,18 @@ import java.util.List;
 @Transactional
 public class CriterionServiceImpl implements CriterionService{
 
-    @Autowired
     private CriterionRepository criterionRepository;
 
-    @Autowired
     private QuestionRepository questionRepository;
 
-    @Autowired
     private RequirementRepository requirementRepository;
+
+    @Autowired
+    public CriterionServiceImpl(CriterionRepository criterionRepository, QuestionRepository questionRepository, RequirementRepository requirementRepository) {
+        this.criterionRepository = criterionRepository;
+        this.questionRepository = questionRepository;
+        this.requirementRepository = requirementRepository;
+    }
 
     public Criterion save(Criterion entity) {
         List<Question> questions = entity.getQuestions();

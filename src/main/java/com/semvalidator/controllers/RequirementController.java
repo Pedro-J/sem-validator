@@ -32,17 +32,21 @@ public class RequirementController {
 
     private final Logger logger = LoggerFactory.getLogger(RequirementController.class);
 
-    @Autowired
     private RequirementService requirementService;
 
-    @Autowired
     private QuestionService questionService;
 
-    @Autowired
     private CriterionService criterionService;
 
-    @Autowired
     private RequirementFormValidator requirementFormValidator;
+
+    @Autowired
+    public RequirementController(RequirementService requirementService, QuestionService questionService, CriterionService criterionService, RequirementFormValidator requirementFormValidator) {
+        this.requirementService = requirementService;
+        this.questionService = questionService;
+        this.criterionService = criterionService;
+        this.requirementFormValidator = requirementFormValidator;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {

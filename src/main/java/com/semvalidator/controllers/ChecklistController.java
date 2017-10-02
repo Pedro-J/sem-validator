@@ -30,26 +30,33 @@ public class ChecklistController {
 
     private final Logger logger = LoggerFactory.getLogger(Checklist.class);
 
-    @Autowired
     private ChecklistService checkListService;
 
-    @Autowired
     private QuestionService questionService;
 
-    @Autowired
     private CriterionService criterionService;
 
-    @Autowired
     private RequirementService requirementService;
 
-    @Autowired
     private ModelService modelService;
 
-    @Autowired
     private AnswerService answerService;
 
-    @Autowired
     private ChecklistFormValidator checklistFormValidator;
+
+    @Autowired
+    public ChecklistController(ChecklistService checkListService, QuestionService questionService, CriterionService criterionService,
+                               RequirementService requirementService, ModelService modelService, AnswerService answerService,
+                               ChecklistFormValidator checklistFormValidator) {
+
+        this.checkListService = checkListService;
+        this.questionService = questionService;
+        this.criterionService = criterionService;
+        this.requirementService = requirementService;
+        this.modelService = modelService;
+        this.answerService = answerService;
+        this.checklistFormValidator = checklistFormValidator;
+    }
 
     @RequestMapping(value = "/checklists/list", method = RequestMethod.GET)
     public ModelAndView showAllChecklists(

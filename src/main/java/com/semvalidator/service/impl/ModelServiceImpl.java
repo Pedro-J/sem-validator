@@ -21,11 +21,15 @@ import java.util.List;
 public class ModelServiceImpl implements ModelService{
     private final String APP_BASE_DIR = "uploaded_files/models";
 
-    @Autowired
     private ModelRepository modelRepository;
 
-    @Autowired
     private FileService fileService;
+
+    @Autowired
+    public ModelServiceImpl(ModelRepository modelRepository, FileService fileService) {
+        this.modelRepository = modelRepository;
+        this.fileService = fileService;
+    }
 
     public ModelSE save(ModelSE entity, MultipartFile modelFile) {
         ModelSE savedModel = null;

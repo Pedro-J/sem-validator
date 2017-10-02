@@ -32,14 +32,18 @@ public class CriterionController {
 
     private final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
-    @Autowired
     private CriterionService criterionService;
 
-    @Autowired
     private QuestionService questionService;
 
-    @Autowired
     private CriterionFormValidator criterionFormValidator;
+
+    @Autowired
+    public CriterionController(CriterionService criterionService, QuestionService questionService, CriterionFormValidator criterionFormValidator) {
+        this.criterionService = criterionService;
+        this.questionService = questionService;
+        this.criterionFormValidator = criterionFormValidator;
+    }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {

@@ -14,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	@Autowired
 	private AuthenticationTrustResolver authenticationTrustResolver;
+
+	@Autowired
+	public LoginController(AuthenticationTrustResolver authenticationTrustResolver) {
+		this.authenticationTrustResolver = authenticationTrustResolver;
+	}
 
 	@RequestMapping("/")
 	public String index() {
