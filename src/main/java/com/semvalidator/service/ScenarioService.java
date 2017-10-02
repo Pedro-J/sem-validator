@@ -9,6 +9,8 @@ public interface ScenarioService {
 
     List<Scenario> findAll();
 
+    Scenario findById(Integer id);
+
     List<ScenarioTip> findAllTips(Integer scenarioId);
 
 }

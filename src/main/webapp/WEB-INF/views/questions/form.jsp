@@ -23,7 +23,7 @@
                 <s:url value="/questions" var="formActionUrl"/>
 
                 <form:form class="form-horizontal" method="POST" modelAttribute="question"
-                           action="${formActionUrl}" acceptCharset="UTF-8">
+                           action="${formActionUrl}" acceptCharset="UTF-8"  >
 
                     <form:hidden path="id"/>
 

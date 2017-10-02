@@ -10,6 +10,9 @@ public class PersonaTip extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 2000)
+    private String description;
+
     @ManyToOne
     private Persona persona;
 
@@ -36,4 +39,11 @@ public class PersonaTip extends GenericEntity{
         this.persona = persona;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

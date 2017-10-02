@@ -39,13 +39,15 @@
 
                         <c:forEach var="scenario" items="${scenarios}">
                             <tr>
-                                <td><div class="long-text-column">${scenario.description}</div></td>
+                                <td><div class="long-text-column width1000" >${scenario.description}</div></td>
                                 <td>
-                                    <s:message code="scenario.tips.label" var="tipLabel"/>
-                                    <s:url value="/scenarios/${scenario.id}/tips" var="scenarioTips" />
+                                    <div>
+                                        <s:message code="scenario.tips.label" var="tipLabel"/>
+                                        <s:url value="/scenarios/${scenario.id}/tips" var="scenarioTips" />
 
-                                    <button class="btn btn-primary glyphicon glyphicon-edit"
-                                            onclick="location.href='${scenarioTips}'" title="${tipLabel}"></button>
+                                        <button class="btn btn-primary glyphicon glyphicon-zoom-in"
+                                                onclick="location.href='${scenarioTips}'" title="${tipLabel}"></button>
+                                    </div>
                                 </td>
                             </tr>
                         </c:forEach>

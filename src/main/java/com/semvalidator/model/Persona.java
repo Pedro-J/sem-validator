@@ -10,6 +10,7 @@ public class Persona extends GenericEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length = 2000)
     private String description;
 
     public String getDescription() {

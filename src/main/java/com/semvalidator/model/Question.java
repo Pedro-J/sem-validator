@@ -31,10 +31,10 @@ public class Question extends GenericEntity{
     @ManyToMany(mappedBy = "questions")
     private List<Checklist> checklists;
 
-    @Lob
+    @Column(length = 2000)
     private String description;
 
-    @Lob
+    @Column(length = 2000)
     private String tip;
 
     public Question(Integer id) {

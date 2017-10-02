@@ -15,16 +15,13 @@ public class ModelSE extends GenericEntity{
 
     private String title;
 
-    @Lob
-    @Column(name = "dsc_model")
+    @Column(name = "dsc_model", length = 2000)
     private String description;
 
-    @Lob
-    @Column(name = "dsc_objectives")
+    @Column(name = "dsc_objectives", length = 2000)
     private String objectivesDesc;
 
-    @Lob
-    @Column(name = "dsc_applicabilities")
+    @Column(name = "dsc_applicabilities", length = 2000)
     private String applicabilitiesDesc;
 
     @Column(name = "file_url")

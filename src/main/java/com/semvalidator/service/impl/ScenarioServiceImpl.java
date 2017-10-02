@@ -30,6 +30,11 @@ public class ScenarioServiceImpl implements ScenarioService {
     }
 
     @Override
+    public Scenario findById(Integer id) {
+        return scenarioRepository.findOne(id);
+    }
+
+    @Override
     public List<ScenarioTip> findAllTips(Integer scenarioId) {
         return scenarioTipRepository.findByScenario(scenarioId);
     }

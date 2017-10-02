@@ -20,8 +20,7 @@ public class PersonaController {
 
     @GetMapping("/personas/list")
     public String redirectPersonaList(Model model){
-        model.addAttribute("perosnas", personaService.findAll());
-
+        model.addAttribute("personas", personaService.findAll());
         return "personas/list";
     }
 

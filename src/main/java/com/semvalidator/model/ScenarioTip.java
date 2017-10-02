@@ -3,12 +3,15 @@ package com.semvalidator.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tb_sceneario_tip")
+@Table(name = "tb_scenario_tip")
 public class ScenarioTip extends GenericEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 2000)
+    private String description;
 
     @ManyToOne
     private Scenario scenario;
@@ -34,5 +37,13 @@ public class ScenarioTip extends GenericEntity {
 
     public void setScenario(Scenario scenario) {
         this.scenario = scenario;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -44,7 +44,7 @@
                                     <s:message code="persona.tips.label" var="tipLabel"/>
                                     <s:url value="/personas/${persona.id}/tips" var="personaTips" />
 
-                                    <button class="btn btn-primary glyphicon glyphicon-edit"
+                                    <button class="btn btn-primary glyphicon glyphicon-zoom-in"
                                             onclick="location.href='${personaTips}'" title="${tipLabel}"></button>
                                 </td>
                             </tr>
