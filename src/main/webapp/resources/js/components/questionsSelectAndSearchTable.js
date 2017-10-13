@@ -1,7 +1,8 @@
 
-var Checklist = function(title, model, type){
+var Checklist = function(id, title, checklistType){
+    this.id = id;
     this.title = title;
-    this.checklistType = type;
+    this.checklistType = checklistType;
     this.questions = [];
 };
 
@@ -9,9 +10,7 @@ Checklist.prototype.setQuestions = function(data){
     this.questions = data.map(function(current){
         return {id:current};
     });
-
-    console.log(this.questions);
-}
+};
 
 // Component Model
 var tableModel = (function() {
@@ -22,7 +21,7 @@ var tableModel = (function() {
         currentPage: 1,
         pageSize: 10,
         totalElements: 0,
-        totalPages: 1,
+        totalPages: 1
     };
 
     return {
@@ -42,6 +41,9 @@ var tableModel = (function() {
         },
         getSelectedIDs: function(){
             return data.selectedIDs;
+        },
+        setSelectedIDs: function(selectedQuestionsIds){
+            data.selectedIDs = selectedQuestionsIds;
         },
         setCurrentPage: function(value){
             data.currentPage = value;
@@ -75,8 +77,6 @@ var tableModel = (function() {
 })();
 
 
-
-
 // Component UI
 var tableView = (function() {
 
@@ -90,7 +90,8 @@ var tableView = (function() {
         btnSearch: '.btn-search',
 
         //Form checklist
-        inputChecklistDesc: 'checklist-desc',
+        selectedChecklist:'selected-checklist',
+        inputChecklistTitle: 'checklist-title',
         selectChecklistType: 'checklist-type',
 
         messageDesc: '.desc-message',
@@ -134,9 +135,14 @@ var tableView = (function() {
 
         getInputsForm: function() {
             return {
-                description: document.getElementById(DOMstrings.inputChecklistDesc).value,
+                description: document.getElementById(DOMstrings.inputChecklistTitle).value,
                 type: document.getElementById(DOMstrings.selectChecklistType).value
             };
+        },
+
+        setInputsForm: function(title, checklistType) {
+            document.getElementById(DOMstrings.selectChecklistType).value = checklistType;
+            document.getElementById(DOMstrings.inputChecklistTitle).value = title;
         },
 
         getMessagesForm: function() {
@@ -146,10 +152,13 @@ var tableView = (function() {
             };
         },
 
+        getSelectedChecklist: function() {
+            return document.getElementById(DOMstrings.selectedChecklist);
+        },
+
         updateDisplay: function(content, selectedIDs) {
             var html, newHtml, tableContent;
             // Create HTML string with placeholder text
-
 
             tableContent = document.querySelector(DOMstrings.tableContent);
             tableContent.innerHTML = "";
@@ -177,7 +186,6 @@ var tableView = (function() {
                 tableContent.insertAdjacentHTML('beforeend', newHtml);
 
             });
-
         },
 
         updatePagination: function(currentPage, maxPage){
@@ -268,7 +276,7 @@ var controller = (function(model, view) {
 
     var addContext = function (url){
         return (view.getViewParams().appContext + url);
-    }
+    };
 
     loadData = function() {
         //1. load data through ajax
@@ -279,7 +287,7 @@ var controller = (function(model, view) {
         xhr.onload = function() {
             if (xhr.status === 200) {
                 //2. Update model and UI
-                console.log(xhr.responseText);
+                //console.log(xhr.responseText);
                 var resultData = JSON.parse(xhr.responseText);
                 model.setData(resultData);
                 view.updateDisplay(model.getContent(), model.getSelectedIDs());
@@ -288,6 +296,26 @@ var controller = (function(model, view) {
         };
         xhr.send();
     };
+
+    loadSelectedQuestions = function() {
+        if( view.getSelectedChecklist() != null ) {
+            var reqUrl = addContext('checklists/' + view.getSelectedChecklist().value);
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', reqUrl);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    //2. Update model and UI
+                    console.log(xhr.responseText);
+                    var resultData = JSON.parse(xhr.responseText);
+                    model.setSelectedIDs(resultData.questions);
+                    view.setInputsForm(resultData.title, resultData.checklistType)
+                }
+            };
+            xhr.send();
+        }
+    };
+
 
     var search = function(){
         var inputsSearch = view.getInputsSearch();
@@ -360,7 +388,13 @@ var controller = (function(model, view) {
         }
 
         var inputs = view.getInputsForm();
-        var checklist = new Checklist(inputs.description, {id:inputs.model}, inputs.type);
+
+        var checklist = null;
+        if( view.getSelectedChecklist() != null)
+            checklist = new Checklist(view.getSelectedChecklist().value, inputs.description, inputs.type);
+        else
+            checklist = new Checklist(null, inputs.description, inputs.type);
+
         checklist.setQuestions(model.getSelectedIDs());
 
         var xhr = new XMLHttpRequest();
@@ -372,8 +406,8 @@ var controller = (function(model, view) {
                 window.location.replace(addContext('checklists/list?success=true'));
             }
         };
+
         var checklistJSON = JSON.stringify(checklist);
-        //console.log('checklist json: '+ checklistJSON);
 
         xhr.send(checklistJSON);
 
@@ -408,6 +442,7 @@ var controller = (function(model, view) {
     return {
         init: function() {
             console.log('Application has started.');
+            loadSelectedQuestions();
             loadData();
             setupEventListeners();
         }

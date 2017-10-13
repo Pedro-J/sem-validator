@@ -2,6 +2,7 @@ package com.semvalidator.service;
 
 import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
+import com.semvalidator.util.ChecklistDTO;
 
 import java.util.List;
 
@@ -10,4 +11,8 @@ import java.util.List;
  */
 public interface ChecklistService extends GenericService<Checklist>{
     List<Checklist> findByChecklistType(ChecklistType type);
+
+    Checklist findByIdWithQuestions(Integer id);
+
+    ChecklistDTO findDTOById(Integer id);
 }

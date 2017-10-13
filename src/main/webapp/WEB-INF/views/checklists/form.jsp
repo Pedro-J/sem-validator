@@ -26,11 +26,14 @@
             <div class="panel-body">
 
                 <form class="form-horizontal" >
+                    <c:if test="${not empty checklist}" >
+                        <input type="hidden" id="selected-checklist" value="${checklist.id}">
+                    </c:if>
 
                     <div class="form-group ">
-                        <label class="col-sm-2 control-label"><s:message code="description.label"/>:</label>
+                        <label class="col-sm-2 control-label"><s:message code="title.label"/>:</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="checklist-desc" />
+                            <input type="text" class="form-control" id="checklist-title" />
                             <span class="form-control alert-danger desc-message" style="display: none">
                                 <s:message code="form.notEmpty.description" />
                             </span>
@@ -122,19 +125,13 @@
                     <div class="form-group"></div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <c:choose>
-                                <c:when test="${newChecklist}">
-                                    <button type="submit" class="btn btn-primary pull-right btn-save"><s:message
-                                            code="general.save"/></button>
-                                </c:when>
-                                <c:otherwise>
-                                    <button type="submit" class="btn btn-primary pull-right btn-update" style="margin-left: 5px"><s:message
-                                            code="general.update"/></button>
-                                    <c:url value="/" var="app_context" />
-                                    <a href="${app_context}checklists/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
 
-                                </c:otherwise>
-                            </c:choose>
+                            <button type="submit" class="btn btn-primary pull-right btn-save"><s:message
+                                    code="general.save"/></button>
+                            <c:url value="/" var="app_context" />
+                            <a href="${app_context}checklists/list" class="btn btn-default pull-right"><s:message code="general.back" /> </a>
+
+
                         </div>
                     </div>
                 </form>

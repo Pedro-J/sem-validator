@@ -44,7 +44,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Page<Question> findByCriterion(Criterion criterion, Pageable pageable);
     Page<Question> findByDescriptionLike(String description, Pageable pageable);
 
-    @Query
+    @Query("select q from Question q order by q.requirement.description, q.criterion.description")
     @Override
     Page<Question> findAll(Pageable pageable);
 

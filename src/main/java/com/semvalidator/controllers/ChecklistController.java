@@ -5,6 +5,7 @@ import com.semvalidator.model.Answer;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.Question;
 import com.semvalidator.service.*;
+import com.semvalidator.util.ChecklistDTO;
 import com.semvalidator.validation.ChecklistFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +105,7 @@ public class ChecklistController {
 
     }
 
-    @RequestMapping(value = "/checklists/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/checklists/{id}/details", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
         Checklist checklist = checkListService.findById(id);
         List<Question> questions = questionService.findByChecklist(id);
@@ -128,6 +129,11 @@ public class ChecklistController {
         return answerService.findByEvaluation(id);
     }
 
+    @GetMapping("/checklists/{id}")
+    @ResponseBody
+    public ChecklistDTO getSelectedQuestionsIds(@PathVariable Integer id){
+        return checkListService.findDTOById(id);
+    }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ModelAndView handleEmptyData(HttpServletRequest req, Exception ex) {

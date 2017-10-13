@@ -48,7 +48,7 @@
                                 <s:message code="general.seeDetail" var="detail"/>
 
 
-                                <s:url value="/checklists/${checklist.id}" var="detailUrl" />
+                                <s:url value="/checklists/${checklist.id}/details" var="detailUrl" />
                                 <s:url value="/checklists/${checklist.id}/delete" var="deleteUrl" />
                                 <s:url value="/checklists/${checklist.id}/update" var="updateUrl" />
 

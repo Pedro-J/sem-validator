@@ -4,6 +4,7 @@ import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.repository.ChecklistRepository;
 import com.semvalidator.service.ChecklistService;
+import com.semvalidator.util.ChecklistDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,5 +56,19 @@ public class CheckListServiceImpl implements ChecklistService {
 
     public List<Checklist> findByChecklistType(ChecklistType type) {
         return checklistRepository.findByChecklistType(type);
+    }
+
+    public Checklist findByIdWithQuestions(Integer id){
+        return checklistRepository.findByIdWithQuestions(id);
+    }
+
+    public ChecklistDTO findDTOById(Integer id){
+        Checklist checklist = checklistRepository.findByIdWithQuestions(id);
+        ChecklistDTO dto = null;
+
+        if( checklist != null )
+            dto = new ChecklistDTO(checklist);
+
+        return dto;
     }
 }

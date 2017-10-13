@@ -33,7 +33,7 @@
                         <thead>
                         <tr>
                             <th><s:message code="description.label" /></th>
-                            <th><s:message code="actions.label" /></th>
+                            <th><s:message code="tip.label" /></th>
                         </tr>
                         </thead>
 
