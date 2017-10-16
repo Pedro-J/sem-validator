@@ -23,6 +23,11 @@
                     <strong><s:message code="${msgTitle}" /><s:message code="app.entity.scenario"/>&nbsp;<s:message code="${msgContent}" /></strong>
                 </div>
             </c:if>
+            <div style="margin-top:20px">
+                <p style="text-align: left;"><s:message code="scenario.description.text.p1" /></p>
+                <p style="text-align: left;"><s:message code="scenario.description.text.p2" /></p>
+                <br/>
+            </div>
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
                     <h4><s:message code="scenario.list.title" /></h4>

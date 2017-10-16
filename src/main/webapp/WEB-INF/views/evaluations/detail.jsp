@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="checklist.detail.title">
@@ -88,7 +89,9 @@
                     <div class="row">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="general.satisfaction.label"/>:</label>
-                        <div class="col-sm-9">${generalSatisfaction * 100}%</div>
+                        <div class="col-sm-9">
+                            <fmt:formatNumber value="${generalSatisfaction}" type="percent" maxFractionDigits="2"/>
+                        </div>
                     </div>
 
                     <div class="row"><br/></div>
@@ -97,7 +100,7 @@
                         <c:if test="${not empty requirements}">
                         <div class="panel panel-primary" style="width: 43%;float:left;margin-left: 58px;">
                             <div class="panel-heading text-center">
-                                <h5><s:message code="criterions.satisfaction.label"/></h5>
+                                <h5><s:message code="requirements.satisfaction.label"/></h5>
                             </div>
                             <div class="panel-body ">
                                 <div id="requirementStatistics" class="table-responsive">
@@ -112,7 +115,9 @@
                                         <c:forEach var="requirement" items="${requirements}" >
                                             <tr>
                                                 <td class="long-text-column width300">${requirement.description}</td>
-                                                <td class="width40">${requirement.satisfactionValue * 100}%</td>
+                                                <td class="width40">
+                                                    <fmt:formatNumber value="${requirement.satisfactionValue}" type="percent" maxFractionDigits="2"/>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -125,7 +130,7 @@
                         <c:if test="${not empty criterions}">
                             <div class="panel panel-primary" style="width: 43%;float:right;margin-right:58px;">
                                 <div class="panel-heading text-center">
-                                    <h5><s:message code="requirements.satisfaction.label"/></h5>
+                                    <h5><s:message code="criterions.satisfaction.label"/></h5>
                                 </div>
                                 <div class="panel-body ">
                                     <div id="criterionStatistics" class="table-responsive">
@@ -140,7 +145,9 @@
                                             <c:forEach var="criterion" items="${criterions}" >
                                                 <tr>
                                                     <td class="long-text-column width300">${criterion.description}</td>
-                                                    <td class="width40">${criterion.satisfactionValue * 100}%</td>
+                                                    <td class="width40">
+                                                        <fmt:formatNumber value="${criterion.satisfactionValue}" type="percent" maxFractionDigits="2"/>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                             </tbody>
@@ -165,14 +172,18 @@
                                             <thead>
                                             <tr>
                                                 <th><s:message code="app.entity.question" /> </th>
+                                                <th><s:message code="app.entity.requirement" /> </th>
+                                                <th><s:message code="app.entity.criterion" /> </th>
                                                 <th><s:message code="app.entity.answer" /> </th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <c:forEach var="answer" items="${answers}" >
                                                 <tr>
-                                                    <td >${answer.question.description}</td>
-                                                    <td ><s:message code="${answer.value.messageCode}" /></td>
+                                                    <td ><div class="long-text-column">${answer.question.description}</div></td>
+                                                    <td class="width200"><div class="long-text-column">${answer.question.requirement.description}</div></td>
+                                                    <td class="width100"><div class="long-text-column">${answer.question.criterion.description}</div></td>
+                                                    <td class="width100"><div class="long-text-column"><s:message code="${answer.value.messageCode}" /></div></td>
                                                 </tr>
                                             </c:forEach>
                                             </tbody>

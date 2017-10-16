@@ -2,9 +2,11 @@ package com.semvalidator.service.impl;
 
 import com.semvalidator.enums.AnswerValue;
 import com.semvalidator.model.Answer;
+import com.semvalidator.model.Evaluation;
 import com.semvalidator.model.Question;
 import com.semvalidator.repository.AnswerRepository;
 import com.semvalidator.repository.ChecklistRepository;
+import com.semvalidator.repository.EvaluationRepository;
 import com.semvalidator.repository.QuestionRepository;
 import com.semvalidator.service.AnswerService;
 import com.semvalidator.util.AnswerJsonDTO;
@@ -28,11 +30,14 @@ public class AnswerServiceImpl implements AnswerService{
 
     private QuestionRepository questionRepository;
 
+    private EvaluationRepository evaluationRepository;
+
     private ChecklistRepository checklistRepository;
 
     @Autowired
-    public AnswerServiceImpl(AnswerRepository answerRepository, QuestionRepository questionRepository, ChecklistRepository checklistRepository) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, EvaluationRepository evaluationRepository, QuestionRepository questionRepository, ChecklistRepository checklistRepository) {
         this.answerRepository = answerRepository;
+        this.evaluationRepository = evaluationRepository;
         this.questionRepository = questionRepository;
         this.checklistRepository = checklistRepository;
     }
@@ -67,11 +72,12 @@ public class AnswerServiceImpl implements AnswerService{
     public void saveAllDatas(List<AnswerJsonDTO> answersJson) {
 
         if( answersJson != null && !answersJson.isEmpty() ) {
-            Integer currentChecklist = answersJson.get(0).getEvaluation();
-            List<Question> questionsNotAnswered = questionRepository.findByChecklist(currentChecklist);
+            Evaluation evaluation = evaluationRepository.findOne(answersJson.get(0).getEvaluation());
+
+            List<Question> questionsNotAnswered = questionRepository.findByChecklist(evaluation.getChecklist().getId());
 
             if( isSaveAll(answersJson) ){
-                saveNotAnsweredQuestions(questionsNotAnswered, currentChecklist);
+                saveNotAnsweredQuestions(questionsNotAnswered, evaluation.getId());
                 return;
             }
 
@@ -93,7 +99,7 @@ public class AnswerServiceImpl implements AnswerService{
                 }
             }
             answerRepository.save(answers);
-            saveNotAnsweredQuestions(questionsNotAnswered, currentChecklist);
+            saveNotAnsweredQuestions(questionsNotAnswered, evaluation.getId());
         }
     }
 

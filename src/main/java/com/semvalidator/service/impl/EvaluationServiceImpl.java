@@ -113,7 +113,7 @@ public class EvaluationServiceImpl implements EvaluationService {
     public Double calculateGeneralSatisfaction(Integer evaluationId) {
         List<Answer> answers = answerRepository.findByEvaluation(evaluationId);
 
-        Double result = answers.stream().mapToDouble( answer -> answer.getValue().getSatisfaction() ).sum();
+        Double result = answers.stream().mapToDouble( answer -> answer.getValue().getSatisfaction() ).sum() / answers.size();
 
         return result;
     }

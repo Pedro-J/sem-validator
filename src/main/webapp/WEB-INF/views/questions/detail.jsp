@@ -41,7 +41,7 @@
                             <span style="margin-right: 20px;">${question.criterion.description}</span>
 
 
-                            <s:message code="general.delete" var="delete"/>
+<%--                            <s:message code="general.delete" var="delete"/>
                             <s:message code="general.edit" var="edit"/>
 
                             <s:url value="/criterions/${question.criterion.id}/delete" var="deleteUrl" />
@@ -51,7 +51,7 @@
                                     onclick="location.href='${updateUrl}'" title="${edit}" />
 
                             <img class="btn btn-danger glyphicon glyphicon-remove"
-                                    onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}" />
+                                    onclick="this.disabled=true;post('${deleteUrl}');" title="${delete}" />--%>
                         </c:if>
                     </div>
                 </div>
