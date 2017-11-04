@@ -10,7 +10,10 @@ import com.semvalidator.repository.EvaluationRepository;
 import com.semvalidator.repository.QuestionRepository;
 import com.semvalidator.service.AnswerService;
 import com.semvalidator.util.AnswerJsonDTO;
+import com.semvalidator.util.OptionHTML;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,12 +37,17 @@ public class AnswerServiceImpl implements AnswerService{
 
     private ChecklistRepository checklistRepository;
 
+    private ApplicationContext context;
+
     @Autowired
-    public AnswerServiceImpl(AnswerRepository answerRepository, EvaluationRepository evaluationRepository, QuestionRepository questionRepository, ChecklistRepository checklistRepository) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, EvaluationRepository evaluationRepository,
+                             QuestionRepository questionRepository, ChecklistRepository checklistRepository,
+                             ApplicationContext context) {
         this.answerRepository = answerRepository;
         this.evaluationRepository = evaluationRepository;
         this.questionRepository = questionRepository;
         this.checklistRepository = checklistRepository;
+        this.context = context;
     }
 
     public Answer save(Answer entity) {
@@ -137,6 +145,19 @@ public class AnswerServiceImpl implements AnswerService{
     @Override
     public List<Answer> findByEvaluation(Integer id) {
         return answerRepository.findByEvaluation(id);
+    }
+
+    @Override
+    public List<OptionHTML> getTypes() {
+
+        List<OptionHTML> options = new ArrayList<OptionHTML>();
+
+        for(AnswerValue value : AnswerValue.values()){
+            String message = context.getMessage(value.getMessageCode(), null,  LocaleContextHolder.getLocale());
+            OptionHTML optionHTML = new OptionHTML(value.getCode(), message);
+            options.add(optionHTML);
+        }
+        return options;
     }
 
     @Transactional(readOnly = true )

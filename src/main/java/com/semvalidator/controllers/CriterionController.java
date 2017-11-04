@@ -1,6 +1,7 @@
 package com.semvalidator.controllers;
 
 import com.semvalidator.editor.QuestionPropertyEditor;
+import com.semvalidator.exception.ResourceNotFoundException;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.service.CriterionService;
@@ -66,7 +67,11 @@ public class CriterionController {
 
     @RequestMapping("/{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("criterion", criterionService.findById(id));
+        Criterion criterion = criterionService.findById(id);
+
+        if( criterion == null ) throw new ResourceNotFoundException();
+
+        model.addAttribute("criterion", criterion);
         return "criterions/form";
     }
 
@@ -94,6 +99,9 @@ public class CriterionController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String showCriterion(@PathVariable("id") Integer id, Model model){
         Criterion criterion = criterionService.findById(id);
+
+        if( criterion == null ) throw new ResourceNotFoundException();
+
         List<Question> questions = questionService.findByCriterion(criterion);
         model.addAttribute("criterion", criterion);
         model.addAttribute("questions", questions);

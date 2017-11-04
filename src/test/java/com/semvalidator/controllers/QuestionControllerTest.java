@@ -53,7 +53,7 @@ public class QuestionControllerTest {
     public void setUp(){
         MockitoAnnotations.initMocks(this);
 
-        questionController = new QuestionController(questionService, criterionService, requirementService, questionFormValidator);
+        questionController = new QuestionController(questionService, criterionService, requirementService);
         mockMvc = MockMvcBuilders.standaloneSetup(questionController)
                 .setControllerAdvice(new GlobalExceptionHandler()).build();
     }
@@ -63,13 +63,13 @@ public class QuestionControllerTest {
         List<Question> questions = new ArrayList<>();
         questions.add(new Question());
 
-        Mockito.when(questionService.findAll()).thenReturn(questions);
+        Mockito.when(questionService.findAllOrderByRequirementAndCriterion()).thenReturn(questions);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/questions/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("questions/list"));
 
-        Mockito.verify(questionService, Mockito.times(1)).findAll();
+        Mockito.verify(questionService, Mockito.times(1)).findAllOrderByRequirementAndCriterion();
     }
 
     @Test
@@ -95,6 +95,40 @@ public class QuestionControllerTest {
 
         assertThat(pageRequest.getPageNumber(), Matchers.greaterThan(1));
         assertThat(pageRequest.getPageSize(), Matchers.greaterThan(1));
+    }
+
+
+    @Test
+    public void testShowQuestionDetails() throws Exception {
+        Mockito.when(questionService.findById(Mockito.anyInt())).thenReturn(new Question());
+        mockMvc.perform(MockMvcRequestBuilders.get("/questions/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("questions/detail"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("question"));
+
+    }
+
+    @Test
+    public void testSaveOrUpdate() throws Exception {
+        Question question = new Question();
+        question.setId(1);
+        question.setDescription("description 1");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/questions")
+                .requestAttr("question", question))
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/questions/list"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+
+        Mockito.verify(questionService, Mockito.times(1)).save(Mockito.any());
+    }
+
+    @Test
+    public void testDeleteQuestion() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/questions/1/delete"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/questions/list"));
+
+        Mockito.verify(questionService, Mockito.times(1)).delete(Mockito.anyInt());
     }
 
     @Test
@@ -151,32 +185,16 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void testSaveOrUpdate() throws Exception {
-        Question question = new Question();
-        question.setId(1);
-        question.setDescription("description 1");
+    public void testShowAddForm() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/questions")
-                .requestAttr("question", question))
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/questions/list"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection());
-    }
+        Mockito.when(criterionService.findAll()).thenReturn(new ArrayList<>());
+        Mockito.when(requirementService.findAll()).thenReturn(new ArrayList<>());
 
-
-    @Test
-    public void testShowQuestionDetails() throws Exception {
-        Mockito.when(questionService.findById(Mockito.anyInt())).thenReturn(new Question());
-        mockMvc.perform(MockMvcRequestBuilders.get("/questions/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/questions/add"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("questions/detail"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("question"));
-
-    }
-
-    @Test
-    public void testDeleteQuestion() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/questions/1/delete"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/questions/list"));
+                .andExpect(MockMvcResultMatchers.model().attribute("question", new Question()))
+                .andExpect(MockMvcResultMatchers.model().attribute("criterions", new ArrayList<>()))
+                .andExpect(MockMvcResultMatchers.model().attribute("requirements", new ArrayList<>()))
+                .andExpect(MockMvcResultMatchers.view().name("questions/form"));
     }
 }

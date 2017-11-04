@@ -1,6 +1,7 @@
 package com.semvalidator.conf;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -13,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
+@Configuration
 @EnableTransactionManagement
 public class JPAConfiguration {
 
@@ -33,7 +34,6 @@ public class JPAConfiguration {
 	}
 
 	@Bean
-	@Profile("dev")
 	public Properties additionalProperties() {
 		Properties props = new Properties();
 		props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
@@ -51,6 +51,17 @@ public class JPAConfiguration {
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/db_se_model_validator");
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		
+		return dataSource;
+	}
+
+	@Bean
+	@Profile("test")
+	public DataSource dataSourceTest() {
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/db_se_model_validator_test");
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUsername("postgres");
+		dataSource.setPassword("postgres");
 		return dataSource;
 	}
 	

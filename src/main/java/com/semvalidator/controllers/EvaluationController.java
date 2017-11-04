@@ -2,6 +2,7 @@ package com.semvalidator.controllers;
 
 import com.semvalidator.editor.ChecklistPropertyEditor;
 import com.semvalidator.editor.ModelPropertyEditor;
+import com.semvalidator.exception.ResourceNotFoundException;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.Evaluation;
 import com.semvalidator.model.ModelSE;
@@ -65,7 +66,10 @@ public class EvaluationController {
 
     @GetMapping("/evaluations/{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("evaluation", evaluationService.findById(id));
+        Evaluation evaluation = evaluationService.findById(id);
+        if( evaluation == null ) throw new ResourceNotFoundException();
+
+        model.addAttribute("evaluation", evaluation);
         return "evaluations/form";
     }
 
@@ -101,7 +105,10 @@ public class EvaluationController {
 
     @GetMapping("/evaluations/{id}")
     public String showDetails(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("evaluation", evaluationService.findById(id));
+        Evaluation evaluation = evaluationService.findById(id);
+        if( evaluation == null ) throw new ResourceNotFoundException();
+
+        model.addAttribute("evaluation", evaluation);
         model.addAttribute("generalSatisfaction", evaluationService.calculateGeneralSatisfaction(id));
         model.addAttribute("answers", answerService.findByEvaluation(id));
 
@@ -113,6 +120,8 @@ public class EvaluationController {
     @GetMapping("/evaluations/{id}/answers/form")
     public String showAnswerValidationQuestionsForm(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         Evaluation evaluation = evaluationService.findById(id);
+
+        if( evaluation == null ) throw new ResourceNotFoundException();
 
         List<Question> questions = questionService.findByChecklist(evaluation.getChecklist().getId());
         if( !CollectionUtils.isEmpty(questions) ) {
@@ -129,6 +138,9 @@ public class EvaluationController {
     @GetMapping("/evaluations/{id}/questions")
     public @ResponseBody List<Question> getQuestions(@PathVariable("id") Integer id){
         Evaluation evaluation = evaluationService.findById(id);
+
+        if( evaluation == null ) throw new ResourceNotFoundException();
+
         return questionService.findByChecklist(evaluation.getChecklist().getId());
     }
 

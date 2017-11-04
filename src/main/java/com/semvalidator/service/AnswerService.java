@@ -2,6 +2,7 @@ package com.semvalidator.service;
 
 import com.semvalidator.model.Answer;
 import com.semvalidator.util.AnswerJsonDTO;
+import com.semvalidator.util.OptionHTML;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface AnswerService extends GenericService<Answer>{
     void saveAllDatas(List<AnswerJsonDTO> answersJson);
 
     List<Answer> findByEvaluation(Integer id);
+
+    List<OptionHTML> getTypes();
 }

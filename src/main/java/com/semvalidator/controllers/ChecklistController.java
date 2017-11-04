@@ -1,17 +1,18 @@
 package com.semvalidator.controllers;
 
 import com.semvalidator.enums.ChecklistType;
+import com.semvalidator.exception.ResourceNotFoundException;
 import com.semvalidator.model.Answer;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.Question;
 import com.semvalidator.service.*;
 import com.semvalidator.util.ChecklistDTO;
-import com.semvalidator.validation.ChecklistFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,12 +44,9 @@ public class ChecklistController {
 
     private AnswerService answerService;
 
-    private ChecklistFormValidator checklistFormValidator;
-
     @Autowired
     public ChecklistController(ChecklistService checkListService, QuestionService questionService, CriterionService criterionService,
-                               RequirementService requirementService, ModelService modelService, AnswerService answerService,
-                               ChecklistFormValidator checklistFormValidator) {
+                               RequirementService requirementService, ModelService modelService, AnswerService answerService) {
 
         this.checkListService = checkListService;
         this.questionService = questionService;
@@ -56,7 +54,6 @@ public class ChecklistController {
         this.requirementService = requirementService;
         this.modelService = modelService;
         this.answerService = answerService;
-        this.checklistFormValidator = checklistFormValidator;
     }
 
     @RequestMapping(value = "/checklists/list", method = RequestMethod.GET)
@@ -86,7 +83,11 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/{id}/update", method = RequestMethod.GET)
     public String showUpdateForm(@PathVariable("id") Integer id, Model model){
-        model.addAttribute("checklist", checkListService.findById(id));
+        Checklist checklist = checkListService.findById(id);
+
+        if( checklist == null ) throw new ResourceNotFoundException();
+
+        model.addAttribute("checklist", checklist);
         model.addAttribute("checklistTypes", ChecklistType.values());
         model.addAttribute("criterions", criterionService.findAll());
         model.addAttribute("requirements", requirementService.findAll());
@@ -94,7 +95,7 @@ public class ChecklistController {
         return "checklists/form";
     }
 
-    @RequestMapping(value = "/checklists", method = RequestMethod.POST)
+    @RequestMapping(value = "/checklists", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<?> saveOrUpdate(@RequestBody Checklist checklist){
         try {
             checkListService.save(checklist);
@@ -108,6 +109,9 @@ public class ChecklistController {
     @RequestMapping(value = "/checklists/{id}/details", method = RequestMethod.GET)
     public String showChecklistDetails(@PathVariable("id") Integer id, Model model){
         Checklist checklist = checkListService.findById(id);
+
+        if( checklist == null ) throw new ResourceNotFoundException();
+
         List<Question> questions = questionService.findByChecklist(id);
         model.addAttribute("checklist", checklist);
         model.addAttribute("questions", questions);

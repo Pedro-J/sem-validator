@@ -1,6 +1,7 @@
 package com.semvalidator.controllers;
 
 import com.semvalidator.enums.ChecklistType;
+import com.semvalidator.exception.ResourceNotFoundException;
 import com.semvalidator.model.Checklist;
 import com.semvalidator.model.ModelSE;
 import com.semvalidator.service.AnswerService;
@@ -69,8 +70,10 @@ public class ModelController {
 
     @RequestMapping(value = "/models/{id}/update", method = RequestMethod.GET)
     public String showAddForm(@PathVariable("id") Integer id, Model model){
+        ModelSE modelSE = modelService.findById(id);
+        if( modelSE == null ) throw new ResourceNotFoundException();
         loadForm(model);
-        model.addAttribute("model", modelService.findById(id));
+        model.addAttribute("model", modelSE);
         return "models/form";
     }
 
@@ -97,6 +100,7 @@ public class ModelController {
     @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
     public String showQuestionDetails(@PathVariable("id") Integer id, Model model){
         ModelSE modelSE = modelService.findById(id);
+        if( modelSE == null ) throw new ResourceNotFoundException();
         model.addAttribute("model", modelSE);
         return "models/detail";
     }

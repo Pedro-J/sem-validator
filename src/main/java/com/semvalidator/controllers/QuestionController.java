@@ -3,6 +3,7 @@ package com.semvalidator.controllers;
 import com.semvalidator.editor.CriterionPropertyEditor;
 import com.semvalidator.editor.RequirementPropertyEditor;
 import com.semvalidator.exception.RequestErrorException;
+import com.semvalidator.exception.ResourceNotFoundException;
 import com.semvalidator.model.Criterion;
 import com.semvalidator.model.Question;
 import com.semvalidator.model.Requirement;
@@ -10,7 +11,6 @@ import com.semvalidator.service.CriterionService;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.service.RequirementService;
 import com.semvalidator.util.SearchQuestionParamsDTO;
-import com.semvalidator.validation.QuestionFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +46,12 @@ public class QuestionController {
 
     private RequirementService requirementService;
 
-    private QuestionFormValidator questionFormValidator;
-
     @Autowired
     public QuestionController(QuestionService questionService, CriterionService criterionService,
-                              RequirementService requirementService, QuestionFormValidator questionFormValidator){
+                              RequirementService requirementService){
         this.questionService = questionService;
         this.criterionService = criterionService;
         this.requirementService = requirementService;
-        this.questionFormValidator = questionFormValidator;
     }
 
     @InitBinder
@@ -101,9 +98,12 @@ public class QuestionController {
 
     @RequestMapping(value= "/questions/{id}/update", method = RequestMethod.GET)
     public ModelAndView showUpdateForm(@PathVariable("id") Integer id) {
-        ModelAndView modelAndView = new ModelAndView("questions/form");
+        Question question = questionService.findById(id);
 
-        modelAndView.addObject("question", questionService.findById(id));
+        if( question == null ) throw new ResourceNotFoundException();
+
+        ModelAndView modelAndView = new ModelAndView("questions/form");
+        modelAndView.addObject("question", question );
         modelAndView.addObject("criterions", criterionService.findAll());
         modelAndView.addObject("requirements", requirementService.findAll());
         return modelAndView;
@@ -132,6 +132,9 @@ public class QuestionController {
     @RequestMapping(value = "/questions/{id}", method = RequestMethod.GET)
     public String showQuestionDetails(@PathVariable("id") Integer id, Model model){
         Question question = questionService.findById(id);
+
+        if( question == null ) throw new ResourceNotFoundException();
+
         model.addAttribute("question", question);
 
         return "questions/detail";
@@ -170,5 +173,7 @@ public class QuestionController {
 
         return model;
     }
+
+
 
 }

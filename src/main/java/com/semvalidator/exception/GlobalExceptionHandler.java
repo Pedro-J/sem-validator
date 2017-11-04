@@ -16,7 +16,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public static final String DEFAULT_ERROR_VIEW = "error";
 
 	private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-	
+
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
 
