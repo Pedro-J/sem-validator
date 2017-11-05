@@ -160,9 +160,15 @@ var tableView = (function() {
 
     var createTD = function (element){
         var td = document.createElement('td');
-        //td.setAttribute('colspan', colspan);
         td.appendChild(element);
         return td;
+    };
+
+    var createContainer = function(element){
+        var container = document.createElement('div');
+        container.classList.add('long-text-column');
+        container.appendChild(element);
+        return container;
     };
 
     var updateTable = function(model) {
@@ -185,17 +191,32 @@ var tableView = (function() {
             var tdQuestionDescription = createTD(document.createTextNode(question.description));
             tdQuestionDescription.classList.add('width400');
 
+
+            var tdCriterionDescription = createTD(createContainer(document.createTextNode(question.criterion.description)));
+            tdCriterionDescription.classList.add('width100');
+
+            var tdRequirementDescription = createTD(createContainer(document.createTextNode(question.requirement.description)));
+            tdRequirementDescription.classList.add('width100');
+
+            var tdQuestionDescription = createTD(document.createTextNode(question.description));
+            tdQuestionDescription.classList.add('width100');
+
             //var colspanTip = '1';
             var tdQuestionTip = createTD(imgQuestionTip);
-            tdQuestionTip.classList.add('text-center', 'width100')
+            tdQuestionTip.classList.add('text-center', 'width100');
 
             //var colspanAnswer = '1';
             var tdQuestionAnswer = createTD(selectAnswers);
             tdQuestionAnswer.classList.add('text-center', 'width140');
 
+
+
+
             var trQuestion = document.createElement('tr');
 
             trQuestion.appendChild(tdQuestionDescription);
+            trQuestion.appendChild(tdCriterionDescription);
+            trQuestion.appendChild(tdRequirementDescription);
             trQuestion.appendChild(tdQuestionTip)
             trQuestion.appendChild(tdQuestionAnswer);
             tableContent.appendChild(trQuestion);

@@ -88,9 +88,9 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th><div style="width:250px"><s:message code="questions.label" /></div></th>
                                     <th><s:message code="criterion.label" /></th>
                                     <th><s:message code="requirement.label" /></th>
-                                    <th><div style="width:250px"><s:message code="questions.label" /></div></th>
                                 </tr>
                                 </thead>
 

@@ -26,6 +26,7 @@
             <div style="margin-top:20px">
                 <p style="text-align: left;"><s:message code="scenario.description.text.p1" /></p>
                 <p style="text-align: left;"><s:message code="scenario.description.text.p2" /></p>
+                <p style="text-align: left;"><s:message code="scenario.description.text.p3" /></p>
                 <br/>
             </div>
             <div class="panel panel-primary">

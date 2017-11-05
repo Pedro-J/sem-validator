@@ -29,16 +29,18 @@
 
                 </sec:authorize>
                 <sec:authorize access="hasRole('USER')" >
+
+
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown"
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
-                            <s:message code="app.entity.question" />
+                            <s:message code="app.entity.model" />
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="${app_context}questions/add"><s:message code="general.register" /></a></li>
+                            <li><a href="${app_context}models/add"><s:message code="general.register" /></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="${app_context}questions/list"><s:message code="general.list" /></a></li>
+                            <li><a href="${app_context}models/list"><s:message code="general.list" /></a></li>
                         </ul>
                     </li>
 
@@ -58,19 +60,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">
-                            <s:message code="app.entity.model" />
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${app_context}models/add"><s:message code="general.register" /></a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="${app_context}models/list"><s:message code="general.list" /></a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                           role="button" aria-haspopup="true" aria-expanded="false">
                             <s:message code="app.entity.evaluation" />
                             <span class="caret"></span>
                         </a>
@@ -83,6 +72,19 @@
 
                     <li><a href="${app_context}personas/list"> <s:message code="app.entity.persona" /></a></li>
                     <li><a href="${app_context}scenarios/list" > <s:message code="app.entity.scenario" /></a></li>
+
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">
+                            <s:message code="app.entity.question" />
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="${app_context}questions/add"><s:message code="general.register" /></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="${app_context}questions/list"><s:message code="general.list" /></a></li>
+                        </ul>
+                    </li>
 
                 </sec:authorize>
 

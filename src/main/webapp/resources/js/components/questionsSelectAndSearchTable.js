@@ -165,14 +165,15 @@ var tableView = (function() {
 
             content.forEach(function(obj){
 
-                html = '<tr><td><input type="checkbox" value="%id%" %checked%></td> <td>%criterion%</td> <td>%requirement%</td> <td>%description%</td></tr>';
+                html = '<tr><td><input type="checkbox" value="%id%" %checked%></td> <td>%description%</td> <td>%criterion%</td> <td>%requirement%</td> </tr>';
 
                 // Replace the placeholder text with some actual data
                 newHtml = html.replace('%id%', obj.id);
 
+                newHtml = newHtml.replace('%description%', obj.description);
                 newHtml = newHtml.replace('%criterion%', obj.criterion.description);
                 newHtml = newHtml.replace('%requirement%', obj.requirement.description);
-                newHtml = newHtml.replace('%description%', obj.description);
+
 
                 if( selectedIDs.indexOf(parseInt(obj.id)) !== -1 ){
                     newHtml = newHtml.replace('%checked%', 'checked');

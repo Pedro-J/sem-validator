@@ -172,8 +172,8 @@
                                             <thead>
                                             <tr>
                                                 <th><s:message code="app.entity.question" /> </th>
-                                                <th><s:message code="app.entity.requirement" /> </th>
                                                 <th><s:message code="app.entity.criterion" /> </th>
+                                                <th><s:message code="app.entity.requirement" /> </th>
                                                 <th><s:message code="app.entity.answer" /> </th>
                                             </tr>
                                             </thead>
@@ -181,8 +181,8 @@
                                             <c:forEach var="answer" items="${answers}" >
                                                 <tr>
                                                     <td ><div class="long-text-column">${answer.question.description}</div></td>
-                                                    <td class="width200"><div class="long-text-column">${answer.question.requirement.description}</div></td>
                                                     <td class="width100"><div class="long-text-column">${answer.question.criterion.description}</div></td>
+                                                    <td class="width200"><div class="long-text-column">${answer.question.requirement.description}</div></td>
                                                     <td class="width100"><div class="long-text-column"><s:message code="${answer.value.messageCode}" /></div></td>
                                                 </tr>
                                             </c:forEach>
