@@ -10,6 +10,7 @@
         <c:url value="/resources/js" var="jsPath" />
         <script type="text/javascript" src="${jsPath}/components/questionsSelectAndSearchTable.js"></script>
     </jsp:attribute>
+
     <jsp:body>
     <div class="container">
         <div class="panel panel-primary">

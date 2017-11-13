@@ -29,8 +29,11 @@ In this showcase you'll see the following in action:
 * Forms
 * File Upload
 * Exception Handling
-* JPA repositories
-* HTML/CSS/javascript
+
+Technologies/Frameworks:
+* Spring 4
+* JPA/Hibernate
+* HTML/CSS/javascript and JSTL
 * Bootstrap 3.3.7
 * JAVA 8
 

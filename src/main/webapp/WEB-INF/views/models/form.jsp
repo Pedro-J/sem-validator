@@ -6,6 +6,15 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="${model['new'] ? 'model.add.title': 'model.update.title'}">
+
+    <jsp:attribute name="extraScripts">
+        <c:url value="/resources/js" var="jsPath" />
+        <script type="text/javascript" src="${jsPath}/textEditor/nicEdit.js"></script>
+        <script type="text/javascript">
+            bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+        </script>
+    </jsp:attribute>
+    <jsp:body>
     <div class="container">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
@@ -107,4 +116,5 @@
             </div>
         </div>
     </div>
+    </jsp:body>
 </tags:pageTemplate>
