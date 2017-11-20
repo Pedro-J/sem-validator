@@ -30,10 +30,10 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     List<Question> findByRequirementAndCriterion(Requirement requirement, Criterion criterion);
 
     @Query("select q from Question q inner join q.checklists c where c.id = :id")
-    Page<Question> findByChecklist(@Param("id") Integer id, Pageable pageable);
+    Page<Question> findByChecklist(@Param("id") Integer checklistId, Pageable pageable);
 
     @Query("select q from Question q inner join q.checklists c where c.id = :id order by q.requirement.description, q.criterion.description")
-    List<Question> findByChecklist(@Param("id") Integer id);
+    List<Question> findByChecklist(@Param("id") Integer checklistId);
 
     Page<Question> findByRequirementAndCriterionAndDescriptionLike(
             Requirement requirement, Criterion criterion, String description, Pageable pageable);

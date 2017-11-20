@@ -20,4 +20,7 @@ public interface ChecklistRepository extends JpaRepository<Checklist, Integer> {
     @Query("select c from Checklist c left join c.questions where c.id = :id")
     Checklist findByIdWithQuestions(@Param("id") Integer id);
 
+    @Query("select c from Checklist c left join c.questions q where q.id = :id")
+    List<Checklist> findByQuestion(@Param("id") Integer questionId);
+
 }

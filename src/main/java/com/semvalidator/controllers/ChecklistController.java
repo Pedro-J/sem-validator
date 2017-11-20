@@ -120,10 +120,17 @@ public class ChecklistController {
 
     @RequestMapping(value = "/checklists/{id}/delete", method = RequestMethod.POST)
     public String deleteChecklist(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
-        checkListService.delete(id);
-        redirectAttributes.addFlashAttribute("msgCSS","success");
-        redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
-        redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
+        if( checkListService.isDeletable(id) ) {
+            checkListService.delete(id);
+
+            redirectAttributes.addFlashAttribute("msgCSS", "success");
+            redirectAttributes.addFlashAttribute("msgTitle", "general.msg.title.info");
+            redirectAttributes.addFlashAttribute("msgContent", "general.msg.delete");
+        }else{
+            redirectAttributes.addFlashAttribute("msgCSS", "warning");
+            redirectAttributes.addFlashAttribute("msgTitle", "general.msg.title.warn");
+            redirectAttributes.addFlashAttribute("msgContent","general.msg.delete.checklist.error");
+        }
         return "redirect:/checklists/list";
     }
 

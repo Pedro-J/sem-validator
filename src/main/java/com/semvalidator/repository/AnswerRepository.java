@@ -29,5 +29,8 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer>{
     @Query("select a from Answer a where a.evaluation.id = :evaluationId and a.question.criterion.id = :criterionId")
     List<Answer> findByEvaluationAndCriterion(@Param("evaluationId") Integer evaluationId, @Param("criterionId") Integer criterionId);
 
+    @Query("select a from Answer a where a.question.id = :id")
+    List<Answer> findByQuestion(@Param("id") Integer questionId);
 
+    List<Answer> findByEvaluation(Evaluation evaluation);
 }

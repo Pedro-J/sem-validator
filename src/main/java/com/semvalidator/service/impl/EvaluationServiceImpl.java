@@ -54,6 +54,9 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     @Override
     public void delete(Integer id) {
+        List<Answer> answers = answerRepository.findByEvaluation(id);
+        answers.stream().forEach( answer -> answerRepository.delete(answer.getId()) );
+
         evaluationRepository.delete(id);
     }
 

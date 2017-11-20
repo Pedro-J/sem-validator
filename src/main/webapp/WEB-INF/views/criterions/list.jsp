@@ -20,7 +20,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <strong><s:message code="${msgTitle}" /><s:message code="app.entity.criterion"/>&nbsp;<s:message code="${msgContent}" /></strong>
+                <strong><s:message code="${msgTitle}" />&nbsp;<s:message code="app.entity.the.criterion"/>&nbsp;<s:message code="${msgContent}" /></strong>
             </div>
         </c:if>
         <div class="panel panel-primary">

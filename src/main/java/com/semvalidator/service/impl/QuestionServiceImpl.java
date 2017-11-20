@@ -1,11 +1,7 @@
 package com.semvalidator.service.impl;
 
-import com.semvalidator.model.Criterion;
-import com.semvalidator.model.Question;
-import com.semvalidator.model.Requirement;
-import com.semvalidator.repository.CriterionRepository;
-import com.semvalidator.repository.QuestionRepository;
-import com.semvalidator.repository.RequirementRepository;
+import com.semvalidator.model.*;
+import com.semvalidator.repository.*;
 import com.semvalidator.service.QuestionService;
 import com.semvalidator.util.SearchQuestionParamsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -30,11 +27,18 @@ public class QuestionServiceImpl implements QuestionService{
 
     private RequirementRepository requirementRepository;
 
+    private ChecklistRepository checklistRepository;
+
+    private AnswerRepository answerRepository;
+
     @Autowired
-    public QuestionServiceImpl(QuestionRepository questionRepository, CriterionRepository criterionRepository, RequirementRepository requirementRepository) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, CriterionRepository criterionRepository, RequirementRepository requirementRepository,
+            ChecklistRepository checklistRepository, AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
         this.criterionRepository = criterionRepository;
         this.requirementRepository = requirementRepository;
+        this.checklistRepository = checklistRepository;
+        this.answerRepository = answerRepository;
     }
 
     public Question save(Question entity) {
@@ -47,6 +51,18 @@ public class QuestionServiceImpl implements QuestionService{
 
     public void delete(Integer id) {
         questionRepository.delete(id);
+    }
+
+    public boolean isDeletable(Integer id){
+
+        List<Answer> answers = answerRepository.findByQuestion(id);
+        List<Checklist> checklists = checklistRepository.findByQuestion(id);
+
+        if( CollectionUtils.isEmpty(answers) && CollectionUtils.isEmpty(checklists) ) {
+            return true;
+        }
+
+        return false;
     }
 
     @Transactional(readOnly = true)

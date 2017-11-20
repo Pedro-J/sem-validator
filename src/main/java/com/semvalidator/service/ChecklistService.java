@@ -15,4 +15,6 @@ public interface ChecklistService extends GenericService<Checklist>{
     Checklist findByIdWithQuestions(Integer id);
 
     ChecklistDTO findDTOById(Integer id);
+
+    boolean isDeletable(Integer id);
 }

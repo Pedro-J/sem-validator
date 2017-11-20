@@ -107,11 +107,19 @@ public class ModelController {
 
     @RequestMapping(value = "/models/{id}/delete", method = RequestMethod.POST)
     public String deleteQuestion(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
-        modelService.delete(id);
 
-        redirectAttributes.addFlashAttribute("msgCSS","success");
-        redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
-        redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
+        if( modelService.isDeletable(id) ) {
+            modelService.delete(id);
+
+            redirectAttributes.addFlashAttribute("msgCSS", "success");
+            redirectAttributes.addFlashAttribute("msgTitle", "general.msg.title.info");
+            redirectAttributes.addFlashAttribute("msgContent", "general.msg.delete");
+        }else{
+            redirectAttributes.addFlashAttribute("msgCSS", "warning");
+            redirectAttributes.addFlashAttribute("msgTitle", "general.msg.title.warn");
+            redirectAttributes.addFlashAttribute("msgContent","general.msg.delete.model.error");
+
+        }
 
         return "redirect:/models/list";
     }

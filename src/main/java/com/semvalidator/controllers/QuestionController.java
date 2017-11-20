@@ -142,11 +142,19 @@ public class QuestionController {
 
     @RequestMapping(value = "/questions/{id}/delete", method = RequestMethod.POST)
     public String deleteQuestion(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
-        questionService.delete(id);
 
-        redirectAttributes.addFlashAttribute("msgCSS","success");
-        redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
-        redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
+        if( questionService.isDeletable(id) ) {
+            questionService.delete(id);
+
+            redirectAttributes.addFlashAttribute("msgCSS","success");
+            redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.info");
+            redirectAttributes.addFlashAttribute("msgContent","general.msg.delete");
+        }else{
+            redirectAttributes.addFlashAttribute("msgCSS","warning");
+            redirectAttributes.addFlashAttribute("msgTitle","general.msg.title.warn");
+            redirectAttributes.addFlashAttribute("msgContent","general.msg.delete.question.error");
+        }
+
 
         return "redirect:/questions/list";
     }

@@ -23,27 +23,27 @@
                 <h4><s:message code="model.detail.title"/></h4>
             </div>
             <div class="panel-body">
-                <div class="row">
+                <div class="row vertical-margin10">
                     <label class="col-sm-2"><s:message code="title.label"/>:</label>
                     <div class="col-sm-10">${model.title}</div>
                 </div>
 
-                <div class="row">
+                <div class="row vertical-margin10">
                     <label class="col-sm-2"><s:message code="description.label"/>:</label>
                     <div class="col-sm-10">${model.description}</div>
                 </div>
 
-                <div class="row">
+                <div class="row vertical-margin10">
                     <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
                     <div class="col-sm-10">${model.objectivesDesc}</div>
                 </div>
 
-                <div class="row">
+                <div class="row vertical-margin10">
                     <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
                     <div class="col-sm-10">${model.applicabilitiesDesc}</div>
                 </div>
 
-                <div class="row">
+                <div class="row vertical-margin10">
                     <label class="col-sm-2"><s:message code="modelFile.label"/>:</label>
                     <div class="col-sm-10">
                         <c:if test="${not empty model.modelFileUrl}" >

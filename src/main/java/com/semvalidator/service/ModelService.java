@@ -8,4 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface ModelService extends GenericService<ModelSE>{
     ModelSE save(ModelSE entity, MultipartFile modelFile);
+    boolean isDeletable(Integer id);
 }

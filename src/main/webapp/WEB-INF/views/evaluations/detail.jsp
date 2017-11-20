@@ -33,19 +33,19 @@
                 </div>
                 <div class="panel-body">
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="title.label"/>:</label>
                         <div class="col-sm-9">${evaluation.title}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="app.entity.evaluation"/>:</label>
                         <div class="col-sm-9">${evaluation.checklist.title}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="checklistType.label"/>:</label>
                         <div class="col-sm-9">
@@ -57,36 +57,36 @@
 
                     <div class="row"><br/></div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="title.label"/>:</label>
                         <div class="col-sm-9">${evaluation.model.title}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="description.label"/>:</label>
                         <div class="col-sm-9">${evaluation.model.description}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
                         <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
                         <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
                     </div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
                         <label class="col-sm-2"><s:message code="general.satisfaction.label"/>:</label>
                         <div class="col-sm-9">
@@ -96,7 +96,7 @@
 
                     <div class="row"><br/></div>
 
-                    <div class="row">
+                    <div class="row vertical-margin10">
                         <c:if test="${not empty requirements}">
                         <div class="panel panel-primary" style="width: 43%;float:left;margin-left: 58px;">
                             <div class="panel-heading text-center">
@@ -161,7 +161,7 @@
                     <div class="row"><br/></div>
 
                     <c:if test="${not empty answers}">
-                        <div class="row">
+                        <div class="row vertical-margin10">
                             <div class="panel panel-primary" style="width: 90%;margin: 0 auto;">
                                 <div class="panel-heading text-center">
                                     <h5><s:message code="answers.label"/></h5>

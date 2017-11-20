@@ -92,3 +92,7 @@ actions-column-4{
     width: 20px;
     height: 20px;
 }
+
+.vertical-margin10{
+    margin-top: 10px;margin-bottom: 10px;
+}

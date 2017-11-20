@@ -2,7 +2,9 @@ package com.semvalidator.service.impl;
 
 import com.semvalidator.enums.ChecklistType;
 import com.semvalidator.model.Checklist;
+import com.semvalidator.model.Evaluation;
 import com.semvalidator.repository.ChecklistRepository;
+import com.semvalidator.repository.EvaluationRepository;
 import com.semvalidator.service.ChecklistService;
 import com.semvalidator.util.ChecklistDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -22,9 +25,12 @@ public class CheckListServiceImpl implements ChecklistService {
 
     private ChecklistRepository checklistRepository;
 
+    private EvaluationRepository evaluationRepository;
+
     @Autowired
-    public CheckListServiceImpl(ChecklistRepository checklistRepository) {
+    public CheckListServiceImpl(ChecklistRepository checklistRepository, EvaluationRepository evaluationRepository) {
         this.checklistRepository = checklistRepository;
+        this.evaluationRepository = evaluationRepository;
     }
 
     public Checklist save(Checklist entity) {
@@ -56,6 +62,15 @@ public class CheckListServiceImpl implements ChecklistService {
 
     public List<Checklist> findByChecklistType(ChecklistType type) {
         return checklistRepository.findByChecklistType(type);
+    }
+
+    public boolean isDeletable(Integer id){
+        List<Evaluation> evaluations = evaluationRepository.findByChecklist(id);
+
+        if( CollectionUtils.isEmpty(evaluations) )
+            return true;
+        else
+            return false;
     }
 
     public Checklist findByIdWithQuestions(Integer id){

@@ -1,7 +1,9 @@
 package com.semvalidator.service.impl;
 
 import com.semvalidator.infra.FileService;
+import com.semvalidator.model.Evaluation;
 import com.semvalidator.model.ModelSE;
+import com.semvalidator.repository.EvaluationRepository;
 import com.semvalidator.repository.ModelRepository;
 import com.semvalidator.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,11 +26,14 @@ public class ModelServiceImpl implements ModelService{
 
     private ModelRepository modelRepository;
 
+    private EvaluationRepository evaluationRepository;
+
     private FileService fileService;
 
     @Autowired
-    public ModelServiceImpl(ModelRepository modelRepository, FileService fileService) {
+    public ModelServiceImpl(ModelRepository modelRepository, EvaluationRepository evaluationRepository, FileService fileService) {
         this.modelRepository = modelRepository;
+        this.evaluationRepository = evaluationRepository;
         this.fileService = fileService;
     }
 
@@ -52,6 +58,15 @@ public class ModelServiceImpl implements ModelService{
         savedModel = modelRepository.saveAndFlush(entity);
 
         return savedModel;
+    }
+
+    public boolean isDeletable(Integer id){
+        List<Evaluation> evaluations = evaluationRepository.findByModel(id);
+
+        if( CollectionUtils.isEmpty(evaluations) )
+            return true;
+        else
+            return false;
     }
 
     @Override
