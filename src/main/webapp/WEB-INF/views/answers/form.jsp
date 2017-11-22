@@ -5,7 +5,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
-<tags:pageTemplate title="answer.add.title">
+<tags:pageTemplate title="answer.evaluation">
 
     <jsp:attribute name="extraScripts">
         <c:url value="/resources/js" var="jsPath" />
@@ -56,35 +56,50 @@
                             </div>
                         </div>
 
-                        <div class="row"><br/></div>
-
                         <div class="row">
                             <div class="col-sm-1"></div>
-                            <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
+                            <div class="col-sm-3">
+                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#model-details"><s:message code="app.entity.model.detail"/></button>
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-1"></div>
-                            <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.model.title}</div>
-                        </div>
+                        <div class="form-group collapse" id="model-details">
+                            <div class="panel" style="width: 100%;margin: 10px auto;">
 
-                        <div class="row">
-                            <div class="col-sm-1"></div>
-                            <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.model.description}</div>
-                        </div>
+                                <div class="panel-body ">
+                                  <div class="row">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col-sm-1"></div>
-                            <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
-                        </div>
+                                    <div class="row">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="title.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.title}</div>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col-sm-1"></div>
-                            <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                            <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
+                                    <div class="row">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="description.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.description}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">

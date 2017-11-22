@@ -59,6 +59,10 @@ img.lang{
     width: 20px;
 }
 
+.width10{
+    width: 10px;
+}
+
 .input-search{
     float:left;margin-left:10px;
 }

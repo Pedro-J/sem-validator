@@ -38,6 +38,7 @@
                     <table class="table table-bordered data-table-pagination">
                         <thead>
                         <tr>
+                            <th>Nº</th>
                             <th><s:message code="description.label" /></th>
                             <th><s:message code="tip.label" /></th>
                         </tr>
@@ -45,7 +46,8 @@
 
                         <c:forEach var="scenario" items="${scenarios}">
                             <tr>
-                                <td><div class="long-text-column width1000" >${scenario.description}</div></td>
+                                <td><div class="long-text-column width10">${scenario.id}</div></td>
+                                <td><div class="long-text-column" style="width:990px;" >${scenario.description}</div></td>
                                 <td>
                                     <div>
                                         <s:message code="scenario.tips.label" var="tipLabel"/>

@@ -5,12 +5,27 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 
 <tags:pageTemplate title="question.list.title" >
+
     <jsp:attribute name="extraScripts">
         <script type="text/javascript">
 
             $(document).ready(function() {
                 $('.data-table-pagination').DataTable(getCurrentLanguage());
+
+                var searchInput = document.querySelector('input.form-control.input-sm');
+                searchInput.setAttribute('placeholder', '');
+
+                var events = ['click', 'keyup'];
+
+                events.forEach(function(eventType){
+                    searchInput.addEventListener(eventType, function(event) {
+                        $('.data-table-pagination').DataTable().column(2)
+                            .search(event.target.value, true, true);
+                    });
+                });
+
             } );
+
         </script>
     </jsp:attribute>
 

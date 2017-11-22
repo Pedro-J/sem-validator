@@ -328,7 +328,7 @@ var controller = (function(model, view) {
 
     var addContext = function (url){
         return (view.getViewParams().appContext + url);
-    }
+    };
 
     //Insert answer in the model
     var selectAnswer = function(event){
