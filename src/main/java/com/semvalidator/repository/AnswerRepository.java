@@ -20,7 +20,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer>{
 /*    @Query("select a from Answer a where a.checklist = :checklist order by a.requirement.description,a.question.criterion.description")
     List<Answer> findByChecklistOrderByRequirementAndCriterion(@Param("checklist") Checklist checklist);*/
 
-    @Query("select a from Answer a where a.evaluation.id = :id")
+    @Query("select a from Answer a where a.evaluation.id = :id order by a.question.criterion.description")
     List<Answer> findByEvaluation(@Param("id") Integer evaluationId);
 
     @Query("select a from Answer a where a.evaluation.id = :evaluationId and a.question.requirement.id = :requirementId")

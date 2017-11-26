@@ -45,8 +45,9 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><s:message code="checklistType.label"/>:</label>
                         <div class="col-sm-5">
+                            <s:message code="select.label" var="select_label" />
                             <select class="form-control" id="checklist-type" >
-                                <option value="" label="--- Select ---"/>
+                                <option value="" label="--- ${select_label} ---"/>
                                 <c:forEach items="${checklistTypes}" var="item" >
                                     <s:message code="${item.messageCode}" var="typeDescription"/>
                                     <option value="${item}" label="${typeDescription}" />
@@ -65,23 +66,24 @@
                         </div>
                         <div class="panel-body text-center">
                             <div style="margin:20px 0">
+                                <s:message code="criterion.label" var="critetion_label" />
                                 <select class="form-control width200 input-search select-criterion" >
-                                    <option value="0" label="--- Select ---"/>
+                                    <option value="0" label="--- ${critetion_label} ---"/>
                                     <c:forEach items="${criterions}" var="item" >
                                         <option value="${item.id}" label="${item.description}" />
                                     </c:forEach>
                                 </select>
 
-                                <select class="form-control width200 input-search select-requirement" >
-                                    <option value="0" label="--- Select ---"/>
+                                <s:message code="criterion.category.label" var="category_critetion_label" />
+                                <select class="form-control width260 input-search select-requirement" >
+                                    <option value="0" label="--- ${category_critetion_label} ---"/>
                                     <c:forEach items="${requirements}" var="item" >
                                         <option value="${item.id}" label="${item.description}" />
                                     </c:forEach>
                                 </select>
 
                                 <s:message code="questions.label" var="questionLabel" />
-                                <input type="text" class="form-control input-search input-description"
-                                       style="width:50%;" placeholder="${questionLabel}" />
+                                <input type="text" class="form-control width400 input-search input-description" placeholder="${questionLabel}" />
 
                                 <button type="button" class="btn btn-primary btn-search glyphicon glyphicon-search width60"> </button>
                             </div>

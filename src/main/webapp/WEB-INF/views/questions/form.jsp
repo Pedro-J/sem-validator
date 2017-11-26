@@ -27,7 +27,7 @@
 
                     <form:hidden path="id"/>
 
-                    <s:bind path="numeration">
+<%--                    <s:bind path="numeration">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
                             <s:message code="numeration.label" var="numeration"/>
                             <label class="col-sm-2 control-label">${numeration}:</label>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-sm-2"></div>
                         </div>
-                    </s:bind>
+                    </s:bind>--%>
 
                     <s:bind path="description">
                         <div class="form-group ${status.error ? 'has-error' : ''}">

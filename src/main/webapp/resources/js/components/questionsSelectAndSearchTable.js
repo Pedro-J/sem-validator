@@ -192,7 +192,6 @@ var tableView = (function() {
         updatePagination: function(currentPage, maxPage){
             var minPage = 1;
 
-
             document.querySelector(DOMstrings.pagination).classList.remove('hide');
 
             if( maxPage == minPage ){
@@ -215,6 +214,10 @@ var tableView = (function() {
                 document.querySelector(DOMstrings.pageRight).classList.remove('active');
 
                 document.querySelector(DOMstrings.pagePrev).classList.add('disabled');
+
+                document.querySelector(DOMstrings.pageLeft).firstElementChild.textContent = currentPage;
+                document.querySelector(DOMstrings.pageMiddle).firstElementChild.textContent = currentPage + 1;
+                document.querySelector(DOMstrings.pageRight).firstElementChild.textContent = currentPage + 2;
 
             } else if( currentPage === maxPage && maxPage > 2){
                 document.querySelector(DOMstrings.pageLeft).classList.remove('active');
@@ -279,7 +282,7 @@ var controller = (function(model, view) {
         return (view.getViewParams().appContext + url);
     };
 
-    loadData = function() {
+    loadQuestions = function() {
         //1. load data through ajax
         var reqUrl = addContext('questions?page=' + (model.getCurrentPage() - 1) + '&size='+ model.getPageSize());
         var xhr = new XMLHttpRequest();
@@ -318,7 +321,7 @@ var controller = (function(model, view) {
     };
 
 
-    var search = function(){
+    var loadQuestionsByFormInputsAndPage = function(page){
         var inputsSearch = view.getInputsSearch();
 
         var xhr = new XMLHttpRequest();
@@ -334,13 +337,19 @@ var controller = (function(model, view) {
             }
         };
         var searchData = JSON.stringify({
-            page: (model.getCurrentPage() - 1),
+            page: (page - 1),
             size: model.getPageSize(),
             criterion: inputsSearch.criterion,
             requirement: inputsSearch.requirement,
             questionDescription: inputsSearch.description
         });
         xhr.send(searchData);
+    };
+
+    var search = function(){
+        model.setCurrentPage(1);
+        view.updatePagination(model.getCurrentPage(), model.getTotalPages());
+        loadQuestionsByFormInputsAndPage(model.getCurrentPage());
     };
 
     //Insert/remove id in/from the model
@@ -359,7 +368,7 @@ var controller = (function(model, view) {
             var current = parseInt(event.target.textContent);
             model.setCurrentPage(current);
             view.updatePagination(current, model.getTotalPages());
-            search();
+            loadQuestionsByFormInputsAndPage(model.getCurrentPage());
         }
     };
 
@@ -368,7 +377,7 @@ var controller = (function(model, view) {
             var current = model.getCurrentPage() - 1;
             model.setCurrentPage(current);
             view.updatePagination(current, model.getTotalPages());
-            search();
+            loadQuestionsByFormInputsAndPage(model.getCurrentPage());
         }
     };
 
@@ -377,7 +386,7 @@ var controller = (function(model, view) {
             var current = model.getCurrentPage() + 1;
             model.setCurrentPage(current);
             view.updatePagination(current, model.getTotalPages());
-            search();
+            loadQuestionsByFormInputsAndPage(model.getCurrentPage());
         }
     };
 
@@ -444,7 +453,7 @@ var controller = (function(model, view) {
         init: function() {
             console.log('Application has started.');
             loadSelectedQuestions();
-            loadData();
+            loadQuestions();
             setupEventListeners();
         }
     };

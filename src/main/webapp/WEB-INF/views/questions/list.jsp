@@ -11,20 +11,7 @@
 
             $(document).ready(function() {
                 $('.data-table-pagination').DataTable(getCurrentLanguage());
-
-                var searchInput = document.querySelector('input.form-control.input-sm');
-                searchInput.setAttribute('placeholder', '');
-
-                var events = ['click', 'keyup'];
-
-                events.forEach(function(eventType){
-                    searchInput.addEventListener(eventType, function(event) {
-                        $('.data-table-pagination').DataTable().column(2)
-                            .search(event.target.value, true, true);
-                    });
-                });
-
-            } );
+            });
 
         </script>
     </jsp:attribute>
@@ -48,10 +35,9 @@
                 <table class="table table-bordered data-table-pagination">
                     <thead>
                         <tr>
-                            <th><s:message code="numeration.label" /></th>
+                            <th></th>
                             <th><s:message code="description.label" /></th>
                             <th><s:message code="criterion.label" /></th>
-                            <th><s:message code="requirement.label" /></th>
                             <th><s:message code="tip.label" /></th>
                             <th><s:message code="actions.label" /></th>
                         </tr>
@@ -59,10 +45,9 @@
                     <tbody>
                     <c:forEach var="question" items="${questions}">
                         <tr>
-                            <td >${question.numeration}</td>
-                            <td class="width260"><div class="long-text-column">${question.description}</div></td>
+                            <td >${question.id}</td>
+                            <td class="width600"><div class="long-text-column">${question.description}</div></td>
                             <td class="width200"><div class="long-text-column">${question.criterion.description}</div></td>
-                            <td class="width200"><div class="long-text-column">${question.requirement.description}</div></td>
                             <td class="width140"><div class="long-text-column">${question.tip}</div></td>
                             <td class="actions-column">
                                 <s:message code="general.delete" var="delete"/>

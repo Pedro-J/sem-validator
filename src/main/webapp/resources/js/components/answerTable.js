@@ -191,12 +191,8 @@ var tableView = (function() {
             var tdQuestionDescription = createTD(document.createTextNode(question.description));
             tdQuestionDescription.classList.add('width400');
 
-
             var tdCriterionDescription = createTD(createContainer(document.createTextNode(question.criterion.description)));
-            tdCriterionDescription.classList.add('width100');
-
-            var tdRequirementDescription = createTD(createContainer(document.createTextNode(question.requirement.description)));
-            tdRequirementDescription.classList.add('width100');
+            tdCriterionDescription.classList.add('width200', 'text-center');
 
             var tdQuestionDescription = createTD(document.createTextNode(question.description));
             tdQuestionDescription.classList.add('width100');
@@ -209,15 +205,11 @@ var tableView = (function() {
             var tdQuestionAnswer = createTD(selectAnswers);
             tdQuestionAnswer.classList.add('text-center', 'width140');
 
-
-
-
             var trQuestion = document.createElement('tr');
 
             trQuestion.appendChild(tdQuestionDescription);
             trQuestion.appendChild(tdCriterionDescription);
-            trQuestion.appendChild(tdRequirementDescription);
-            trQuestion.appendChild(tdQuestionTip)
+            trQuestion.appendChild(tdQuestionTip);
             trQuestion.appendChild(tdQuestionAnswer);
             tableContent.appendChild(trQuestion);
         });

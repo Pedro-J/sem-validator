@@ -10,7 +10,22 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.data-table-pagination').DataTable(getCurrentLanguage());
-            } );
+
+                var searchInput = document.querySelector("input[aria-controls='DataTables_Table_2']");
+                searchInput.setAttribute('placeholder', '');
+
+                var events = ['click', 'keyup'];
+
+                events.forEach(function(eventType){
+                    searchInput.addEventListener(eventType, function(event) {
+                        $('#DataTables_Table_2').DataTable().column(1)
+                            .search(event.target.value, true, true).draw();
+
+                        $('#DataTables_Table_2').DataTable().column(2)
+                            .search(event.target.value, true, true).draw();
+                    });
+                });
+            });
         </script>
     </jsp:attribute>
     <jsp:body>
@@ -173,7 +188,7 @@
                                             <tr>
                                                 <th><s:message code="app.entity.question" /> </th>
                                                 <th><s:message code="app.entity.criterion" /> </th>
-                                                <th><s:message code="app.entity.requirement" /> </th>
+                                                <th><s:message code="criterion.category.label" /> </th>
                                                 <th><s:message code="app.entity.answer" /> </th>
                                             </tr>
                                             </thead>

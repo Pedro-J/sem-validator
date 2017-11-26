@@ -113,8 +113,7 @@
                                             <thead>
                                             <tr>
                                                 <th class="text-center width400"><s:message code="app.entity.question" /> </th>
-                                                <th class="text-center width100"><s:message code="app.entity.criterion" /> </th>
-                                                <th class="text-center width100"><s:message code="app.entity.requirement" /> </th>
+                                                <th class="text-center width200"><s:message code="app.entity.criterion" /> </th>
                                                 <th class="text-center width100"><s:message code="tip.label" /> </th>
                                                 <th class="text-center width200"><s:message code="app.entity.answer" /> </th>
                                             </tr>

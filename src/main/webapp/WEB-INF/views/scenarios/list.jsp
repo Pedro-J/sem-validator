@@ -15,7 +15,7 @@
 
     <jsp:body>
         <div class="container">
-            <c:if test="${not empty msgContent}">
+<%--            <c:if test="${not empty msgContent}">
                 <div class="alert alert-${msgCSS} alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -28,7 +28,7 @@
                 <p style="text-align: left;"><s:message code="scenario.description.text.p2" /></p>
                 <p style="text-align: left;"><s:message code="scenario.description.text.p3" /></p>
                 <br/>
-            </div>
+            </div>--%>
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
                     <h4><s:message code="scenario.list.title" /></h4>
@@ -38,7 +38,7 @@
                     <table class="table table-bordered data-table-pagination">
                         <thead>
                         <tr>
-                            <th>Nº</th>
+                            <th></th>
                             <th><s:message code="description.label" /></th>
                             <th><s:message code="tip.label" /></th>
                         </tr>
