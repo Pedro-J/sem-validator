@@ -87,7 +87,7 @@
 
                     <s:bind path="requirement">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <label class="col-sm-2 control-label"><s:message code="requirement.label"/>:</label>
+                            <label class="col-sm-2 control-label"><s:message code="criterion.category.label"/>:</label>
                             <div class="col-sm-5">
                                 <form:select path="requirement" class="form-control">
                                     <form:option value="0" label="--- Select ---"/>
@@ -96,9 +96,9 @@
                                 <form:errors path="requirement" class="control-label"/>
                             </div>
                             <div class="col-sm-1">
-                                <s:message code="requirement.add.title" var="addRequirement"/>
+                                <s:message code="criterion.category.add.title" var="addCriterionCategory"/>
                                 <a class="btn btn-primary glyphicon glyphicon-plus"
-                                        href="${app_context}requirements/add" title="${addRequirement}"></a>
+                                        href="${app_context}requirements/add" title="${addCriterionCategory}"></a>
                             </div>
                             <div class="col-sm-4"></div>
                         </div>

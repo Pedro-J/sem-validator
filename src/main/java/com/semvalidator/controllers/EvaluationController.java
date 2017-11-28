@@ -70,6 +70,9 @@ public class EvaluationController {
         if( evaluation == null ) throw new ResourceNotFoundException();
 
         model.addAttribute("evaluation", evaluation);
+        model.addAttribute("models", modelService.findAll());
+        model.addAttribute("checklists", checklistService.findAll());
+
         return "evaluations/form";
     }
 

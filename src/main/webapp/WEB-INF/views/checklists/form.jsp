@@ -93,7 +93,7 @@
                                     <th>#</th>
                                     <th><div style="width:250px"><s:message code="questions.label" /></div></th>
                                     <th><s:message code="criterion.label" /></th>
-                                    <th><s:message code="requirement.label" /></th>
+                                    <th><s:message code="criterion.category.label" /></th>
                                 </tr>
                                 </thead>
 

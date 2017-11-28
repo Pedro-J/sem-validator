@@ -31,7 +31,7 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h4><s:message code="answer.add.title"/></h4>
+                    <h4><s:message code="answer.evaluation"/></h4>
                 </div>
                 <div class="panel-body">
                     <s:url value="/answer" var="formActionUrl"/>
@@ -66,37 +66,56 @@
                             </div>
                         </div>
 
-                        <div class="form-group collapse" id="model-details">
-                            <div class="panel" style="width: 100%;margin: 10px auto;">
+                        <div class="row">
+                            <div class="form-group collapse col-sm-12" id="model-details">
+                                <div class="panel" style="width: 100%;margin: 10px auto;">
 
-                                <div class="panel-body ">
-                                  <div class="row">
-                                        <div class="col-sm-1"></div>
-                                        <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
-                                    </div>
+                                    <div class="panel-body ">
+                                      <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
+                                        </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-1"></div>
-                                        <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                                        <div class="col-sm-9">${evaluation.model.title}</div>
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2"><s:message code="title.label"/>:</label>
+                                            <div class="col-sm-9">${evaluation.model.title}</div>
+                                        </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-1"></div>
-                                        <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                                        <div class="col-sm-9">${evaluation.model.description}</div>
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2"><s:message code="description.label"/>:</label>
+                                            <div class="col-sm-9">${evaluation.model.description}</div>
+                                        </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-1"></div>
-                                        <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                                        <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
-                                    </div>
+                                        <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
+                                            <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
+                                        </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-1"></div>
-                                        <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                                        <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
+                                        <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
+                                            <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <label class="col-sm-2"><s:message code="modelFile.label"/>:</label>
+                                            <div class="col-sm-9"></div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-10">
+                                                <c:if test="${not empty evaluation.model.modelFileUrl}" >
+                                                    <c:url value="/" var="contextPath" />
+                                                    <img src="${contextPath}${evaluation.model.modelFileUrl}" class="img-responsive" />
+                                                </c:if>
+                                            </div>
+                                            <div class="col-sm-1"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

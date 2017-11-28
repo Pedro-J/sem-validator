@@ -70,46 +70,81 @@
                         </div>
                     </div>
 
-                    <div class="row"><br/></div>
-
                     <div class="row vertical-margin10">
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
-                    </div>
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#model-details"><s:message code="app.entity.model.detail"/></button>
+                        </div>
+                        <div class="col-sm-8">
 
-                    <div class="row vertical-margin10">
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-2"><s:message code="title.label"/>:</label>
-                        <div class="col-sm-9">${evaluation.model.title}</div>
-                    </div>
-
-                    <div class="row vertical-margin10">
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-2"><s:message code="description.label"/>:</label>
-                        <div class="col-sm-9">${evaluation.model.description}</div>
-                    </div>
-
-                    <div class="row vertical-margin10">
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
-                        <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
-                    </div>
-
-                    <div class="row vertical-margin10">
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
-                        <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
-                    </div>
-
-                    <div class="row vertical-margin10">
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-2"><s:message code="general.satisfaction.label"/>:</label>
-                        <div class="col-sm-9">
-                            <fmt:formatNumber value="${generalSatisfaction}" type="percent" maxFractionDigits="2"/>
                         </div>
                     </div>
 
-                    <div class="row"><br/></div>
+                    <div class="row vertical-margin10">
+                        <div class="form-group collapse" id="model-details">
+                            <div class="panel" style="width: 100%;margin: 10px auto;">
+
+                                <div class="panel-body ">
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="app.entity.model.detail"/>:</label>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="title.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.title}</div>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="description.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.description}</div>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="objectives.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.objectivesDesc}</div>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="applicabilities.label"/>:</label>
+                                        <div class="col-sm-9">${evaluation.model.applicabilitiesDesc}</div>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="general.satisfaction.label"/>:</label>
+                                        <div class="col-sm-9">
+                                            <fmt:formatNumber value="${generalSatisfaction}" type="percent" maxFractionDigits="2"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <label class="col-sm-2"><s:message code="modelFile.label"/>:</label>
+                                        <div class="col-sm-9"></div>
+                                    </div>
+
+                                    <div class="row vertical-margin10">
+                                        <div class="col-sm-1"></div>
+                                        <div class="col-sm-10">
+                                            <c:if test="${not empty evaluation.model.modelFileUrl}" >
+                                                <c:url value="/" var="contextPath" />
+                                                <img src="${contextPath}${evaluation.model.modelFileUrl}" class="img-responsive" />
+                                            </c:if>
+                                        </div>
+                                        <div class="col-sm-1"></div>
+                                    </div>
+
+                                    <div class="row"><br/></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row vertical-margin10">
                         <c:if test="${not empty requirements}">

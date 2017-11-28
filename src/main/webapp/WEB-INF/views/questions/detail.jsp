@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-2"><s:message code="requirement.label"/>:</label>
+                    <label class="col-sm-2"><s:message code="criterion.category.label"/>:</label>
                     <div class="col-sm-10">
                         <c:if test="${not empty question.requirement}">
                             ${question.requirement.description}
